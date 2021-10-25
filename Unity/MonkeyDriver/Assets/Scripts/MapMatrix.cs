@@ -11,10 +11,23 @@ This script is responsible for:
 */
 public class MapMatrix : MonoBehaviour
 {
+    GameObject[,] mapMatrix;
+
+    void generateMap(int height,int width)
+    {
+        mapMatrix = new GameObject[height, width];
+    }
+
+    //once we have sprites and etc this is how it will visualize
+    void drawMap()
+    {
+
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        //generateMap(5, 5);
     }
 
     // Update is called once per frame
