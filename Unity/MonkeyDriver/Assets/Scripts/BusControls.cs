@@ -7,11 +7,29 @@ This script is responsible for:
 -each control that the bus can take (to be used by the monkey)
 -collision with obstacles
 */
+enum Controls
+{
+    Up,
+    Down,
+    Left,
+    Right,
+    Plow,
+    Rest,
+    Accelerate
+}
 public class BusControls : MonoBehaviour
 {
+
+    bool atBoundUp, atBoundLeft, atBoundRight, atBoundDown;
+    bool hasPlow = false;
+    public float speed;
+    Controls[] activeControls = new Controls[3];
     public void Up()
     {
- 
+        if (!atBoundUp)
+        {
+            //move up
+        }
     }
 
     public void Down()

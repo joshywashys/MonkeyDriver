@@ -10,18 +10,7 @@ This script is responsible for:
 */
 public class MonkeyController : MonoBehaviour
 {
-    enum Controls
-    {
-        Up,
-        Down,
-        Left,
-        Right,
-        Plow,
-        Rest,
-        Accelerate
-    }
 
-    // Start is called before the first frame update
     void Start()
     {
         
