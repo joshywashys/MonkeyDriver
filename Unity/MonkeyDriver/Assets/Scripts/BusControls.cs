@@ -27,7 +27,7 @@ public class BusControls : MonoBehaviour
     public float curSpeed, maxSpeed, speedIncrement;
     public static int numControls = 3;
 
-    List <Controls> activeControls = new List<Controls>;
+    List <Controls> activeControls = new List<Controls>();
 
     void Start()
     {
@@ -42,6 +42,7 @@ public class BusControls : MonoBehaviour
     {
         
     }
+#region control methods
     public void Up()
     {
         if (!atBoundUp)//this check will become obsolete since the control should never be called if it would result in out of bounds
@@ -91,6 +92,7 @@ public class BusControls : MonoBehaviour
             curSpeed += speedIncrement;//add whatever factor we determine is justifiable
         }
     }
+#endregion
 
     void executeAction(Controls control)
     {
