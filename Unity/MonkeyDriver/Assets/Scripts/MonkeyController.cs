@@ -32,4 +32,11 @@ public class MonkeyController : MonoBehaviour
         int monkeyChoice = Random.Range(0, numControls);
         return (monkeyChoice);
     }
+    private void OnCollisionEnter(Collision collision) //if the monkey in the bus pulls up to an intersection
+    {
+        if (collision.gameObject.tag == "Intersection")
+        {
+            chooseControl();
+        }
+    }
 }
