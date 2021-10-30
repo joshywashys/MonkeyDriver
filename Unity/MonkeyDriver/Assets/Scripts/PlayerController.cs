@@ -22,4 +22,9 @@ public class PlayerController : MonoBehaviour
     {
         
     }
+
+    private void OnMouseDrag()
+    {
+        //drag the buttons and the banana
+    }
 }

@@ -10,7 +10,7 @@ This script is responsible for:
 */
 
 enum Mood {VeryUpset, Upset, Neutral, Content, Happy }
-public class PassengerController : MonoBehaviour
+public class Passenger
 {
 	Mood currentMood;
 	float commuteTime;
@@ -21,25 +21,17 @@ public class PassengerController : MonoBehaviour
 	Vector3 destination = new Vector3(0,0,0); // UPDATE WITH RANDOM INTERSECTION DESTINATION
     private float distanceToDest;
 
-    IEnumerator commuteTooLong()
-	{
-		while (onBus)
-		{
-			yield return new WaitForSeconds(90);
-			moodMeter -= moodDecrease;
-		}
-	}
-	void Start()
-	{
-		currentMood = Mood.Happy;
-	}
+ //   IEnumerator commuteTooLong()
+	//{
+	//	while (onBus)
+	//	{
+	//		yield return new WaitForSeconds(90);
+	//		moodMeter -= moodDecrease;
+	//	}
+	//}
 
-	// Update is called once per frame
-	void Update()
-	{
-		updateMood("none");
-	}
-	void updateMood(string condition)
+	// Update mood once per frame?
+	void updateMood()
 	{
 		switch (moodMeter)
 		{
@@ -69,20 +61,8 @@ public class PassengerController : MonoBehaviour
 		ScoreManager.i.addScore(moodMeter);
 	}
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
 		//THIS FUNCTION IS FOR WHEN THEY LEAVE THE BUS
 		//might not work depending on how we have the passengers spawned and entering the bus
 		//my suggestion is having them parented to the bus and hiding their sprites
 		// showing their sprites again when they get unparented from the bus
-        if (collision.gameObject.tag == "Bus")
-        {
-			calcScore();
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //THIS FUNCTION IS FOR WHEN THEY HIT OBJECTS
-    }
 }

@@ -30,6 +30,7 @@ public class BusControls : MonoBehaviour
     public static int numControls = 3;
 
     List <Controls> activeControls = new List<Controls>();
+    List<Passenger> passengers = new List<Passenger>();
 
     void Awake()
     {
@@ -108,7 +109,6 @@ public class BusControls : MonoBehaviour
 
     public void executeAction(int control)
     {
-        Debug.Log("doing action");
         switch (activeControls[control])
         {
             case Controls.Up:
