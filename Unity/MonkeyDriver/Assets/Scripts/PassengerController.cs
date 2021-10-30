@@ -69,16 +69,19 @@ public class PassengerController : MonoBehaviour
 		ScoreManager.i.addScore(moodMeter);
 	}
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
 		//THIS FUNCTION IS FOR WHEN THEY LEAVE THE BUS
+		//might not work depending on how we have the passengers spawned and entering the bus
+		//my suggestion is having them parented to the bus and hiding their sprites
+		// showing their sprites again when they get unparented from the bus
         if (collision.gameObject.tag == "Bus")
         {
 			calcScore();
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         //THIS FUNCTION IS FOR WHEN THEY HIT OBJECTS
     }

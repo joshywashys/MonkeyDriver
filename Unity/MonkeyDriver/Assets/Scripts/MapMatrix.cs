@@ -27,6 +27,7 @@ public class MapMatrix : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //needs to be negative and position values
         //generateMap(5, 5);
     }
 

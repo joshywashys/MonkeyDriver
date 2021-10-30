@@ -31,7 +31,7 @@ public class BusControls : MonoBehaviour
 
     List <Controls> activeControls = new List<Controls>();
 
-    void Start()
+    void Awake()
     {
         if (bus == null)
         {
@@ -55,6 +55,7 @@ public class BusControls : MonoBehaviour
         if (!atBoundUp)//this check will become obsolete since the control should never be called if it would result in out of bounds
         {
             transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+            Debug.Log("up");
         }
     }
 
@@ -63,6 +64,7 @@ public class BusControls : MonoBehaviour
         if (!atBoundDown)
         {
             transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
+            Debug.Log("down");
         }
     }
 
@@ -71,6 +73,7 @@ public class BusControls : MonoBehaviour
         if (!atBoundLeft)
         {
             transform.position = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
+            Debug.Log("left");
         }
     }
 
@@ -79,6 +82,7 @@ public class BusControls : MonoBehaviour
         if (!atBoundRight)
         {
             transform.position = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
+            Debug.Log("right");
         }
     }
 
@@ -90,6 +94,7 @@ public class BusControls : MonoBehaviour
     public void Rest()
     {
         //set speed to zero?
+        //need a way for the monkey to make a decision again after 
     }
 
     public void Accelerate()
@@ -103,6 +108,7 @@ public class BusControls : MonoBehaviour
 
     public void executeAction(int control)
     {
+        Debug.Log("doing action");
         switch (activeControls[control])
         {
             case Controls.Up:
@@ -128,6 +134,4 @@ public class BusControls : MonoBehaviour
                 break;
         }
     }
-
-
 }

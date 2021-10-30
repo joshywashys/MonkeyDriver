@@ -10,9 +10,17 @@ This script is responsible for:
 */
 public class MonkeyController : MonoBehaviour
 {
+    IEnumerator testMonkey()
+    {
+        while (true)
+        { //remove from loop to begin making decisions at start of game
+            BusControls.bus.executeAction(chooseControl());
+            yield return new WaitForSeconds(5);
+        }
+    }
     void Start()
     {
-        
+        StartCoroutine(testMonkey());
     }
 
     // Update is called once per frame
@@ -25,9 +33,10 @@ public class MonkeyController : MonoBehaviour
         //check for banana
         //then the control set must be reduced to the number of viable options
         int monkeyChoice = Random.Range(0, BusControls.numControls);
+        Debug.Log("choosing control " + monkeyChoice);
         return (monkeyChoice);
     }
-    private void OnCollisionEnter2D(Collision2D collision) //if the monkey in the bus pulls up to an intersection
+    private void OnTriggerEnter2D(Collider2D collision) //if the monkey in the bus pulls up to an intersection
     {
         if (collision.gameObject.tag == "Intersection")
         {
