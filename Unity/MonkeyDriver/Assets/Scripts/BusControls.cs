@@ -22,7 +22,9 @@ enum Controls
 }
 public class BusControls : MonoBehaviour
 {
-    bool atBoundUp, atBoundLeft, atBoundRight, atBoundDown;
+    public static BusControls bus = null;
+
+    public static bool atBoundUp, atBoundLeft, atBoundRight, atBoundDown; //map changes these
     bool hasPlow = false;
     public float curSpeed, maxSpeed, speedIncrement;
     public static int numControls = 3;
@@ -31,10 +33,15 @@ public class BusControls : MonoBehaviour
 
     void Start()
     {
+        if (bus == null)
+        {
+            bus = this;
+        }
+
+        //populate the first controls
         activeControls.Add(Controls.Up);
         activeControls.Add(Controls.Right);
         activeControls.Add(Controls.Left);
-
     }
 
     // Update is called once per frame
@@ -94,9 +101,9 @@ public class BusControls : MonoBehaviour
     }
 #endregion
 
-    void executeAction(Controls control)
+    public void executeAction(int control)
     {
-        switch (control)
+        switch (activeControls[control])
         {
             case Controls.Up:
                 Up();

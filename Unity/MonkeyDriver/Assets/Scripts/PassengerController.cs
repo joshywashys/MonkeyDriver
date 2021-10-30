@@ -18,6 +18,9 @@ public class PassengerController : MonoBehaviour
 	int moodMeter = 1000;
     public int moodDecrease = 50;
 
+	Vector3 destination = new Vector3(0,0,0); // UPDATE WITH RANDOM INTERSECTION DESTINATION
+    private float distanceToDest;
+
     IEnumerator commuteTooLong()
 	{
 		while (onBus)
@@ -34,9 +37,9 @@ public class PassengerController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		updateMood();
+		updateMood("none");
 	}
-	void updateMood()
+	void updateMood(string condition)
 	{
 		switch (moodMeter)
 		{
@@ -60,6 +63,23 @@ public class PassengerController : MonoBehaviour
 
 	void calcScore()
 	{
+		//distanceToDest = transform.position - destination;
+		Mathf.Round(distanceToDest);
+		moodMeter -= moodDecrease * (int)distanceToDest;
 		ScoreManager.i.addScore(moodMeter);
 	}
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+		//THIS FUNCTION IS FOR WHEN THEY LEAVE THE BUS
+        if (collision.gameObject.tag == "Bus")
+        {
+			calcScore();
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //THIS FUNCTION IS FOR WHEN THEY HIT OBJECTS
+    }
 }
