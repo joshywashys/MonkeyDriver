@@ -72,17 +72,33 @@ public class BusControls : MonoBehaviour
         }
     }
 
-    bool destinationInBounds()
+    void checkForBounds()
     {
         int mapWidth = map.mapMatrix.GetLength(0);
         int mapHeight = map.mapMatrix.GetLength(1);
-        Vector2 currPos = new Vector2(bus.transform.position.x, bus.transform.position.y);
-        if (currPos.x == mapWidth)
+        Vector2Int currPos = new Vector2Int(busPos.x, busPos.y);
+
+        atBoundUp = false;
+        atBoundRight = false;
+        atBoundDown = false;
+        atBoundLeft = false;
+
+        if (currPos.y == mapHeight)
         {
             atBoundUp = true;
         }
-
-        return true;
+        if (currPos.x == mapWidth)
+        {
+            atBoundRight = true;
+        }
+        if (currPos.y == 0)
+        {
+            atBoundDown = true;
+        }
+        if (currPos.x == 0)
+        {
+            atBoundLeft = true;
+        }
     }
 
 #region control methods
