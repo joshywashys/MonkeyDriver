@@ -24,6 +24,7 @@ public class BusControls : MonoBehaviour
 {
     public static BusControls bus = null;
 
+    private Transform busTransform;
     public static bool atBoundUp, atBoundLeft, atBoundRight, atBoundDown; //map changes these
     bool hasPlow = false;
     public float curSpeed, maxSpeed, speedIncrement;
@@ -65,8 +66,10 @@ public class BusControls : MonoBehaviour
         }
     }
 
-    bool destinationInBounds(Vector2 movementVec)
+    bool destinationInBounds(Transform busPos)
     {
+        Vector2 currPos = new Vector2(busPos.position.x, busPos.position.y);
+
         return true;
     }
 

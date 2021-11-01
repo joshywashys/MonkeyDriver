@@ -17,7 +17,7 @@ public class MapMatrix : MonoBehaviour
 
     public int numStops;
     public int numObstacles;
-    Vector2[] stopCoordinates;
+    public Vector2[] stopCoordinates;
 
     public Transform generationLocation;
     public GameObject intersection;
