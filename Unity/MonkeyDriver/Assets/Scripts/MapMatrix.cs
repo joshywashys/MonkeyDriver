@@ -17,49 +17,49 @@ public class MapMatrix : MonoBehaviour
 
     public int numStops;
     public int numObstacles;
-    public float busStopChance;
-    public float obstacleChance;
 
     public Transform generationLocation;
     public GameObject intersection;
     public GameObject busStop;
     public GameObject obstacle;
 
-    private const float MAP_SCALAR = 1.2f;
+    public const float MAP_SCALAR = 1.2f;
 
     //populates a 2d array we feed it with bus stops and obstacles.
-    //NOTE TO SELF: should probably generate a number instead of linearly going through the array. this is not true random right now.
     void GenerateMap(Intersection[,] mapMatrix, int numStops)
     {
         int matrixWidth = mapMatrix.GetLength(0);
         int matrixHeight = mapMatrix.GetLength(1);
-        int generatedStops = 0;
-        int generatedObstacles = 0;
 
-        while (generatedStops < numStops)
+        //populate map with intersections
+        for (int i = 0; i < matrixWidth; i++)
         {
-            for (int i = 0; i < matrixWidth; i++)
+            for (int j = 0; j < matrixHeight; j++)
             {
-                for (int j = 0; j < matrixHeight; j++)
-                {
-                    mapMatrix[i, j] = new Intersection();
-                    if (busStopChance > Random.Range(0.0f, 1.0f) && mapMatrix[i, j].type == 0 && generatedStops < numStops)
-                    {
-                        mapMatrix[i, j].type = 1;
-                        generatedStops += 1;
-                        Debug.Log("created stop at index: " + i + ", " + j + "!");
-                    }
-                    if (obstacleChance > Random.Range(0.0f, 1.0f) && mapMatrix[i, j].type == 0 && generatedObstacles < numObstacles)
-                    {
-                        mapMatrix[i, j].type = 2;
-                        generatedObstacles += 1;
-                        Debug.Log("created obstacle at index: " + i + ", " + j + "!");
-                    }
-
-                }
+                mapMatrix[i, j] = new Intersection();
             }
         }
         Debug.Log("generated map");
+
+        //populate map with X, Y many times
+        void populateMap(int numToGenerate, int typeNum)
+        {
+            for (int i = 0; i < numToGenerate; i++)
+            {
+                int randX;
+                int randY;
+                do
+                {
+                    randX = Random.Range(0, matrixWidth);
+                    randY = Random.Range(0, matrixHeight);
+                }
+                while (mapMatrix[randX, randY].type != 0);
+
+                mapMatrix[randX, randY].type = typeNum;
+            }
+        }
+        populateMap(numStops, 1);
+        populateMap(numObstacles, 2);
     }
 
     //instantiate everything in the right places
