@@ -6,7 +6,7 @@ using UnityEngine;
 public class Intersection
 {
     public int m_id;
-    public bool hasMonkey;
+    public bool hasBus;
 
     //what is on the intersection
     /*
