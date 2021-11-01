@@ -33,10 +33,13 @@ public class BusControls : MonoBehaviour
     List<Passenger> passengers = new List<Passenger>();
     IEnumerator commuteTooLong()
     {
-        while (onBus)
+        while (true)
         {
             yield return new WaitForSeconds(90);
-            moodMeter -= moodDecrease;
+            foreach (Passenger person in passengers)
+            {
+                person.updateMood("long commute");
+            }
         }
     }
 
