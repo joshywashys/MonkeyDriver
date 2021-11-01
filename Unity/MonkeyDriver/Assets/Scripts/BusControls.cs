@@ -32,6 +32,8 @@ public class BusControls : MonoBehaviour
 
     List <Controls> activeControls = new List<Controls>();
     List<Passenger> passengers = new List<Passenger>();
+    MapMatrix map;
+
     IEnumerator commuteTooLong()
     {
         while (true)
@@ -51,7 +53,10 @@ public class BusControls : MonoBehaviour
         {
             bus = this;
         }
-
+    }
+    private void Start()
+    {
+        map = FindObjectOfType<MapMatrix>();
         //populate the first controls
         activeControls.Add(Controls.Up);
         activeControls.Add(Controls.Right);
@@ -155,6 +160,43 @@ public class BusControls : MonoBehaviour
             case Controls.Accelerate:
                 Accelerate();
                 break;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "obstacle")
+        {
+            foreach (Passenger person in passengers)
+            {
+                person.updateMood("hit obstacle");
+            }
+        }
+    }
+
+    void ejection()
+    {
+        float shortestDistance = 1000.0f;
+        float distance;
+        Vector2 closestStop = new Vector2(-45,-45);
+        Vector2 busPos = new Vector2(transform.position.x, transform.position.y);
+        foreach (Vector2 stop in map.stopCoordinates)
+        {
+            distance = Mathf.Sqrt(Mathf.Pow((busPos.x + stop.x),2) + Mathf.Pow((busPos.y + stop.y),2));
+            if (distance < shortestDistance)
+            {
+                shortestDistance = distance;
+                closestStop = stop;
+            }
+        }
+
+        foreach(Passenger person in passengers)
+        {
+            if (person.getDestination() == closestStop)
+            {
+                person.calcScore(busPos);
+                passengers.Remove(person);
+            }
         }
     }
 }

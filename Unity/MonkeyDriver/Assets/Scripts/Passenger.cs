@@ -7,7 +7,7 @@ public class Passenger
 {
     Mood m_currentMood;
     float m_commuteTime;
-    bool m_onBus = true;
+    //bool m_onBus = true;
     int m_moodMeter = 1000;
     public int m_moodDecrease;
 
@@ -19,7 +19,7 @@ public class Passenger
 		m_moodDecrease = 50;
     }
 
-    #region gettersSetters
+    #region getters and setters
   //  public Mood getMood()
   //  {
 		//return m_currentMood;
@@ -28,6 +28,10 @@ public class Passenger
 	public void setCommuteTime()
     {
 		m_commuteTime += Time.deltaTime;
+    }
+	public Vector2 getDestination()
+    {
+		return (m_destination);
     }
 	public void setDestination()
     {
@@ -64,11 +68,11 @@ public class Passenger
 				break;
 		}
 	}
-	void calcScore(Vector2 position)
+	public void calcScore(Vector2 busPos)
 	{
-		//float distanceToDest;// = position - m_destination;
-		//Mathf.Round(distanceToDest);
-		//m_moodMeter -= m_moodDecrease * (int)distanceToDest;
-		//ScoreManager.i.addScore(m_moodMeter);
-	}
+        float distanceToDest = Mathf.Sqrt(Mathf.Pow((busPos.x + m_destination.x), 2) + Mathf.Pow((busPos.y + m_destination.y), 2));
+		Mathf.Round(distanceToDest);
+        m_moodMeter -= m_moodDecrease * (int)distanceToDest;
+        ScoreManager.i.addScore(m_moodMeter);
+    }
 }
