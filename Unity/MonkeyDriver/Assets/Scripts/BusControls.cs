@@ -64,6 +64,12 @@ public class BusControls : MonoBehaviour
             person.updateMood("none");
         }
     }
+
+    bool destinationInBounds(Vector2 movementVec)
+    {
+        return true;
+    }
+
 #region control methods
     public void Up()
     {

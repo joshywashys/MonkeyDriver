@@ -17,6 +17,7 @@ public class MapMatrix : MonoBehaviour
 
     public int numStops;
     public int numObstacles;
+    Vector2[] stopCoordinates;
 
     public Transform generationLocation;
     public GameObject intersection;
@@ -39,8 +40,40 @@ public class MapMatrix : MonoBehaviour
                 mapMatrix[i, j] = new Intersection();
             }
         }
-        Debug.Log("generated map");
 
+        //populate map with stops
+        for (int i = 0; i < numStops; i++)
+        {
+            int randX;
+            int randY;
+            do
+            {
+                randX = Random.Range(0, matrixWidth);
+                randY = Random.Range(0, matrixHeight);
+            }
+            while (mapMatrix[randX, randY].type != 0);
+
+            mapMatrix[randX, randY].type = 1;
+            stopCoordinates[i] = new Vector2(randX, randY);
+        }
+
+        //populate map with stops
+        for (int i = 0; i < numObstacles; i++)
+        {
+            int randX;
+            int randY;
+            do
+            {
+                randX = Random.Range(0, matrixWidth);
+                randY = Random.Range(0, matrixHeight);
+            }
+            while (mapMatrix[randX, randY].type != 0);
+
+            mapMatrix[randX, randY].type = 2;
+        }
+
+        /*
+         * DEPRECATED
         //populate map with X, Y many times
         void populateMap(int numToGenerate, int typeNum)
         {
@@ -60,6 +93,9 @@ public class MapMatrix : MonoBehaviour
         }
         populateMap(numStops, 1);
         populateMap(numObstacles, 2);
+        */
+
+
     }
 
     //instantiate everything in the right places
@@ -83,11 +119,9 @@ public class MapMatrix : MonoBehaviour
                         break;
                     case 1:
                         Instantiate(busStop, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
-                        Debug.Log("drew stop");
                         break;
                     case 2:
                         Instantiate(obstacle, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
-                        Debug.Log("drew obstacle");
                         break;
                 }
             }
@@ -101,6 +135,7 @@ public class MapMatrix : MonoBehaviour
     void Awake()
     {
         mapMatrix = new Intersection[width, height];
+        stopCoordinates = new Vector2[numStops];
     }
 
     // Start is called before the first frame update
@@ -109,6 +144,11 @@ public class MapMatrix : MonoBehaviour
         //needs to be negative and position values
         GenerateMap(mapMatrix, numStops);
         DrawMap(mapMatrix);
+        for (int i = 0; i < stopCoordinates.Length; i++)
+        {
+            Debug.Log(stopCoordinates[i]);
+        }
+        
     }
 
     // Update is called once per frame

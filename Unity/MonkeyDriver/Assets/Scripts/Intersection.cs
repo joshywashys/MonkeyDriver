@@ -5,7 +5,8 @@ using UnityEngine;
 //I couldve just used a struct... Whoops, too late now!!!
 public class Intersection
 {
-    public int m_id;
+    private static int numIntersections = 0;
+    public int id;
     public bool hasBus;
 
     //what is on the intersection
@@ -13,13 +14,12 @@ public class Intersection
         0 = Empty
         1 = Stop
         2 = Obstacle
-         
     */
     public int type;
 
     public Intersection()
     {
-        type = 0;
+        numIntersections += 1;
+        id = numIntersections;
     }
-
 }
