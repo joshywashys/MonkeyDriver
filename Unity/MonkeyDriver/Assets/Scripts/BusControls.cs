@@ -31,6 +31,15 @@ public class BusControls : MonoBehaviour
 
     List <Controls> activeControls = new List<Controls>();
     List<Passenger> passengers = new List<Passenger>();
+    IEnumerator commuteTooLong()
+    {
+        while (onBus)
+        {
+            yield return new WaitForSeconds(90);
+            moodMeter -= moodDecrease;
+        }
+    }
+
 
     void Awake()
     {
@@ -48,7 +57,9 @@ public class BusControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        foreach (Passenger person in passengers){
+            person.updateMood("none");
+        }
     }
 #region control methods
     public void Up()

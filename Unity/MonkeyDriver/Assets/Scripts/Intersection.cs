@@ -19,7 +19,7 @@ public class Intersection
 
     public Intersection()
     {
-
+        type = 0;
     }
 
 }

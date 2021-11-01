@@ -2,67 +2,73 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*
-This script is responsible for:
--mood
--destination
--time spent on bus
-*/
-
-enum Mood {VeryUpset, Upset, Neutral, Content, Happy }
+enum Mood { VeryUpset, Upset, Neutral, Content, Happy }
 public class Passenger
 {
-	Mood currentMood;
-	float commuteTime;
-	bool onBus = false;
-	int moodMeter = 1000;
-    public int moodDecrease = 50;
+    Mood m_currentMood;
+    float m_commuteTime;
+    bool m_onBus = true;
+    int m_moodMeter = 1000;
+    public int m_moodDecrease;
 
-	Vector3 destination = new Vector3(0,0,0); // UPDATE WITH RANDOM INTERSECTION DESTINATION
-    private float distanceToDest;
+    Vector2 m_destination;
+    public Passenger(Vector2 dest)
+    {
+		m_destination = dest;
+		m_moodMeter = 1000;
+		m_moodDecrease = 50;
+    }
 
- //   IEnumerator commuteTooLong()
-	//{
-	//	while (onBus)
-	//	{
-	//		yield return new WaitForSeconds(90);
-	//		moodMeter -= moodDecrease;
-	//	}
-	//}
+    #region gettersSetters
+  //  public Mood getMood()
+  //  {
+		//return m_currentMood;
+  //  }
 
-	// Update mood once per frame?
-	void updateMood()
+	public void setCommuteTime()
+    {
+		m_commuteTime += Time.deltaTime;
+    }
+	public void setDestination()
+    {
+
+    }
+    #endregion
+    public void updateMood(string moodEvent)
 	{
-		switch (moodMeter)
+		if (moodEvent == "long commute")
+        {
+			m_moodMeter -= m_moodDecrease;
+        }
+		else if (moodEvent == "hit obtacle")
+        {
+			m_moodMeter -= m_moodDecrease * 4;
+        }
+
+		switch (m_moodMeter)
 		{
-			case int mood when (mood>= 1000 && mood > 800):
-				currentMood = Mood.Happy;
+			case int mood when (mood >= 1000 && mood > 800):
+				m_currentMood = Mood.Happy;
 				break;
 			case int mood when (mood >= 800 && mood > 600):
-				currentMood = Mood.Content;
+				m_currentMood = Mood.Content;
 				break;
 			case int mood when (mood >= 600 && mood > 400):
-				currentMood = Mood.Neutral;
+				m_currentMood = Mood.Neutral;
 				break;
 			case int mood when (mood >= 400 && mood > 200):
-				currentMood = Mood.Upset;
+				m_currentMood = Mood.Upset;
 				break;
 			case int mood when (mood > 200):
-				currentMood = Mood.VeryUpset;
+				m_currentMood = Mood.VeryUpset;
 				break;
 		}
 	}
-
-	void calcScore()
+	void calcScore(Vector2 position)
 	{
-		//distanceToDest = transform.position - destination;
-		Mathf.Round(distanceToDest);
-		moodMeter -= moodDecrease * (int)distanceToDest;
-		ScoreManager.i.addScore(moodMeter);
+		//float distanceToDest;// = position - m_destination;
+		//Mathf.Round(distanceToDest);
+		//m_moodMeter -= m_moodDecrease * (int)distanceToDest;
+		//ScoreManager.i.addScore(m_moodMeter);
 	}
-
-		//THIS FUNCTION IS FOR WHEN THEY LEAVE THE BUS
-		//might not work depending on how we have the passengers spawned and entering the bus
-		//my suggestion is having them parented to the bus and hiding their sprites
-		// showing their sprites again when they get unparented from the bus
 }
