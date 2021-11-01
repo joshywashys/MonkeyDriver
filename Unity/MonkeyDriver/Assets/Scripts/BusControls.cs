@@ -24,6 +24,7 @@ public class BusControls : MonoBehaviour
 {
     public static BusControls bus = null;
 
+    private Vector2Int busPos;
     private Transform busTransform;
     public static bool atBoundUp, atBoundLeft, atBoundRight, atBoundDown; //map changes these
     bool hasPlow = false;
@@ -71,9 +72,15 @@ public class BusControls : MonoBehaviour
         }
     }
 
-    bool destinationInBounds(Transform busPos)
+    bool destinationInBounds()
     {
-        Vector2 currPos = new Vector2(busPos.position.x, busPos.position.y);
+        int mapWidth = map.mapMatrix.GetLength(0);
+        int mapHeight = map.mapMatrix.GetLength(1);
+        Vector2 currPos = new Vector2(bus.transform.position.x, bus.transform.position.y);
+        if (currPos.x == mapWidth)
+        {
+            atBoundUp = true;
+        }
 
         return true;
     }

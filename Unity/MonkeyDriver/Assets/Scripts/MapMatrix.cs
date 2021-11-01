@@ -11,7 +11,7 @@ This script is responsible for:
 */
 public class MapMatrix : MonoBehaviour
 {
-    Intersection[,] mapMatrix;
+    public Intersection[,] mapMatrix;
     public int height;
     public int width;
 
