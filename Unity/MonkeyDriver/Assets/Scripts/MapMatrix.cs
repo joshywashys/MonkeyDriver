@@ -23,7 +23,7 @@ public class MapMatrix : MonoBehaviour
     public GameObject busStop;
     public GameObject obstacle;
 
-    public const float MAP_SCALAR = 1.2f;
+    public const float MAP_SCALAR = 1.0f; //mainly used for debugging/visualisation purposes
 
     //populates a 2d array we feed it with bus stops and obstacles.
     void GenerateMap(Intersection[,] mapMatrix, int numStops)
