@@ -25,11 +25,11 @@ public class BusControls : MonoBehaviour
     public static BusControls bus = null;
 
     private Vector2Int busPos;
-    private Transform busTransform;
     public static bool atBoundUp, atBoundLeft, atBoundRight, atBoundDown; //map changes these
     bool hasPlow = false;
     public float curSpeed, maxSpeed, speedIncrement;
     public static int numControls = 3;
+    int numPassengers = 15;
 
     List <Controls> activeControls = new List<Controls>();
     List<Passenger> passengers = new List<Passenger>();
@@ -85,9 +85,14 @@ public class BusControls : MonoBehaviour
         activeControls.Add(Controls.Left);
 
         busPos = new Vector2Int(0,0);
+        
     }
     private void Start()
     {
+        for (int i = 0; i < numPassengers; i++)
+        {
+            passengers.Add(new Passenger(map.stopCoordinates[Random.Range(0, map.numStops)]));
+        }
         StartCoroutine(restTime());
     }
 
@@ -113,22 +118,18 @@ public class BusControls : MonoBehaviour
         if (currPos.y == mapHeight)
         {
             atBoundUp = true;
-            Debug.Log("at upper bound");
         }
         if (currPos.x == mapWidth)
         {
             atBoundRight = true;
-            Debug.Log("at right bound");
         }
         if (currPos.y == 0)
         {
             atBoundDown = true;
-            Debug.Log("at lower bound");
         }
         if (currPos.x == 0)
         {
             atBoundLeft = true;
-            Debug.Log("at left bound");
         }
     }
 
@@ -242,15 +243,16 @@ public class BusControls : MonoBehaviour
                 break;
         }
     }
-
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "obstacle")
+        if (other.gameObject.tag == "Obstacle")
         {
             foreach (Passenger person in passengers)
             {
                 person.updateMood("hit obstacle");
+                Debug.Log("passenger: " + person.getMood());
             }
+            Destroy(other.gameObject);
         }
     }
 

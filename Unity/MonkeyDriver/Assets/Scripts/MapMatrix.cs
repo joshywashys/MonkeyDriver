@@ -136,14 +136,16 @@ public class MapMatrix : MonoBehaviour
     {
         mapMatrix = new Intersection[width, height];
         stopCoordinates = new Vector2[numStops];
+
+        GenerateMap(mapMatrix, numStops);
+        DrawMap(mapMatrix);
     }
 
     // Start is called before the first frame update
     void Start()
     {
         //needs to be negative and position values
-        GenerateMap(mapMatrix, numStops);
-        DrawMap(mapMatrix);
+
         for (int i = 0; i < stopCoordinates.Length; i++)
         {
             Debug.Log(stopCoordinates[i]);

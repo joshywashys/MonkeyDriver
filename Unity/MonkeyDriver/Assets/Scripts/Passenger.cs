@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum Mood { VeryUpset, Upset, Neutral, Content, Happy }
+//enum Mood { VeryUpset, Upset, Neutral, Content, Happy }
 public class Passenger
 {
-    Mood m_currentMood;
+    //Mood m_currentMood;
     float m_commuteTime;
     //bool m_onBus = true;
     int m_moodMeter = 1000;
@@ -20,12 +20,12 @@ public class Passenger
     }
 
     #region getters and setters
-  //  public Mood getMood()
-  //  {
-		//return m_currentMood;
-  //  }
+    public int getMood()
+    {
+        return m_moodMeter;
+    }
 
-	public void setCommuteTime()
+    public void setCommuteTime()
     {
 		m_commuteTime += Time.deltaTime;
     }
@@ -44,29 +44,29 @@ public class Passenger
         {
 			m_moodMeter -= m_moodDecrease;
         }
-		else if (moodEvent == "hit obtacle")
+		else if (moodEvent == "hit obstacle")
         {
-			m_moodMeter -= m_moodDecrease * 4;
+			m_moodMeter -= m_moodDecrease * 3;
         }
 
-		switch (m_moodMeter)
-		{
-			case int mood when (mood >= 1000 && mood > 800):
-				m_currentMood = Mood.Happy;
-				break;
-			case int mood when (mood >= 800 && mood > 600):
-				m_currentMood = Mood.Content;
-				break;
-			case int mood when (mood >= 600 && mood > 400):
-				m_currentMood = Mood.Neutral;
-				break;
-			case int mood when (mood >= 400 && mood > 200):
-				m_currentMood = Mood.Upset;
-				break;
-			case int mood when (mood > 200):
-				m_currentMood = Mood.VeryUpset;
-				break;
-		}
+		//switch (m_moodMeter)
+		//{
+		//	case int mood when (mood >= 1000 && mood > 800):
+		//		m_currentMood = Mood.Happy;
+		//		break;
+		//	case int mood when (mood >= 800 && mood > 600):
+		//		m_currentMood = Mood.Content;
+		//		break;
+		//	case int mood when (mood >= 600 && mood > 400):
+		//		m_currentMood = Mood.Neutral;
+		//		break;
+		//	case int mood when (mood >= 400 && mood > 200):
+		//		m_currentMood = Mood.Upset;
+		//		break;
+		//	case int mood when (mood > 200):
+		//		m_currentMood = Mood.VeryUpset;
+		//		break;
+		//}
 	}
 	public void calcScore(Vector2 busPos)
 	{
