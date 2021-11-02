@@ -30,14 +30,14 @@ public class DragUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
 
     public void Update()
     {
-        if (BusControls.atBoundUp && ctrlNum == 0) { dragRectTransform.localScale = new Vector2(0.5f, 0.5f); }
-        if (!BusControls.atBoundUp && ctrlNum == 0) { dragRectTransform.localScale = new Vector2(1f, 1f); }
-        if (BusControls.atBoundDown && ctrlNum == 1) { dragRectTransform.localScale = new Vector2(0.5f, 0.5f); }
-        if (!BusControls.atBoundDown && ctrlNum == 1) { dragRectTransform.localScale = new Vector2(1f, 1f); }
-        if (BusControls.atBoundLeft && ctrlNum == 2) { dragRectTransform.localScale = new Vector2(0.5f, 0.5f); }
-        if (!BusControls.atBoundLeft && ctrlNum == 2) { dragRectTransform.localScale = new Vector2(1f, 1f); }
-        if (BusControls.atBoundRight && ctrlNum == 3) { dragRectTransform.localScale = new Vector2(0.5f, 0.5f); }
-        if (!BusControls.atBoundRight && ctrlNum == 3) { dragRectTransform.localScale = new Vector2(1f, 1f); }
+        if (BusControls.atBoundUp && ctrlNum == 0) { GetComponent<Image>().color = new Color32(255, 255, 225, 100); }
+        if (!BusControls.atBoundUp && ctrlNum == 0) { GetComponent<Image>().color = new Color32(255, 255, 225, 255); }
+        if (BusControls.atBoundDown && ctrlNum == 1) { GetComponent<Image>().color = new Color32(255, 255, 225, 100); }
+        if (!BusControls.atBoundDown && ctrlNum == 1) { GetComponent<Image>().color = new Color32(255, 255, 225, 255); }
+        if (BusControls.atBoundLeft && ctrlNum == 2) { GetComponent<Image>().color = new Color32(255, 255, 225, 100); }
+        if (!BusControls.atBoundLeft && ctrlNum == 2) { GetComponent<Image>().color = new Color32(255, 255, 225, 255); }
+        if (BusControls.atBoundRight && ctrlNum == 3) { GetComponent<Image>().color = new Color32(255, 255, 225, 100); }
+        if (!BusControls.atBoundRight && ctrlNum == 3) { GetComponent<Image>().color = new Color32(255, 255, 225, 255); }
     }
     //atBoundUp, atBoundLeft, atBoundRight, atBoundDown
 
