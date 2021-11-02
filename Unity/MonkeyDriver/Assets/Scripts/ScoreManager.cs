@@ -15,15 +15,10 @@ public class ScoreManager : MonoBehaviour
             i = this;
         }
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        scoreCounter.text = "Score: " + score;
-    }
     public void addScore(int addition)
     {
         score += addition;
+        scoreCounter.text = "Score: " + score;
     }
 
 }

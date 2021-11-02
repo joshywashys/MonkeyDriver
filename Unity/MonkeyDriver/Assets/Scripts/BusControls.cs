@@ -27,9 +27,11 @@ public class BusControls : MonoBehaviour
     private Vector2Int busPos;
     public static bool atBoundUp, atBoundLeft, atBoundRight, atBoundDown; //map changes these
     bool hasPlow = false;
-    public float curSpeed, maxSpeed, speedIncrement;
+    public float lerpSpeed = 0.7f;
+    public float minSpeed = 0.1f;
+    public float speedDecrement = 0.1f;
     public static int numControls = 3;
-    int numPassengers = 15;
+    public static int numPassengers = 15;
 
     public GameObject controls;
     List <Controls> activeControls = new List<Controls>();
@@ -50,21 +52,21 @@ public class BusControls : MonoBehaviour
 
     IEnumerator restTime()
     {
-        float lastSpeed = curSpeed;
-        curSpeed = 0;
+        float lastSpeed = lerpSpeed;
+        lerpSpeed = 0;
         yield return new WaitForSeconds(3);
-        curSpeed = lastSpeed;
+        lerpSpeed = lastSpeed;
         executeAction(chooseControl());
     }
     IEnumerator Drive(float startX, float startY, float endX, float endY)
     {
         float DriveTime = 0.0f;
 
-        while (DriveTime < curSpeed)
+        while (DriveTime < lerpSpeed)
         {
             DriveTime += Time.deltaTime;
             
-            transform.position = new Vector3(Mathf.Lerp(startX, endX, DriveTime / curSpeed), Mathf.Lerp(startY, endY, DriveTime / curSpeed), 0);
+            transform.position = new Vector3(Mathf.Lerp(startX, endX, DriveTime / lerpSpeed), Mathf.Lerp(startY, endY, DriveTime / lerpSpeed), 0);
             yield return null;
         }
         executeAction(chooseControl());
@@ -231,9 +233,9 @@ public class BusControls : MonoBehaviour
 
     public void Accelerate()
     {
-        if (curSpeed < maxSpeed)
+        if (lerpSpeed < minSpeed)
         {
-            curSpeed += speedIncrement;//add whatever factor we determine is justifiable
+            lerpSpeed -= speedDecrement;
         }
     }
     #endregion
@@ -279,9 +281,19 @@ public class BusControls : MonoBehaviour
     {
         if (other.gameObject.tag == "Obstacle")
         {
-            foreach (Passenger person in passengers)
+            if (hasPlow)
             {
-                person.updateMood("hit obstacle");
+                foreach (Passenger person in passengers)
+                {
+                    person.updateMood("hit with plow");
+                }
+            }
+            else
+            {
+                foreach (Passenger person in passengers)
+                {
+                    person.updateMood("hit obstacle");
+                }
             }
             Destroy(other.gameObject);
         }
@@ -295,16 +307,11 @@ public class BusControls : MonoBehaviour
         foreach (Vector2 stop in map.stopCoordinates)
         {
             distance = Mathf.Sqrt(Mathf.Pow((busPos.x - stop.x),2) + Mathf.Pow((busPos.y - stop.y),2));
-            Debug.Log("distance: "+distance);
-            Debug.Log("bus position: " + busPos.x + "," + busPos.y);
-            Debug.Log("stop: " + stop);
             if (distance < shortestDistance)
             {
                 shortestDistance = distance;
                 closestStop = stop;
             }
-            Debug.Log("shortest distance: " + shortestDistance);
-            Debug.Log("closest stop: " + closestStop);
         }
 
         foreach(Passenger person in passengers)
@@ -316,8 +323,6 @@ public class BusControls : MonoBehaviour
             }
         }
         passengers.RemoveAll(person => person.getOnBus() == false);
-        closestStop = new Vector2(-45, -45);
-        shortestDistance = 1000.0f;
     }
     public int getNumPassengers()
     {
