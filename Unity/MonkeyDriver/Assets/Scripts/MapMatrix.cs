@@ -112,7 +112,7 @@ public class MapMatrix : MonoBehaviour
             for (int j = 0; j < matrixHeight; j++)
             {
                 //draw intersections
-                Instantiate(intersection, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, 0), Quaternion.identity, generationLocation);
+                //Instantiate(intersection, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
                 switch (mapMatrix[i, j].type)
                 {
                     case 0:
@@ -128,7 +128,7 @@ public class MapMatrix : MonoBehaviour
         }
 
         //center map at origin
-        generationLocation.Translate(new Vector3(-(mapWidth - 1) /2, -(mapHeight - 1)/2, 0));
+        generationLocation.Translate(new Vector3(-(mapWidth - 1) /2, -(mapHeight - 1)/2, -6));
 
     }
 
