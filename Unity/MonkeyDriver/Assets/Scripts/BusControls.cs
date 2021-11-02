@@ -29,7 +29,7 @@ public class BusControls : MonoBehaviour
     bool hasPlow = false;
     public float curSpeed, maxSpeed, speedIncrement;
     public static int numControls = 3;
-    int numPassengers = 15;
+    public static int numPassengers = 15;
 
     List <Controls> activeControls = new List<Controls>();
     public static List<Passenger> passengers = new List<Passenger>();
@@ -260,16 +260,11 @@ public class BusControls : MonoBehaviour
         foreach (Vector2 stop in map.stopCoordinates)
         {
             distance = Mathf.Sqrt(Mathf.Pow((busPos.x - stop.x),2) + Mathf.Pow((busPos.y - stop.y),2));
-            Debug.Log("distance: "+distance);
-            Debug.Log("bus position: " + busPos.x + "," + busPos.y);
-            Debug.Log("stop: " + stop);
             if (distance < shortestDistance)
             {
                 shortestDistance = distance;
                 closestStop = stop;
             }
-            Debug.Log("shortest distance: " + shortestDistance);
-            Debug.Log("closest stop: " + closestStop);
         }
 
         foreach(Passenger person in passengers)
@@ -281,8 +276,6 @@ public class BusControls : MonoBehaviour
             }
         }
         passengers.RemoveAll(person => person.getOnBus() == false);
-        closestStop = new Vector2(-45, -45);
-        shortestDistance = 1000.0f;
     }
     public int getNumPassengers()
     {

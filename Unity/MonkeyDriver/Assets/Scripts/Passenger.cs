@@ -58,6 +58,7 @@ public class Passenger
 		Mathf.Round(distanceToDest);
         m_moodMeter -= m_moodDecrease * (int)distanceToDest;
         onBus = false;
+        BananaController.i.addBananas(1);
         ScoreManager.i.addScore(m_moodMeter);
     }
 }
