@@ -51,7 +51,11 @@ public class Passenger
         {
 			m_moodMeter -= m_moodDecrease * 3;
         }
-	}
+        else if (moodEvent == "hit with plow")
+        {
+            m_moodMeter -= m_moodDecrease / 2;
+        }
+    }
 	public void calcScore(Vector2 busPos)
 	{
         float distanceToDest = Mathf.Sqrt(Mathf.Pow((busPos.x + m_destination.x), 2) + Mathf.Pow((busPos.y + m_destination.y), 2));
