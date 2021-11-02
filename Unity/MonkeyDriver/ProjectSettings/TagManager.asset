@@ -10,6 +10,7 @@ TagManager:
   - Bus
   - Banana
   - MainCanvas
+  - Controls
   layers:
   - Default
   - TransparentFX

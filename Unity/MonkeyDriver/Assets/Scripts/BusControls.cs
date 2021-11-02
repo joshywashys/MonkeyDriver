@@ -29,7 +29,7 @@ public class BusControls : MonoBehaviour
     bool hasPlow = false;
     public float lerpSpeed = 0.7f;
     public float minSpeed = 0.1f;
-    public float speedDecrement = 0.1f;
+    public float speedDecrement = 0.07f;
     public static int numControls = 4;
     public static int numPassengers = 15;
 
@@ -50,12 +50,12 @@ public class BusControls : MonoBehaviour
         }
     }
 
-    IEnumerator restTime()
+    IEnumerator restTime(float time)
     {
         float lastSpeed = lerpSpeed;
         lerpSpeed = 0;
         Debug.Log("resting");
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(time);
         lerpSpeed = lastSpeed;
         executeAction(chooseControl());
     }
@@ -95,7 +95,7 @@ public class BusControls : MonoBehaviour
         {
             passengers.Add(new Passenger(map.stopCoordinates[Random.Range(0, map.numStops)]));
         }
-        StartCoroutine(restTime());
+        StartCoroutine(restTime(3));
         SetAvailableControls();
     }
 
@@ -139,8 +139,8 @@ public class BusControls : MonoBehaviour
     //Up,Down,Left,Right,Plow,Rest,Accelerate
     void SetAvailableControls()
     {
-        Transform[] ctrlsList = new Transform[6];
-        for (int i = 0; i < 6; i++)
+        Transform[] ctrlsList = new Transform[7];
+        for (int i = 0; i < 7; i++)
         {
             ctrlsList[i] = controls.transform.GetChild(i);
         }
@@ -225,21 +225,22 @@ public class BusControls : MonoBehaviour
     public void Plow()
     {
         hasPlow = !hasPlow;
+        StartCoroutine(restTime(0.3f));
     }
 
     public void Rest()
     {
         Debug.Log("take a break!");
-        StartCoroutine(restTime());
+        StartCoroutine(restTime(3));
     }
 
     public void Accelerate()
     {
-        if (lerpSpeed < minSpeed)
+        if (lerpSpeed > minSpeed)
         {
             lerpSpeed -= speedDecrement;
-
         }
+        executeAction(chooseControl());
     }
     #endregion
     int chooseControl()
@@ -247,7 +248,7 @@ public class BusControls : MonoBehaviour
         //check for banana
         //then the control set must be reduced to the number of viable options
         int monkeyChoice = Random.Range(0, numControls);
-        Debug.Log("choosing control "+ monkeyChoice);
+        //Debug.Log("choosing control "+ monkeyChoice);
         return (monkeyChoice);
     }
 
@@ -256,30 +257,38 @@ public class BusControls : MonoBehaviour
     {
         SetAvailableControls();
         CheckForBounds();
-        switch (activeControls[control])
+        try
         {
-            case Controls.Up:
-                Up();
-                break;
-            case Controls.Down:
-                Down();
-                break;
-            case Controls.Left:
-                Left();
-                break;
-            case Controls.Right:
-                Right();
-                break;
-            case Controls.Plow:
-                Plow();
-                break;
-            case Controls.Rest:
-                Rest();
-                break;
-            case Controls.Accelerate:
-                Accelerate();
-                break;
+            switch (activeControls[control])
+            {
+                case Controls.Up:
+                    Up();
+                    break;
+                case Controls.Down:
+                    Down();
+                    break;
+                case Controls.Left:
+                    Left();
+                    break;
+                case Controls.Right:
+                    Right();
+                    break;
+                case Controls.Plow:
+                    Plow();
+                    break;
+                case Controls.Rest:
+                    Rest();
+                    break;
+                case Controls.Accelerate:
+                    Accelerate();
+                    break;
+            }
         }
+        catch
+        {
+            executeAction(chooseControl());
+        }
+        
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
