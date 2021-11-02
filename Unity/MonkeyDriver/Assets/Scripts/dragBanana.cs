@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class dragBanana : MonoBehaviour, IDragHandler
+public class dragBanana : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     private Canvas canvas;
+    private CanvasGroup canvasGroup;
     RectTransform dragRectTransform;
 
     Vector2 popVec;
@@ -24,5 +25,16 @@ public class dragBanana : MonoBehaviour, IDragHandler
     {
         dragRectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        canvasGroup.blocksRaycasts = false;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        canvasGroup.blocksRaycasts = true;
+    }
+
 
 }

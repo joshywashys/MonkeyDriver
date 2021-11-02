@@ -146,7 +146,6 @@ public class BusControls : MonoBehaviour
         }
 
         List<int> availableCtrlNums = new List<int>();
-
         foreach (Transform currCtrl in ctrlsList)
         {
             if (currCtrl.GetComponent<DragUI>().isEnabled)
@@ -154,6 +153,7 @@ public class BusControls : MonoBehaviour
                 availableCtrlNums.Add(currCtrl.GetComponent<DragUI>().ctrlNum);
             }
         }
+        Debug.Log(availableCtrlNums.Count);
 
         activeControls.Clear();
         //get ControlSlots enabled controls
@@ -162,10 +162,10 @@ public class BusControls : MonoBehaviour
             activeControls.Add((Controls)ctrlNum);
         }
 
-        //if (atBoundUp) { activeControls.Remove(Controls.Up); }
-        //if (atBoundRight) { activeControls.Remove(Controls.Right); }
-        //if (atBoundDown) { activeControls.Remove(Controls.Down); }
-        //if (atBoundLeft) { activeControls.Remove(Controls.Left); }
+        if (atBoundUp) { activeControls.Remove(Controls.Up); }
+        if (atBoundRight) { activeControls.Remove(Controls.Right); }
+        if (atBoundDown) { activeControls.Remove(Controls.Down); }
+        if (atBoundLeft) { activeControls.Remove(Controls.Left); }
     }
 
 #region control methods
