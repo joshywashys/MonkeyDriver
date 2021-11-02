@@ -47,6 +47,29 @@ public class BusControls : MonoBehaviour
         }
     }
 
+    IEnumerator restTime()
+    {
+        float lastSpeed = curSpeed;
+        curSpeed = 0;
+        yield return new WaitForSeconds(3);
+        curSpeed = lastSpeed;
+        executeAction(chooseControl());
+    }
+    IEnumerator Drive(float startX, float startY, float endX, float endY)
+    {
+        float DriveTime = 0.0f;
+
+        while (DriveTime < curSpeed)
+        {
+            DriveTime += Time.deltaTime;
+            
+            transform.position = new Vector3(Mathf.Lerp(startX, endX, DriveTime / curSpeed), Mathf.Lerp(startY, endY, DriveTime / curSpeed), 0);
+            yield return null;
+        }
+        executeAction(chooseControl());
+    }
+
+
 
     void Awake()
     {
@@ -54,14 +77,18 @@ public class BusControls : MonoBehaviour
         {
             bus = this;
         }
-    }
-    private void Start()
-    {
+
         map = FindObjectOfType<MapMatrix>();
         //populate the first controls
         activeControls.Add(Controls.Up);
         activeControls.Add(Controls.Right);
         activeControls.Add(Controls.Left);
+
+        busPos = new Vector2Int(0,0);
+    }
+    private void Start()
+    {
+        StartCoroutine(restTime());
     }
 
     // Update is called once per frame
@@ -74,8 +101,8 @@ public class BusControls : MonoBehaviour
 
     void checkForBounds()
     {
-        int mapWidth = map.mapMatrix.GetLength(0);
-        int mapHeight = map.mapMatrix.GetLength(1);
+        int mapWidth = map.mapMatrix.GetLength(0) - 1;
+        int mapHeight = map.mapMatrix.GetLength(1) - 1;
         Vector2Int currPos = new Vector2Int(busPos.x, busPos.y);
 
         atBoundUp = false;
@@ -86,18 +113,22 @@ public class BusControls : MonoBehaviour
         if (currPos.y == mapHeight)
         {
             atBoundUp = true;
+            Debug.Log("at upper bound");
         }
         if (currPos.x == mapWidth)
         {
             atBoundRight = true;
+            Debug.Log("at right bound");
         }
         if (currPos.y == 0)
         {
             atBoundDown = true;
+            Debug.Log("at lower bound");
         }
         if (currPos.x == 0)
         {
             atBoundLeft = true;
+            Debug.Log("at left bound");
         }
     }
 
@@ -106,8 +137,12 @@ public class BusControls : MonoBehaviour
     {
         if (!atBoundUp)//this check will become obsolete since the control should never be called if it would result in out of bounds
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-            Debug.Log("up");
+            busPos.y += 1;
+            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y + 1));
+        }
+        else
+        {
+            executeAction(chooseControl());
         }
     }
 
@@ -115,8 +150,12 @@ public class BusControls : MonoBehaviour
     {
         if (!atBoundDown)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
-            Debug.Log("down");
+            busPos.y -= 1;
+            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y - 1));
+        }
+        else
+        {
+            executeAction(chooseControl());
         }
     }
 
@@ -124,17 +163,26 @@ public class BusControls : MonoBehaviour
     {
         if (!atBoundLeft)
         {
-            transform.position = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
-            Debug.Log("left");
+            busPos.x -= 1;
+            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x - 1, transform.position.y));
         }
+        else
+        {
+            executeAction(chooseControl());
+        }
+
     }
 
     public void Right()
     {
         if (!atBoundRight)
         {
-            transform.position = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
-            Debug.Log("right");
+            busPos.x += 1;
+            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x + 1, transform.position.y));
+        }
+        else
+        {
+            executeAction(chooseControl());
         }
     }
 
@@ -145,8 +193,7 @@ public class BusControls : MonoBehaviour
 
     public void Rest()
     {
-        //set speed to zero?
-        //need a way for the monkey to make a decision again after 
+        StartCoroutine(restTime());
     }
 
     public void Accelerate()
@@ -156,10 +203,20 @@ public class BusControls : MonoBehaviour
             curSpeed += speedIncrement;//add whatever factor we determine is justifiable
         }
     }
-#endregion
+    #endregion
+    int chooseControl()
+    {
+        //check for banana
+        //then the control set must be reduced to the number of viable options
+        int monkeyChoice = Random.Range(0, numControls);
+        Debug.Log("choosing control " + monkeyChoice);
+        return (monkeyChoice);
+    }
+
 
     public void executeAction(int control)
     {
+        checkForBounds();
         switch (activeControls[control])
         {
             case Controls.Up:
@@ -202,7 +259,6 @@ public class BusControls : MonoBehaviour
         float shortestDistance = 1000.0f;
         float distance;
         Vector2 closestStop = new Vector2(-45,-45);
-        Vector2 busPos = new Vector2(transform.position.x, transform.position.y);
         foreach (Vector2 stop in map.stopCoordinates)
         {
             distance = Mathf.Sqrt(Mathf.Pow((busPos.x + stop.x),2) + Mathf.Pow((busPos.y + stop.y),2));
