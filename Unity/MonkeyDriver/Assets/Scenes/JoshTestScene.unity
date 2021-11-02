@@ -251,13 +251,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1536120663}
+  - {fileID: 837972902}
+  - {fileID: 1713159899}
   - {fileID: 1821421825}
   - {fileID: 2044125967}
   - {fileID: 921156349}
-  - {fileID: 837972902}
   - {fileID: 839246653}
-  - {fileID: 1713159899}
-  - {fileID: 1536120663}
   m_Father: {fileID: 437150733}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -278,14 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5be279e4e798334db39417f31f6ae00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ctrlBtns:
-  - {fileID: 1821421824}
-  - {fileID: 2044125966}
-  - {fileID: 921156348}
-  - {fileID: 837972901}
-  - {fileID: 839246652}
-  - {fileID: 1713159898}
-  - {fileID: 1536120662}
+  ctrlBtns: []
 --- !u!1 &833205204
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,11 +394,11 @@ RectTransform:
   m_LocalScale: {x: 3.61, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 661276646}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -368, y: -236}
+  m_AnchoredPosition: {x: -379, y: -14}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &837972903
@@ -470,6 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abec3c36e1cfbf44084b1e96768fe1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ctrlNum: 1
   isEnabled: 1
 --- !u!1 &839246652
 GameObject:
@@ -503,11 +497,11 @@ RectTransform:
   m_LocalScale: {x: 3.61, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 661276646}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 14, y: -236}
+  m_AnchoredPosition: {x: 10, y: -143}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &839246654
@@ -572,6 +566,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abec3c36e1cfbf44084b1e96768fe1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ctrlNum: 6
   isEnabled: 0
 --- !u!1 &921156348
 GameObject:
@@ -605,11 +600,11 @@ RectTransform:
   m_LocalScale: {x: 3.61, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 661276646}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -368, y: -123}
+  m_AnchoredPosition: {x: 14, y: -15}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &921156350
@@ -674,7 +669,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abec3c36e1cfbf44084b1e96768fe1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnabled: 1
+  ctrlNum: 5
+  isEnabled: 0
 --- !u!1 &966445098
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,11 +821,11 @@ RectTransform:
   m_LocalScale: {x: 3.61, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 661276646}
-  m_RootOrder: 6
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 14, y: -9}
+  m_AnchoredPosition: {x: -376, y: 103}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1536120664
@@ -894,7 +890,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abec3c36e1cfbf44084b1e96768fe1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnabled: 0
+  ctrlNum: 0
+  isEnabled: 1
 --- !u!1 &1713159898
 GameObject:
   m_ObjectHideFlags: 0
@@ -927,11 +924,11 @@ RectTransform:
   m_LocalScale: {x: 3.61, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 661276646}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 14, y: -123}
+  m_AnchoredPosition: {x: -378, y: -134}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1713159900
@@ -996,7 +993,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abec3c36e1cfbf44084b1e96768fe1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnabled: 0
+  ctrlNum: 2
+  isEnabled: 1
 --- !u!1 &1821421824
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,8 +1006,8 @@ GameObject:
   - component: {fileID: 1821421825}
   - component: {fileID: 1821421827}
   - component: {fileID: 1821421826}
-  - component: {fileID: 1821421828}
   - component: {fileID: 1821421829}
+  - component: {fileID: 1821421828}
   m_Layer: 5
   m_Name: Dequip Plow
   m_TagString: Untagged
@@ -1029,11 +1027,11 @@ RectTransform:
   m_LocalScale: {x: 3.61, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 661276646}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -368, y: 100}
+  m_AnchoredPosition: {x: -378, y: -242}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1821421826
@@ -1086,6 +1084,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abec3c36e1cfbf44084b1e96768fe1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ctrlNum: 3
   isEnabled: 1
 --- !u!225 &1821421829
 CanvasGroup:
@@ -1110,8 +1109,8 @@ GameObject:
   - component: {fileID: 2044125967}
   - component: {fileID: 2044125969}
   - component: {fileID: 2044125968}
-  - component: {fileID: 2044125970}
   - component: {fileID: 2044125971}
+  - component: {fileID: 2044125970}
   m_Layer: 5
   m_Name: Down
   m_TagString: Untagged
@@ -1131,11 +1130,11 @@ RectTransform:
   m_LocalScale: {x: 3.61, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 661276646}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -368, y: -10}
+  m_AnchoredPosition: {x: 9, y: 111}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2044125968
@@ -1188,7 +1187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abec3c36e1cfbf44084b1e96768fe1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnabled: 1
+  ctrlNum: 4
+  isEnabled: 0
 --- !u!225 &2044125971
 CanvasGroup:
   m_ObjectHideFlags: 0

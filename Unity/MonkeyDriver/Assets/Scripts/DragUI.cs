@@ -12,7 +12,9 @@ public class DragUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     Vector2 popVec;
     Vector2 defaultPos;
 
+    public int ctrlNum;
     public bool isEnabled;
+    private bool isAvailable;
 
     public void Awake()
     {
@@ -22,6 +24,8 @@ public class DragUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
         defaultPos = dragRectTransform.anchoredPosition;
         popVec = new Vector2(10,10);
     }
+        
+    //atBoundUp, atBoundLeft, atBoundRight, atBoundDown
 
     public void OnDrag(PointerEventData eventData)
     {
