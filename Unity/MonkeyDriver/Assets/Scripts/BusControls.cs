@@ -67,7 +67,7 @@ public class BusControls : MonoBehaviour
         {
             DriveTime += Time.deltaTime;
             
-            transform.position = new Vector3(Mathf.Lerp(startX, endX, DriveTime / lerpSpeed), Mathf.Lerp(startY, endY, DriveTime / lerpSpeed), 0);
+            transform.position = new Vector3(Mathf.Lerp(startX, endX, DriveTime / lerpSpeed), Mathf.Lerp(startY, endY, DriveTime / lerpSpeed), -4);
             yield return null;
         }
         executeAction(chooseControl());
