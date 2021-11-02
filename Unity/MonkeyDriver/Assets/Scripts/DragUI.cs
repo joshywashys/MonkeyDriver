@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class DragUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IDropHandler
 {
+    private Canvas canvas;
     private CanvasGroup canvasGroup;
 
     RectTransform dragRectTransform;
@@ -19,6 +20,7 @@ public class DragUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     public void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+        canvas = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<Canvas>();
 
         dragRectTransform = GetComponent<RectTransform>();
         defaultPos = dragRectTransform.anchoredPosition;
@@ -29,7 +31,7 @@ public class DragUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
 
     public void OnDrag(PointerEventData eventData)
     {
-        dragRectTransform.anchoredPosition += eventData.delta; 
+        dragRectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor; 
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -46,7 +48,7 @@ public class DragUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     {
         Vector2 temp = eventData.pointerDrag.GetComponent<DragUI>().defaultPos;
 
-        if (isEnabled != eventData.pointerDrag.GetComponent<DragUI>().isEnabled)
+        if (isEnabled != eventData.pointerDrag.GetComponent<DragUI>().isEnabled && eventData.pointerDrag.tag == "Controls")
         {
             eventData.pointerDrag.GetComponent<DragUI>().defaultPos = defaultPos;
             eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = defaultPos;
@@ -55,6 +57,10 @@ public class DragUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
 
             isEnabled = !isEnabled;
             eventData.pointerDrag.GetComponent<DragUI>().isEnabled = !eventData.pointerDrag.GetComponent<DragUI>().isEnabled;
+        }
+        if (eventData.pointerDrag.tag == "Banana")
+        {
+            eventData.pointerDrag.GetComponent<dragBanana>().defaultPos = defaultPos;
         }
 
     }

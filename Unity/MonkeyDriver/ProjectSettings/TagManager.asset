@@ -9,6 +9,7 @@ TagManager:
   - Passenger
   - Bus
   - Banana
+  - MainCanvas
   layers:
   - Default
   - TransparentFX
