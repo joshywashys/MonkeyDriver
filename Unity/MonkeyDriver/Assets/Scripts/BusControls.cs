@@ -30,7 +30,7 @@ public class BusControls : MonoBehaviour
     public float lerpSpeed = 0.7f;
     public float minSpeed = 0.1f;
     public float speedDecrement = 0.1f;
-    public static int numControls = 3;
+    public static int numControls = 4;
     public static int numPassengers = 15;
 
     public GameObject controls;
@@ -54,6 +54,7 @@ public class BusControls : MonoBehaviour
     {
         float lastSpeed = lerpSpeed;
         lerpSpeed = 0;
+        Debug.Log("resting");
         yield return new WaitForSeconds(3);
         lerpSpeed = lastSpeed;
         executeAction(chooseControl());
@@ -161,10 +162,10 @@ public class BusControls : MonoBehaviour
             activeControls.Add((Controls)ctrlNum);
         }
 
-        if (atBoundUp) { activeControls.Remove(Controls.Up); }
-        if (atBoundRight) { activeControls.Remove(Controls.Right); }
-        if (atBoundDown) { activeControls.Remove(Controls.Down); }
-        if (atBoundLeft) { activeControls.Remove(Controls.Left); }
+        //if (atBoundUp) { activeControls.Remove(Controls.Up); }
+        //if (atBoundRight) { activeControls.Remove(Controls.Right); }
+        //if (atBoundDown) { activeControls.Remove(Controls.Down); }
+        //if (atBoundLeft) { activeControls.Remove(Controls.Left); }
     }
 
 #region control methods
@@ -228,6 +229,7 @@ public class BusControls : MonoBehaviour
 
     public void Rest()
     {
+        Debug.Log("take a break!");
         StartCoroutine(restTime());
     }
 
@@ -236,6 +238,7 @@ public class BusControls : MonoBehaviour
         if (lerpSpeed < minSpeed)
         {
             lerpSpeed -= speedDecrement;
+
         }
     }
     #endregion
@@ -244,6 +247,7 @@ public class BusControls : MonoBehaviour
         //check for banana
         //then the control set must be reduced to the number of viable options
         int monkeyChoice = Random.Range(0, numControls);
+        Debug.Log("choosing control "+ monkeyChoice);
         return (monkeyChoice);
     }
 
