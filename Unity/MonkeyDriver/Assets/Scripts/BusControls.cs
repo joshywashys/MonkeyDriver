@@ -31,6 +31,7 @@ public class BusControls : MonoBehaviour
     public static int numControls = 3;
     int numPassengers = 15;
 
+    public GameObject controls;
     List <Controls> activeControls = new List<Controls>();
     public static List<Passenger> passengers = new List<Passenger>();
     MapMatrix map;
@@ -78,9 +79,9 @@ public class BusControls : MonoBehaviour
 
         map = FindObjectOfType<MapMatrix>();
         //populate the first controls
-        activeControls.Add(Controls.Up);
-        activeControls.Add(Controls.Right);
-        activeControls.Add(Controls.Left);
+        //activeControls.Add(Controls.Up);
+        //activeControls.Add(Controls.Right);
+        //activeControls.Add(Controls.Left);
 
         busPos = new Vector2Int(0,0);
         
@@ -92,6 +93,7 @@ public class BusControls : MonoBehaviour
             passengers.Add(new Passenger(map.stopCoordinates[Random.Range(0, map.numStops)]));
         }
         StartCoroutine(restTime());
+        SetAvailableControls();
     }
 
     // Update is called once per frame
@@ -102,7 +104,7 @@ public class BusControls : MonoBehaviour
         }
     }
 
-    void checkForBounds()
+    void CheckForBounds()
     {
         int mapWidth = map.mapMatrix.GetLength(0) - 1;
         int mapHeight = map.mapMatrix.GetLength(1) - 1;
@@ -129,6 +131,38 @@ public class BusControls : MonoBehaviour
         {
             atBoundLeft = true;
         }
+    }
+
+    //Up,Down,Left,Right,Plow,Rest,Accelerate
+    void SetAvailableControls()
+    {
+        Transform[] ctrlsList = new Transform[6];
+        for (int i = 0; i < 6; i++)
+        {
+            ctrlsList[i] = controls.transform.GetChild(i);
+        }
+
+        List<int> availableCtrlNums = new List<int>();
+
+        foreach (Transform currCtrl in ctrlsList)
+        {
+            if (currCtrl.GetComponent<DragUI>().isEnabled)
+            {
+                availableCtrlNums.Add(currCtrl.GetComponent<DragUI>().ctrlNum);
+            }
+        }
+
+        activeControls.Clear();
+        //get ControlSlots enabled controls
+        foreach (int ctrlNum in availableCtrlNums)
+        {
+            activeControls.Add((Controls)ctrlNum);
+        }
+
+        if (atBoundUp) { activeControls.Remove(Controls.Up); }
+        if (atBoundRight) { activeControls.Remove(Controls.Right); }
+        if (atBoundDown) { activeControls.Remove(Controls.Down); }
+        if (atBoundLeft) { activeControls.Remove(Controls.Left); }
     }
 
 #region control methods
@@ -214,7 +248,8 @@ public class BusControls : MonoBehaviour
 
     public void executeAction(int control)
     {
-        checkForBounds();
+        SetAvailableControls();
+        CheckForBounds();
         switch (activeControls[control])
         {
             case Controls.Up:
