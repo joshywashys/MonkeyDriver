@@ -12,6 +12,8 @@ public class Passenger
     public int m_moodDecrease;
 
     Vector2 m_destination;
+    private bool onBus = true;
+
     public Passenger(Vector2 dest)
     {
 		m_destination = dest;
@@ -33,9 +35,10 @@ public class Passenger
     {
 		return (m_destination);
     }
-	public void setDestination()
-    {
 
+    public bool getOnBus()
+    {
+        return onBus;
     }
     #endregion
     public void updateMood(string moodEvent)
@@ -48,31 +51,13 @@ public class Passenger
         {
 			m_moodMeter -= m_moodDecrease * 3;
         }
-
-		//switch (m_moodMeter)
-		//{
-		//	case int mood when (mood >= 1000 && mood > 800):
-		//		m_currentMood = Mood.Happy;
-		//		break;
-		//	case int mood when (mood >= 800 && mood > 600):
-		//		m_currentMood = Mood.Content;
-		//		break;
-		//	case int mood when (mood >= 600 && mood > 400):
-		//		m_currentMood = Mood.Neutral;
-		//		break;
-		//	case int mood when (mood >= 400 && mood > 200):
-		//		m_currentMood = Mood.Upset;
-		//		break;
-		//	case int mood when (mood > 200):
-		//		m_currentMood = Mood.VeryUpset;
-		//		break;
-		//}
 	}
 	public void calcScore(Vector2 busPos)
 	{
         float distanceToDest = Mathf.Sqrt(Mathf.Pow((busPos.x + m_destination.x), 2) + Mathf.Pow((busPos.y + m_destination.y), 2));
 		Mathf.Round(distanceToDest);
         m_moodMeter -= m_moodDecrease * (int)distanceToDest;
+        onBus = false;
         ScoreManager.i.addScore(m_moodMeter);
     }
 }

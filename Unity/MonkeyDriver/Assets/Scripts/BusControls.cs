@@ -32,7 +32,7 @@ public class BusControls : MonoBehaviour
     int numPassengers = 15;
 
     List <Controls> activeControls = new List<Controls>();
-    List<Passenger> passengers = new List<Passenger>();
+    public static List<Passenger> passengers = new List<Passenger>();
     MapMatrix map;
 
     IEnumerator commuteTooLong()
@@ -68,8 +68,6 @@ public class BusControls : MonoBehaviour
         }
         executeAction(chooseControl());
     }
-
-
 
     void Awake()
     {
@@ -210,7 +208,6 @@ public class BusControls : MonoBehaviour
         //check for banana
         //then the control set must be reduced to the number of viable options
         int monkeyChoice = Random.Range(0, numControls);
-        Debug.Log("choosing control " + monkeyChoice);
         return (monkeyChoice);
     }
 
@@ -250,25 +247,29 @@ public class BusControls : MonoBehaviour
             foreach (Passenger person in passengers)
             {
                 person.updateMood("hit obstacle");
-                Debug.Log("passenger: " + person.getMood());
             }
             Destroy(other.gameObject);
         }
     }
 
-    void ejection()
+    public void ejection()
     {
         float shortestDistance = 1000.0f;
         float distance;
         Vector2 closestStop = new Vector2(-45,-45);
         foreach (Vector2 stop in map.stopCoordinates)
         {
-            distance = Mathf.Sqrt(Mathf.Pow((busPos.x + stop.x),2) + Mathf.Pow((busPos.y + stop.y),2));
+            distance = Mathf.Sqrt(Mathf.Pow((busPos.x - stop.x),2) + Mathf.Pow((busPos.y - stop.y),2));
+            Debug.Log("distance: "+distance);
+            Debug.Log("bus position: " + busPos.x + "," + busPos.y);
+            Debug.Log("stop: " + stop);
             if (distance < shortestDistance)
             {
                 shortestDistance = distance;
                 closestStop = stop;
             }
+            Debug.Log("shortest distance: " + shortestDistance);
+            Debug.Log("closest stop: " + closestStop);
         }
 
         foreach(Passenger person in passengers)
@@ -276,8 +277,15 @@ public class BusControls : MonoBehaviour
             if (person.getDestination() == closestStop)
             {
                 person.calcScore(busPos);
-                passengers.Remove(person);
+                numPassengers -= 1;
             }
         }
+        passengers.RemoveAll(person => person.getOnBus() == false);
+        closestStop = new Vector2(-45, -45);
+        shortestDistance = 1000.0f;
+    }
+    public int getNumPassengers()
+    {
+        return (numPassengers);
     }
 }
