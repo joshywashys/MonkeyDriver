@@ -24,7 +24,7 @@ public class MapMatrix : MonoBehaviour
     public GameObject busStop;
     public GameObject obstacle;
 
-    public const float MAP_SCALAR = 1.0f; //altered for debugging/visualisation purposes
+    public float MAP_SCALAR = 2.0f; //altered for debugging/visualisation purposes
 
     //populates a 2d array we feed it with bus stops and obstacles.
     void GenerateMap(Intersection[,] mapMatrix, int numStops)
@@ -57,7 +57,7 @@ public class MapMatrix : MonoBehaviour
             stopCoordinates[i] = new Vector2(randX, randY);
         }
 
-        //populate map with stops
+        //populate map with obstacles
         for (int i = 0; i < numObstacles; i++)
         {
             int randX;
@@ -67,7 +67,7 @@ public class MapMatrix : MonoBehaviour
                 randX = Random.Range(0, matrixWidth);
                 randY = Random.Range(0, matrixHeight);
             }
-            while (mapMatrix[randX, randY].type != 0);
+            while (mapMatrix[randX, randY].type != 0 && (randX+randY) != 0);
 
             mapMatrix[randX, randY].type = 2;
         }
