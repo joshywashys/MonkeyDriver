@@ -11,20 +11,23 @@ This script is responsible for:
 */
 public class MapMatrix : MonoBehaviour
 {
-    public Intersection[,] mapMatrix;
-    public int height;
-    public int width;
-
-    public int numStops;
-    public int numObstacles;
-    public Vector2[] stopCoordinates;
-
+    //Unity objects
     public Transform generationLocation;
     public GameObject intersection;
     public GameObject busStop;
     public GameObject obstacle;
 
-    public float MAP_SCALAR = 2.0f; //altered for debugging/visualisation purposes
+    //map properties
+    public Intersection[,] mapMatrix;
+    public int height;
+    public int width;
+
+    //map gen variables + data
+    public int numStops;
+    public int numObstacles;
+    public Vector2[] stopCoordinates;
+
+    public float MAP_SCALAR = 1.0f; //altered for debugging/visualisation purposes
 
     //populates a 2d array we feed it with bus stops and obstacles.
     void GenerateMap(Intersection[,] mapMatrix, int numStops)
