@@ -38,18 +38,6 @@ public class BusControls : MonoBehaviour
     public static List<Passenger> passengers = new List<Passenger>();
     MapMatrix map;
 
-    IEnumerator commuteTooLong()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(90);
-            foreach (Passenger person in passengers)
-            {
-                person.updateMood("long commute");
-            }
-        }
-    }
-
     IEnumerator restTime(float time)
     {
         float lastSpeed = lerpSpeed;
@@ -102,9 +90,7 @@ public class BusControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        foreach (Passenger person in passengers){
-            person.updateMood("none");
-        }
+
     }
 
     void CheckForBounds()
@@ -139,8 +125,8 @@ public class BusControls : MonoBehaviour
     //Up,Down,Left,Right,Plow,Rest,Accelerate
     void SetAvailableControls()
     {
-        Transform[] ctrlsList = new Transform[7];
-        for (int i = 0; i < 7; i++)
+        Transform[] ctrlsList = new Transform[4];
+        for (int i = 0; i < 4; i++)
         {
             ctrlsList[i] = controls.transform.GetChild(i);
         }
@@ -273,15 +259,6 @@ public class BusControls : MonoBehaviour
                 case Controls.Right:
                     Right();
                     break;
-                case Controls.Plow:
-                    Plow();
-                    break;
-                case Controls.Rest:
-                    Rest();
-                    break;
-                case Controls.Accelerate:
-                    Accelerate();
-                    break;
             }
         }
         catch
@@ -296,17 +273,11 @@ public class BusControls : MonoBehaviour
         {
             if (hasPlow)
             {
-                foreach (Passenger person in passengers)
-                {
-                    person.updateMood("hit with plow");
-                }
+
             }
             else
             {
-                foreach (Passenger person in passengers)
-                {
-                    person.updateMood("hit obstacle");
-                }
+
             }
             Destroy(other.gameObject);
         }

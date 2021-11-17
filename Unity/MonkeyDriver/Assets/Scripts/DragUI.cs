@@ -16,7 +16,6 @@ public class DragUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
     public int ctrlNum;
     public bool isEnabled;
     private bool isAvailable;
-    public bool hasBanana;
 
     public void Awake()
     {
@@ -75,12 +74,6 @@ public class DragUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
             eventData.pointerDrag.GetComponent<DragUI>().isEnabled = !eventData.pointerDrag.GetComponent<DragUI>().isEnabled;
             isEnabled = !isEnabled;
         }
-        if (eventData.pointerDrag.tag == "Banana")
-        {
-            eventData.pointerDrag.GetComponent<dragBanana>().defaultPos = defaultPos;
-            eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = defaultPos;
-            hasBanana = true;
-}
 
     }
 
