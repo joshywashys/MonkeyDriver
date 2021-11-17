@@ -125,8 +125,8 @@ public class BusControls : MonoBehaviour
     //Up,Down,Left,Right,Plow,Rest,Accelerate
     void SetAvailableControls()
     {
-        Transform[] ctrlsList = new Transform[4];
-        for (int i = 0; i < 4; i++)
+        Transform[] ctrlsList = new Transform[7];
+        for (int i = 0; i < 7; i++)
         {
             ctrlsList[i] = controls.transform.GetChild(i);
         }
