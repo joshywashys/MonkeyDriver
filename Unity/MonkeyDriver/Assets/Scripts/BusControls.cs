@@ -88,10 +88,6 @@ public class BusControls : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     void CheckForBounds()
     {
@@ -159,8 +155,8 @@ public class BusControls : MonoBehaviour
     {
         if (!atBoundUp)//this check will become obsolete since the control should never be called if it would result in out of bounds
         {
-            busPos.y += 1;
-            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y + 1));
+            busPos.y += (int)map.MAP_SCALAR;
+            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y + (int) map.MAP_SCALAR));
         }
         else
         {
@@ -172,8 +168,8 @@ public class BusControls : MonoBehaviour
     {
         if (!atBoundDown)
         {
-            busPos.y -= 1;
-            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y - 1));
+            busPos.y -= (int) map.MAP_SCALAR;
+            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y - (int) map.MAP_SCALAR));
         }
         else
         {
@@ -185,8 +181,8 @@ public class BusControls : MonoBehaviour
     {
         if (!atBoundLeft)
         {
-            busPos.x -= 1;
-            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x - 1, transform.position.y));
+            busPos.x -= (int) map.MAP_SCALAR;
+            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x - (int) map.MAP_SCALAR, transform.position.y));
         }
         else
         {
@@ -199,8 +195,8 @@ public class BusControls : MonoBehaviour
     {
         if (!atBoundRight)
         {
-            busPos.x += 1;
-            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x + 1, transform.position.y));
+            busPos.x += (int) map.MAP_SCALAR;
+            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x + (int) map.MAP_SCALAR, transform.position.y));
         }
         else
         {

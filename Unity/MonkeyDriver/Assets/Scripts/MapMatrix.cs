@@ -115,7 +115,7 @@ public class MapMatrix : MonoBehaviour
             for (int j = 0; j < matrixHeight; j++)
             {
                 //draw intersections
-                //Instantiate(intersection, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
+                Instantiate(intersection, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
                 switch (mapMatrix[i, j].type)
                 {
                     case 0:
