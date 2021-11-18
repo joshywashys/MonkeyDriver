@@ -27,9 +27,9 @@ public class BusControls : MonoBehaviour
     private Vector2Int busPos;
     public static bool atBoundUp, atBoundLeft, atBoundRight, atBoundDown; //map changes these
     bool hasPlow = false;
-    public float lerpSpeed = 0.7f;
-    public float minSpeed = 0.1f;
-    public float speedDecrement = 0.07f;
+    private float lerpSpeed = 0.7f;
+    private float minSpeed = 0.1f;
+    private float speedDecrement = 0.07f;
     public static int numControls = 4;
     public static int numPassengers = 15;
 

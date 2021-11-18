@@ -6,23 +6,22 @@ using UnityEngine;
 public class Passenger
 {
     //Mood m_currentMood;
-    float m_commuteTime;
-    //bool m_onBus = true;
+    //float m_commuteTime;
 
-    Vector2 m_destination;
+    string m_destination;
     private bool onBus = true;
 
-    public Passenger(Vector2 dest)
+    public Passenger(string dest)
     {
 		m_destination = dest;
     }
 
     #region getters and setters
-    public void setCommuteTime()
-    {
-		m_commuteTime += Time.deltaTime;
-    }
-	public Vector2 getDestination()
+  //  public void setCommuteTime()
+  //  {
+		//m_commuteTime += Time.deltaTime;
+  //  }
+	public string getDestination()
     {
 		return (m_destination);
     }
@@ -38,6 +37,8 @@ public class Passenger
         float distanceToDest = Mathf.Sqrt(Mathf.Pow((busPos.x + m_destination.x), 2) + Mathf.Pow((busPos.y + m_destination.y), 2));
 		Mathf.Round(distanceToDest);
         onBus = false;
-        ScoreManager.i.addScore((int)distanceToDest);
+        //do something for the score
+
+        //ScoreManager.i.addScore(score);
     }
 }

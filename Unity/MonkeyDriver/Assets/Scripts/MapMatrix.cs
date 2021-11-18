@@ -25,7 +25,7 @@ public class MapMatrix : MonoBehaviour
     //map gen variables + data
     public int numStops;
     public int numObstacles;
-    public Vector2[] stopCoordinates;
+    public Dictionary<Vector2,string> destinations;
 
     public float MAP_SCALAR = 1.0f; //altered for debugging/visualisation purposes
 
@@ -132,13 +132,12 @@ public class MapMatrix : MonoBehaviour
 
         //center map at origin
         generationLocation.Translate(new Vector3(-(mapWidth - 1) /2, -(mapHeight - 1)/2, -6));
-
     }
 
     void Awake()
     {
         mapMatrix = new Intersection[width, height];
-        stopCoordinates = new Vector2[numStops];
+        destinations = new Dictionary<Vector2, string>();
 
         GenerateMap(mapMatrix, numStops);
         DrawMap(mapMatrix);
@@ -153,12 +152,6 @@ public class MapMatrix : MonoBehaviour
         {
             Debug.Log(stopCoordinates[i]);
         }
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
     }
 }
