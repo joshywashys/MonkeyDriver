@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 /*
 This script is responsible for:
@@ -81,7 +82,7 @@ public class BusControls : MonoBehaviour
     {
         for (int i = 0; i < numPassengers; i++)
         {
-            passengers.Add(new Passenger(map.stopCoordinates[Random.Range(0, map.numStops)]));
+            passengers.Add(new Passenger(map.destinations.Values.ElementAt(Random.Range(0, map.numStops))));
         }
         StartCoroutine(restTime(3));
         SetAvailableControls();
@@ -284,7 +285,7 @@ public class BusControls : MonoBehaviour
         float shortestDistance = 1000.0f;
         float distance;
         Vector2 closestStop = new Vector2(-45,-45);
-        foreach (Vector2 stop in map.stopCoordinates)
+        foreach (Vector2 stop in map.destinations.Keys)
         {
             distance = Mathf.Sqrt(Mathf.Pow((busPos.x - stop.x),2) + Mathf.Pow((busPos.y - stop.y),2));
             if (distance < shortestDistance)

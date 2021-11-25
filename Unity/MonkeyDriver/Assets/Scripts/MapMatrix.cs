@@ -14,7 +14,7 @@ public class MapMatrix : MonoBehaviour
     //Unity objects
     public Transform generationLocation;
     public GameObject intersection;
-    public GameObject busStop;
+    public GameObject blueBusStop, greenBusStop, orangeBusStop, purpleBusStop, redBusStop;
     public GameObject obstacle;
 
     //map properties
@@ -49,15 +49,17 @@ public class MapMatrix : MonoBehaviour
         {
             int randX;
             int randY;
+            int randColour;
             do
             {
                 randX = Random.Range(0, matrixWidth);
                 randY = Random.Range(0, matrixHeight);
+                randColour = Random.Range(1,5);
             }
             while (mapMatrix[randX, randY].type != 0);
 
-            mapMatrix[randX, randY].type = 1;
-            stopCoordinates[i] = new Vector2(randX, randY);
+            mapMatrix[randX, randY].type = randColour;
+            
         }
 
         //populate map with obstacles
@@ -72,7 +74,7 @@ public class MapMatrix : MonoBehaviour
             }
             while (mapMatrix[randX, randY].type != 0 && (randX+randY) != 0);
 
-            mapMatrix[randX, randY].type = 2;
+            mapMatrix[randX, randY].type = 6;
         }
 
         /*
@@ -120,11 +122,47 @@ public class MapMatrix : MonoBehaviour
                 {
                     case 0:
                         break;
+
                     case 1:
-                        Instantiate(busStop, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                        //creates a blue bus stop at [i,j] and adds it to the list of possible destinations
+
+                        Instantiate(blueBusStop, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                        destinations.Add(new Vector2(i, j), "blue");
                         break;
+
                     case 2:
+                        //creates a green bus stop at [i,j] and adds it to the list of possible destinations
+
+                        Instantiate(greenBusStop, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                        destinations.Add(new Vector2(i, j), "green");
+                        break;
+
+                    case 3:
+                        //creates an orange bus stop at [i,j] and adds it to the list of possible destinations
+
+                        Instantiate(orangeBusStop, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                        destinations.Add(new Vector2(i, j), "orange");
+                        break;
+
+                    case 4:
+                        //creates a purple bus stop at [i,j] and adds it to the list of possible destinations
+
+                        Instantiate(purpleBusStop, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                        destinations.Add(new Vector2(i, j), "purple");
+                        break;
+
+                    case 5:
+                        //creates a red bus stop at [i,j] and adds it to the list of possible destinations
+
+                        Instantiate(redBusStop, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                        destinations.Add(new Vector2(i, j), "red");
+                        break;
+
+                    case 6:
                         Instantiate(obstacle, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                        break;
+
+                    default:
                         break;
                 }
             }
@@ -137,21 +175,13 @@ public class MapMatrix : MonoBehaviour
     void Awake()
     {
         mapMatrix = new Intersection[width, height];
+        //dictionary has stop coordinates, and a string colour
+        //passengers get a colour and can be dropped off at that colour stop
+        //have to generate stops of different colour still
         destinations = new Dictionary<Vector2, string>();
 
         GenerateMap(mapMatrix, numStops);
         DrawMap(mapMatrix);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        //needs to be negative and position values
-
-        for (int i = 0; i < stopCoordinates.Length; i++)
-        {
-            Debug.Log(stopCoordinates[i]);
-        }
-        
-    }
 }

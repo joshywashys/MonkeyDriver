@@ -12,8 +12,12 @@ public class Intersection
     //what is on the intersection
     /*
         0 = Empty
-        1 = Stop
-        2 = Obstacle
+        1 = Blue Stop
+        2 = Green
+        3 = Orange
+        4 = Purple
+        5 = Red
+        6 = Obstacle
     */
     public int type;
 
