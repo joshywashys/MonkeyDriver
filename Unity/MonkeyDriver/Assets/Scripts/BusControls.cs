@@ -82,7 +82,7 @@ public class BusControls : MonoBehaviour
     {
         for (int i = 0; i < numPassengers; i++)
         {
-            passengers.Add(new Passenger(map.destinations.Values.ElementAt(Random.Range(0, map.numStops))));
+            passengers.Add(new Passenger(map.destinations.Values.ElementAt(Random.Range(0, map.destinations.Count))));
         }
         StartCoroutine(restTime(3));
         SetAvailableControls();
@@ -136,7 +136,6 @@ public class BusControls : MonoBehaviour
                 availableCtrlNums.Add(currCtrl.GetComponent<DragUI>().ctrlNum);
             }
         }
-        Debug.Log(availableCtrlNums.Count);
 
         activeControls.Clear();
         //get ControlSlots enabled controls
@@ -213,7 +212,6 @@ public class BusControls : MonoBehaviour
 
     public void Rest()
     {
-        Debug.Log("take a break!");
         StartCoroutine(restTime(3));
     }
 
@@ -297,7 +295,8 @@ public class BusControls : MonoBehaviour
 
         foreach(Passenger person in passengers)
         {
-            if (person.getDestination() == closestStop)
+            //if the passenger's destination is the same colour as the closest stop then eject them
+            if (person.getDestination() == map.destinations[closestStop])
             {
                 person.calcScore(busPos);
                 numPassengers -= 1;
