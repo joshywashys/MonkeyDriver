@@ -238,7 +238,7 @@ MonoBehaviour:
   height: 15
   width: 15
   numStops: 15
-  numObstacles: 15
+  numObstacles: 20
   MAP_SCALAR: 2
 --- !u!4 &325480521
 Transform:
@@ -266,6 +266,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676472fde0f705947b43f38d3c1f7a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shakeDuration: 10
+  shakeDelay: 0.02
+  maxHorizontalOffset: 0.7
+  maxVerticalOffset: 0.7
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

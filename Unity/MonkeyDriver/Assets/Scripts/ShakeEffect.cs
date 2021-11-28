@@ -4,33 +4,47 @@ using UnityEngine;
 
 public class ShakeEffect : MonoBehaviour
 {
-    private float shakeMagnitude = 1.0f;
-    private float shakeDuration = 0.0f;
-    private float timer = 0f;
-    private Vector3 originPos;
+    public float shakeDuration;
+    public float shakeDelay;
+    public float maxHorizontalOffset;
+    public float maxVerticalOffset;
+
     // Start is called before the first frame update
-    void Start()
-    {
-        Debug.Log(Camera.main.transform.localPosition);
-    }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator Shake()
     {
-        
-    }
+        Vector3 curCamPosition = Camera.main.transform.localPosition;
+        Debug.Log("origin: " + Camera.main.transform.localPosition);
 
-    IEnumerator screenShake(float duration)
-    {
-        Vector3 curCamTransform = Camera.main.transform.position;
-        for (int i =0; i <duration; i++)
+        for (int i = 0; i < shakeDuration; i++)
         {
-            yield return new WaitForSeconds(0.02f);
-        }
-    }
+            float horizontalOffset = Random.Range(-maxHorizontalOffset, maxHorizontalOffset);
+            float verticalOffset = Random.Range(-maxVerticalOffset, maxVerticalOffset);
 
-    public void shakeCamera(float duration)
+            Vector3 offsetDirection = Camera.main.transform.right.normalized * horizontalOffset +
+                Camera.main.transform.up.normalized * verticalOffset;
+
+            Camera.main.transform.localPosition += offsetDirection;
+
+            yield return new WaitForSeconds(shakeDelay);
+        }
+
+        Camera.main.transform.localPosition = curCamPosition;
+    }
+    //IEnumerator screenShake(float duration)
+    //{
+    //    originPos = Camera.main.transform.localPosition;
+    //    for (int i =0; i <duration; i++)
+    //    {
+    //        Vector3 offsetDirection = Camera.main.transform.right.normalized *
+    //        yield return new WaitForSeconds(0.02f);
+    //    }
+    //    Camera.main.transform.localPosition = originPos;
+    //    Debug.Log("after shake: " + Camera.main.transform.localPosition);
+    //}
+
+    public void shakeCamera()
     {
-        StartCoroutine(screenShake(duration));
+        StartCoroutine(Shake());
     }
 }

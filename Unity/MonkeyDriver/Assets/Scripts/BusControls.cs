@@ -44,7 +44,6 @@ public class BusControls : MonoBehaviour
     {
         float lastSpeed = lerpSpeed;
         lerpSpeed = 0;
-        Debug.Log("resting");
         yield return new WaitForSeconds(time);
         lerpSpeed = lastSpeed;
         monkeyChoice = Random.Range(0, numControls);
@@ -231,12 +230,10 @@ public class BusControls : MonoBehaviour
 
     private void executeAction(int control)
     {
-        Debug.Log("executing action");
         SetAvailableControls();
         CheckForBounds();
         try
         {
-            Debug.Log("trying control");
             switch (activeControls[control])
             {
                 case Controls.Up:
@@ -282,8 +279,13 @@ public class BusControls : MonoBehaviour
             //    GetComponent<CameraShake>().camShake(2);
             //    ScoreManager.i.subScore(50);
             //}
+
+            //need to hide the object
+            //check if playing correctly because unity is weird about my headphones
+            other.GetComponent<AudioSource>().Play();
+            FindObjectOfType<ShakeEffect>().shakeCamera();
             ScoreManager.i.subScore(50);
-            Destroy(other.gameObject);
+            Destroy(other.gameObject, 0.7f);
         }
     }
 
