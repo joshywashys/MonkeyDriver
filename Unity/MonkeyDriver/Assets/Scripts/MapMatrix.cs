@@ -56,7 +56,7 @@ public class MapMatrix : MonoBehaviour
                 randY = Random.Range(0, matrixHeight);
                 randColour = Random.Range(1,5);
             }
-            while (mapMatrix[randX, randY].type != 0);
+            while (mapMatrix[randX, randY].type != 0 && (randX + randY) != 0);
 
             mapMatrix[randX, randY].type = randColour;
             

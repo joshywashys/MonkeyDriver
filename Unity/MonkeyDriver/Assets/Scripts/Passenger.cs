@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//enum Mood { VeryUpset, Upset, Neutral, Content, Happy }
 public class Passenger
 {
     string m_destColour;
@@ -23,13 +22,10 @@ public class Passenger
     {
         return onBus;
     }
-    #endregion
 
-	public void calcScore(Vector2 busPos)
-	{
-        onBus = false;
-        //do something for the score
-
-        //ScoreManager.i.addScore(score);
+    public void setOnBus(bool busStatus)
+    {
+        onBus = busStatus;   
     }
+    #endregion
 }

@@ -279,7 +279,8 @@ public class BusControls : MonoBehaviour
             }
             else
             {
-
+                //screen shake
+                ScoreManager.i.subScore(50);
             }
             Destroy(other.gameObject);
         }
@@ -305,7 +306,8 @@ public class BusControls : MonoBehaviour
             //if the passenger's destination is the same colour as the closest stop then eject them
             if (person.getDestination() == map.destinations[closestStop])
             {
-                person.calcScore(busPos);
+                person.setOnBus(false);
+                ScoreManager.i.addScore(shortestDistance);
                 numPassengers -= 1;
             }
         }

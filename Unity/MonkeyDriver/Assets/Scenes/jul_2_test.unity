@@ -234,11 +234,11 @@ MonoBehaviour:
   purpleBusStop: {fileID: 7309656774847513232, guid: 9617dfa1e2d9c1444817fd9d4c0ef761, type: 3}
   redBusStop: {fileID: 7309656774847513232, guid: 347de037a679092419466c25ee583611, type: 3}
   obstacle: {fileID: 6184713774374819605, guid: 6c14569362f04f649a816ce5488b4f6c, type: 3}
-  height: 9
-  width: 9
+  height: 15
+  width: 15
   numStops: 7
   numObstacles: 4
-  MAP_SCALAR: 1
+  MAP_SCALAR: 2
 --- !u!4 &325480521
 Transform:
   m_ObjectHideFlags: 0
