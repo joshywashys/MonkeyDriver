@@ -45,6 +45,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3056233969
+    locked: 0
+  - name: Roads
+    uniqueID: 2713806179
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Bus
+    uniqueID: 21181269
+    locked: 0
+  - name: Stops+Obstacles
+    uniqueID: 1998862007
     locked: 0

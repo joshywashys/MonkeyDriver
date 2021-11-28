@@ -58,7 +58,7 @@ public class BusControls : MonoBehaviour
         {
             DriveTime += Time.deltaTime;
             
-            transform.position = new Vector3(Mathf.Lerp(startX, endX, DriveTime / lerpSpeed), Mathf.Lerp(startY, endY, DriveTime / lerpSpeed), -4);
+            transform.position = new Vector3(Mathf.Lerp(startX, endX, DriveTime / lerpSpeed), Mathf.Lerp(startY, endY, DriveTime / lerpSpeed), -6);
             yield return null;
         }
         monkeyChoice = Random.Range(0, numControls);
