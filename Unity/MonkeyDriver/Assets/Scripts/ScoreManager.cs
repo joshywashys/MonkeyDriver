@@ -18,6 +18,7 @@ public class ScoreManager : MonoBehaviour
         {
             i = this;
         }
+        StartCoroutine(ScoreTickDown());
     }
     public void addScore(float passengerDistance)
     {
@@ -37,6 +38,7 @@ public class ScoreManager : MonoBehaviour
         {
             score -= subtraction;
         }
+        scoreCounter.text = "Score: " + score;
     }
 
     IEnumerator ScoreTickDown()

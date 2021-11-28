@@ -275,7 +275,7 @@ public class BusControls : MonoBehaviour
         {
             if (hasPlow)
             {
-
+                ScoreManager.i.subScore(50);
             }
             else
             {
