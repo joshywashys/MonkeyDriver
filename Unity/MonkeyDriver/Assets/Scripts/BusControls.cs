@@ -273,15 +273,16 @@ public class BusControls : MonoBehaviour
     {
         if (other.gameObject.tag == "Obstacle")
         {
-            if (hasPlow)
-            {
-                ScoreManager.i.subScore(50);
-            }
-            else
-            {
-                //screen shake
-                ScoreManager.i.subScore(50);
-            }
+            //if (hasPlow)
+            //{
+            //    //ScoreManager.i.subScore(50);
+            //}
+            //else
+            //{
+            //    GetComponent<CameraShake>().camShake(2);
+            //    ScoreManager.i.subScore(50);
+            //}
+            ScoreManager.i.subScore(50);
             Destroy(other.gameObject);
         }
     }
