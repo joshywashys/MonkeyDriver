@@ -38,6 +38,7 @@ public class BusControls : MonoBehaviour
     List <Controls> activeControls = new List<Controls>();
     public static List<Passenger> passengers = new List<Passenger>();
     MapMatrix map;
+    private int monkeyChoice;
 
     IEnumerator restTime(float time)
     {
@@ -46,7 +47,8 @@ public class BusControls : MonoBehaviour
         Debug.Log("resting");
         yield return new WaitForSeconds(time);
         lerpSpeed = lastSpeed;
-        executeAction(chooseControl());
+        monkeyChoice = Random.Range(0, numControls);
+        executeAction(monkeyChoice);
     }
     IEnumerator Drive(float startX, float startY, float endX, float endY)
     {
@@ -59,7 +61,8 @@ public class BusControls : MonoBehaviour
             transform.position = new Vector3(Mathf.Lerp(startX, endX, DriveTime / lerpSpeed), Mathf.Lerp(startY, endY, DriveTime / lerpSpeed), -4);
             yield return null;
         }
-        executeAction(chooseControl());
+        monkeyChoice = Random.Range(0, numControls);
+        executeAction(monkeyChoice);
     }
 
     void Awake()
@@ -70,10 +73,6 @@ public class BusControls : MonoBehaviour
         }
 
         map = FindObjectOfType<MapMatrix>();
-        //populate the first controls
-        //activeControls.Add(Controls.Up);
-        //activeControls.Add(Controls.Right);
-        //activeControls.Add(Controls.Left);
 
         busPos = new Vector2Int(0,0);
         
@@ -160,7 +159,8 @@ public class BusControls : MonoBehaviour
         }
         else
         {
-            executeAction(chooseControl());
+            monkeyChoice = Random.Range(0, numControls);
+            executeAction(monkeyChoice);
         }
     }
 
@@ -173,7 +173,8 @@ public class BusControls : MonoBehaviour
         }
         else
         {
-            executeAction(chooseControl());
+            monkeyChoice = Random.Range(0, numControls);
+            executeAction(monkeyChoice);
         }
     }
 
@@ -186,7 +187,8 @@ public class BusControls : MonoBehaviour
         }
         else
         {
-            executeAction(chooseControl());
+            monkeyChoice = Random.Range(0, numControls);
+            executeAction(monkeyChoice);
         }
 
     }
@@ -200,7 +202,8 @@ public class BusControls : MonoBehaviour
         }
         else
         {
-            executeAction(chooseControl());
+            monkeyChoice = Random.Range(0, numControls);
+            executeAction(monkeyChoice);
         }
     }
 
@@ -221,25 +224,19 @@ public class BusControls : MonoBehaviour
         {
             lerpSpeed -= speedDecrement;
         }
-        executeAction(chooseControl());
+        monkeyChoice = Random.Range(0, numControls);
+        executeAction(monkeyChoice);
     }
     #endregion
-    int chooseControl()
-    {
-        //check for banana
-        //then the control set must be reduced to the number of viable options
-        int monkeyChoice = Random.Range(0, numControls);
-        //Debug.Log("choosing control "+ monkeyChoice);
-        return (monkeyChoice);
-    }
 
-
-    public void executeAction(int control)
+    private void executeAction(int control)
     {
+        Debug.Log("executing action");
         SetAvailableControls();
         CheckForBounds();
         try
         {
+            Debug.Log("trying control");
             switch (activeControls[control])
             {
                 case Controls.Up:
@@ -254,11 +251,21 @@ public class BusControls : MonoBehaviour
                 case Controls.Right:
                     Right();
                     break;
+                case Controls.Plow:
+                    Plow();
+                    break;
+                case Controls.Rest:
+                    Rest();
+                    break;
+                case Controls.Accelerate:
+                    Accelerate();
+                    break;
             }
         }
         catch
         {
-            executeAction(chooseControl());
+            monkeyChoice = Random.Range(0, numControls);
+            executeAction(monkeyChoice);
         }
         
     }
@@ -303,9 +310,5 @@ public class BusControls : MonoBehaviour
             }
         }
         passengers.RemoveAll(person => person.getOnBus() == false);
-    }
-    public int getNumPassengers()
-    {
-        return (numPassengers);
     }
 }
