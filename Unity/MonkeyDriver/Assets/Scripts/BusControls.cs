@@ -32,7 +32,7 @@ public class BusControls : MonoBehaviour
     private float minSpeed = 0.1f;
     private float speedDecrement = 0.07f;
     public static int numControls = 4;
-    public static int numPassengers = 15;
+    public static int numPassengers = 20;
 
     public GameObject controls;
     List <Controls> activeControls = new List<Controls>();

@@ -6,7 +6,18 @@ public class UpdateUI : MonoBehaviour
 {
     public GameObject bluePassenger, greenPassenger, pinkPassenger, redPassenger;
     public Transform passengerHolder;
-    // Update is called once per frame
+
+    private int tilingWidth = 40;
+    private int tilingHeight = 30;
+    private int tileWidth = 5;
+    private int tileHeight = 4;
+
+    int tileXPos;
+    int tileYPos;
+
+    List<GameObject> passengerIcons = new List<GameObject>();
+
+    //new Vector3(i, j, 1)
     void Start()
     {
         foreach (Passenger person in BusControls.passengers)
@@ -15,18 +26,26 @@ public class UpdateUI : MonoBehaviour
             switch (destination)
             {
                 case "blue":
-                    Instantiate(bluePassenger, passengerHolder);
+                    passengerIcons.Add(Instantiate(bluePassenger, passengerHolder));
                     break;
                 case "green":
-                    Instantiate(greenPassenger, passengerHolder);
+                    passengerIcons.Add(Instantiate(greenPassenger, passengerHolder));
                     break;
                 case "pink":
-                    Instantiate(pinkPassenger, passengerHolder);
+                    passengerIcons.Add(Instantiate(pinkPassenger, passengerHolder));
                     break;
                 case "red":
-                    Instantiate(redPassenger, passengerHolder);
+                    passengerIcons.Add(Instantiate(redPassenger, passengerHolder));
                     break;
             }
+        }
+
+        for (int i =0; i < BusControls.numPassengers; i++)
+        {
+            tileXPos = i / tileHeight;
+            tileYPos = i % tileHeight;
+
+            passengerIcons[i].transform.localPosition = new Vector3(tileXPos * tilingWidth, tileYPos * tilingHeight, 0);
         }
     }
 }

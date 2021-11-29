@@ -54,7 +54,7 @@ public class MapMatrix : MonoBehaviour
             {
                 randX = Random.Range(0, matrixWidth);
                 randY = Random.Range(0, matrixHeight);
-                randColour = Random.Range(1,4);
+                randColour = Random.Range(1,5);
             }
             while (mapMatrix[randX, randY].type != 0 && (randX + randY) != 0);
 
@@ -76,30 +76,6 @@ public class MapMatrix : MonoBehaviour
 
             mapMatrix[randX, randY].type = 5;
         }
-
-        /*
-         * DEPRECATED
-        //populate map with X, Y many times
-        void populateMap(int numToGenerate, int typeNum)
-        {
-            for (int i = 0; i < numToGenerate; i++)
-            {
-                int randX;
-                int randY;
-                do
-                {
-                    randX = Random.Range(0, matrixWidth);
-                    randY = Random.Range(0, matrixHeight);
-                }
-                while (mapMatrix[randX, randY].type != 0);
-
-                mapMatrix[randX, randY].type = typeNum;
-            }
-        }
-        populateMap(numStops, 1);
-        populateMap(numObstacles, 2);
-        */
-
 
     }
 
