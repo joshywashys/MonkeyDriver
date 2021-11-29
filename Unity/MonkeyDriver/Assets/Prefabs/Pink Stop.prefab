@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6283267159765624261}
   - component: {fileID: 7194891618923149799}
   m_Layer: 0
-  m_Name: Purple Stop
+  m_Name: Pink Stop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 1998862007
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 64cbb8c3195b31b4cab08085945fe12a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fd789b628b543244f82a73a3084f7ff8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

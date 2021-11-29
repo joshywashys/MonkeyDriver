@@ -31,18 +31,6 @@ public class ShakeEffect : MonoBehaviour
 
         Camera.main.transform.localPosition = curCamPosition;
     }
-    //IEnumerator screenShake(float duration)
-    //{
-    //    originPos = Camera.main.transform.localPosition;
-    //    for (int i =0; i <duration; i++)
-    //    {
-    //        Vector3 offsetDirection = Camera.main.transform.right.normalized *
-    //        yield return new WaitForSeconds(0.02f);
-    //    }
-    //    Camera.main.transform.localPosition = originPos;
-    //    Debug.Log("after shake: " + Camera.main.transform.localPosition);
-    //}
-
     public void shakeCamera()
     {
         StartCoroutine(Shake());

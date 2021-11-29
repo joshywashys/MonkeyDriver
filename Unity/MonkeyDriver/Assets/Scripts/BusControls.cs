@@ -266,28 +266,6 @@ public class BusControls : MonoBehaviour
         }
         
     }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Obstacle")
-        {
-            //if (hasPlow)
-            //{
-            //    //ScoreManager.i.subScore(50);
-            //}
-            //else
-            //{
-            //    GetComponent<CameraShake>().camShake(2);
-            //    ScoreManager.i.subScore(50);
-            //}
-
-            //need to hide the object
-            //check if playing correctly because unity is weird about my headphones
-            other.GetComponent<AudioSource>().Play();
-            FindObjectOfType<ShakeEffect>().shakeCamera();
-            ScoreManager.i.subScore(50);
-            Destroy(other.gameObject, 0.7f);
-        }
-    }
 
     public void ejection()
     {

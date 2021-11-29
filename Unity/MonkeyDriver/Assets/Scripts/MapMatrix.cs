@@ -14,7 +14,7 @@ public class MapMatrix : MonoBehaviour
     //Unity objects
     public Transform generationLocation;
     public GameObject intersection;
-    public GameObject blueBusStop, greenBusStop, orangeBusStop, purpleBusStop, redBusStop;
+    public GameObject blueBusStop, greenBusStop, pinkBusStop, redBusStop;
     public GameObject obstacle;
 
     //map properties
@@ -54,7 +54,7 @@ public class MapMatrix : MonoBehaviour
             {
                 randX = Random.Range(0, matrixWidth);
                 randY = Random.Range(0, matrixHeight);
-                randColour = Random.Range(1,5);
+                randColour = Random.Range(1,4);
             }
             while (mapMatrix[randX, randY].type != 0 && (randX + randY) != 0);
 
@@ -74,7 +74,7 @@ public class MapMatrix : MonoBehaviour
             }
             while (mapMatrix[randX, randY].type != 0 && (randX+randY) != 0);
 
-            mapMatrix[randX, randY].type = 6;
+            mapMatrix[randX, randY].type = 5;
         }
 
         /*
@@ -140,25 +140,18 @@ public class MapMatrix : MonoBehaviour
                     case 3:
                         //creates an orange bus stop at [i,j] and adds it to the list of possible destinations
 
-                        Instantiate(orangeBusStop, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
-                        destinations.Add(new Vector2(i, j), "orange");
+                        Instantiate(pinkBusStop, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                        destinations.Add(new Vector2(i, j), "pink");
                         break;
 
                     case 4:
                         //creates a purple bus stop at [i,j] and adds it to the list of possible destinations
 
-                        Instantiate(purpleBusStop, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
-                        destinations.Add(new Vector2(i, j), "purple");
-                        break;
-
-                    case 5:
-                        //creates a red bus stop at [i,j] and adds it to the list of possible destinations
-
                         Instantiate(redBusStop, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
                         destinations.Add(new Vector2(i, j), "red");
                         break;
 
-                    case 6:
+                    case 5:
                         Instantiate(obstacle, new Vector3(i * MAP_SCALAR, j * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
                         break;
 

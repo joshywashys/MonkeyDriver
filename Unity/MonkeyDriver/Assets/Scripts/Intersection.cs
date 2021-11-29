@@ -14,10 +14,9 @@ public class Intersection
         0 = Empty
         1 = Blue Stop
         2 = Green
-        3 = Orange
-        4 = Purple
-        5 = Red
-        6 = Obstacle
+        3 = Pink
+        4 = Red
+        5 = Obstacle
     */
     public int type;
 
