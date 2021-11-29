@@ -9,8 +9,6 @@ public class ShakeEffect : MonoBehaviour
     public float maxHorizontalOffset;
     public float maxVerticalOffset;
 
-    // Start is called before the first frame update
-
     IEnumerator Shake()
     {
         Vector3 curCamPosition = Camera.main.transform.localPosition;

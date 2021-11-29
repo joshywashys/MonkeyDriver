@@ -8,7 +8,6 @@ TagManager:
   - Obstacle
   - Passenger
   - Bus
-  - Banana
   - MainCanvas
   - Controls
   layers:
