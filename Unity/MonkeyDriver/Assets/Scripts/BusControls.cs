@@ -90,8 +90,8 @@ public class BusControls : MonoBehaviour
 
     void CheckForBounds()
     {
-        int mapWidth = map.mapMatrix.GetLength(0) - 1;
-        int mapHeight = map.mapMatrix.GetLength(1) - 1;
+        int mapWidth = map.mapMatrix.GetLength(0) * map.MAP_SCALAR - 1;
+        int mapHeight = map.mapMatrix.GetLength(1) * map.MAP_SCALAR - 1;
         Vector2Int currPos = new Vector2Int(busPos.x, busPos.y);
 
         atBoundUp = false;
@@ -153,8 +153,8 @@ public class BusControls : MonoBehaviour
     {
         if (!atBoundUp)//this check will become obsolete since the control should never be called if it would result in out of bounds
         {
-            busPos.y += (int)map.MAP_SCALAR;
-            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y + (int) map.MAP_SCALAR));
+            busPos.y += map.MAP_SCALAR;
+            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y +  map.MAP_SCALAR));
         }
         else
         {
@@ -167,8 +167,8 @@ public class BusControls : MonoBehaviour
     {
         if (!atBoundDown)
         {
-            busPos.y -= (int) map.MAP_SCALAR;
-            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y - (int) map.MAP_SCALAR));
+            busPos.y -=  map.MAP_SCALAR;
+            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y -  map.MAP_SCALAR));
         }
         else
         {
@@ -181,8 +181,8 @@ public class BusControls : MonoBehaviour
     {
         if (!atBoundLeft)
         {
-            busPos.x -= (int) map.MAP_SCALAR;
-            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x - (int) map.MAP_SCALAR, transform.position.y));
+            busPos.x -=  map.MAP_SCALAR;
+            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x -  map.MAP_SCALAR, transform.position.y));
         }
         else
         {
@@ -196,8 +196,8 @@ public class BusControls : MonoBehaviour
     {
         if (!atBoundRight)
         {
-            busPos.x += (int) map.MAP_SCALAR;
-            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x + (int) map.MAP_SCALAR, transform.position.y));
+            busPos.x +=  map.MAP_SCALAR;
+            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x +  map.MAP_SCALAR, transform.position.y));
         }
         else
         {

@@ -27,7 +27,7 @@ public class MapMatrix : MonoBehaviour
     public int numObstacles;
     public Dictionary<Vector2,string> destinations;
 
-    public float MAP_SCALAR = 1.0f; //altered for debugging/visualisation purposes
+    public int MAP_SCALAR = 1; //altered for debugging/visualisation purposes
 
     //populates a 2d array we feed it with bus stops and obstacles.
     void GenerateMap(Intersection[,] mapMatrix, int numStops)
