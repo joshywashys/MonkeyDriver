@@ -76,7 +76,7 @@ public class BusControls : MonoBehaviour
         busPos = new Vector2Int(0,0);
         
     }
-    private void Start()
+    private void OnEnable()
     {
         for (int i = 0; i < numPassengers; i++)
         {
