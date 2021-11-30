@@ -210,7 +210,7 @@ public class MapMatrix : MonoBehaviour
         for (int i = 0; i < numStops; i++)
         {
             int randVal;
-            int colVal = (i + 1) % 5;
+            int colVal = (i % 4) + 1;
             do
             {
                 randVal = Random.Range(0, intersectionList.Count);
