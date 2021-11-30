@@ -17,9 +17,8 @@ enum Controls
     Down,
     Left,
     Right,
-    Plow,
-    Rest,
-    Accelerate
+    Accelerate,
+    Rest
 }
 public class BusControls : MonoBehaviour
 {
@@ -27,7 +26,6 @@ public class BusControls : MonoBehaviour
 
     private Vector2Int busPos;
     public static bool atBoundUp, atBoundLeft, atBoundRight, atBoundDown; //map changes these
-    bool hasPlow = false;
     private float lerpSpeed = 0.7f;
     private float minSpeed = 0.1f;
     private float speedDecrement = 0.07f;
@@ -181,6 +179,17 @@ public class BusControls : MonoBehaviour
         if (currIntersection.atBoundRight()) { activeControls.Remove(Controls.Right); }
         if (currIntersection.atBoundDown()) { activeControls.Remove(Controls.Down); }
         if (currIntersection.atBoundLeft()) { activeControls.Remove(Controls.Left); }
+
+        foreach (int avControl in availableCtrlNums)
+        {
+            Debug.Log("Available Controls (from UI): " + avControl); 
+        }
+
+        foreach (Controls control in activeControls)
+        {
+            Debug.Log("Active control methods: " + control);
+        }
+
     }
 
 #region control methods
@@ -240,13 +249,6 @@ public class BusControls : MonoBehaviour
             executeAction(monkeyChoice);
         }
     }
-
-    public void Plow()
-    {
-        hasPlow = !hasPlow;
-        StartCoroutine(restTime(0.3f));
-    }
-
     public void Rest()
     {
         StartCoroutine(restTime(3));
@@ -267,8 +269,10 @@ public class BusControls : MonoBehaviour
     {
         SetAvailableControls();
         //CheckForBounds();
+        Debug.Log("control chosen: " + control);
         try
         {
+            Debug.Log("active control: " + activeControls[control]);
             switch (activeControls[control])
             {
                 case Controls.Up:
@@ -282,9 +286,6 @@ public class BusControls : MonoBehaviour
                     break;
                 case Controls.Right:
                     Right();
-                    break;
-                case Controls.Plow:
-                    Plow();
                     break;
                 case Controls.Rest:
                     Rest();
