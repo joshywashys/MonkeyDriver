@@ -322,5 +322,9 @@ public class BusControls : MonoBehaviour
             person.GetComponent<PassengerBehaviour>().ejectPassenger(map.destinations[closestStop], shortestDistance);
         }
         passengers.RemoveAll(person => person.GetComponent<PassengerBehaviour>().getOnBus() == false);
+        if (passengers.Count == 0)
+        {
+            StateManager.i.setGameState(gameState.FINISHED);
+        }
     }
 }
