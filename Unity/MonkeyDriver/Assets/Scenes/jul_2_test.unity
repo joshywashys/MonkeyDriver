@@ -208,6 +208,7 @@ GameObject:
   - component: {fileID: 325480521}
   - component: {fileID: 325480520}
   - component: {fileID: 325480522}
+  - component: {fileID: 325480523}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -236,8 +237,11 @@ MonoBehaviour:
   obstacle: {fileID: 7309656774847513232, guid: 35e00b988b420fa41a89f9219d02185b, type: 3}
   height: 15
   width: 15
-  numStops: 15
-  numObstacles: 20
+  minRegionSize: 0
+  maxRegionSize: 0
+  numRegions: 0
+  numStops: 10
+  numObstacles: 10
   MAP_SCALAR: 2
 --- !u!4 &325480521
 Transform:
@@ -269,6 +273,21 @@ MonoBehaviour:
   shakeDelay: 0.02
   maxHorizontalOffset: 0.7
   maxVerticalOffset: 0.7
+--- !u!114 &325480523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325480519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07b15684d1aa974bacba06012db3209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDistanceThreshold: 0
+  maxDistanceThreshold: 0
+  tester: {fileID: 6184713774374819605, guid: 6c14569362f04f649a816ce5488b4f6c, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,7 +338,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 150
   field of view: 60
   orthographic: 1
   orthographic size: 5

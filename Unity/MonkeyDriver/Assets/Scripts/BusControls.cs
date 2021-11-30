@@ -82,7 +82,6 @@ public class BusControls : MonoBehaviour
         SetAvailableControls();
     }
 
-    // Update is called once per frame
     /*
     void CheckForBounds()
     {

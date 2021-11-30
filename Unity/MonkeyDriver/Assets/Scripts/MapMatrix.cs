@@ -22,9 +22,9 @@ public class MapMatrix : MonoBehaviour
     public int height;
     public int width;
 
-    private List<Intersection> intersectionList = new List<Intersection>();
-    private List<Intersection> obstacleList = new List<Intersection>();
-    private List<Intersection> stopList = new List<Intersection>();
+    public List<Intersection> intersectionList = new List<Intersection>();
+    public List<Intersection> obstacleList = new List<Intersection>();
+    public Dictionary<Intersection, GameObject> stopDict = new Dictionary<Intersection, GameObject>();
 
     //region (PCG) properties
     private List<Vector2Int> regionPos = new List<Vector2Int>();
@@ -157,7 +157,6 @@ public class MapMatrix : MonoBehaviour
             while (intersectionList[randVal].type != 0);
 
             intersectionList[randVal].type = randColour;
-            stopList.Add(intersectionList[randVal]);
 
         }
 
@@ -202,28 +201,28 @@ public class MapMatrix : MonoBehaviour
                 case 1:
                     //creates a blue bus stop at [i,j] and adds it to the list of possible destinations
 
-                    Instantiate(blueBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                    stopDict.Add(intersectionList[i], Instantiate(blueBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation));
                     destinations.Add(pos, "blue");
                     break;
 
                 case 2:
                     //creates a green bus stop at [i,j] and adds it to the list of possible destinations
 
-                    Instantiate(greenBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                    stopDict.Add(intersectionList[i], Instantiate(greenBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation));
                     destinations.Add(pos, "green");
                     break;
 
                 case 3:
                     //creates an orange bus stop at [i,j] and adds it to the list of possible destinations
 
-                    Instantiate(pinkBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                    stopDict.Add(intersectionList[i], Instantiate(pinkBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation));
                     destinations.Add(pos, "pink");
                     break;
 
                 case 4:
                     //creates a purple bus stop at [i,j] and adds it to the list of possible destinations
 
-                    Instantiate(redBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                    stopDict.Add(intersectionList[i], Instantiate(redBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation));
                     destinations.Add(pos, "red");
                     break;
 
