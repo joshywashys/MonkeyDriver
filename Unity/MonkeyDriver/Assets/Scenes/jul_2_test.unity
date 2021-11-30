@@ -1745,7 +1745,6 @@ GameObject:
   - component: {fileID: 2046821961}
   - component: {fileID: 2046821960}
   - component: {fileID: 2046821959}
-  - component: {fileID: 2046821963}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: MainCanvas
@@ -1837,23 +1836,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &2046821963
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2046821958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 338f4484b24405a4cac16c8b01037c83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bluePassenger: {fileID: 4286326145165717463, guid: f1462117c528347449e96f392c7739b6, type: 3}
-  greenPassenger: {fileID: 4286326145165717463, guid: cb2a542f3b10523498a4f82b62397d0f, type: 3}
-  pinkPassenger: {fileID: 4286326145165717463, guid: 6e5190abdb6c4e44c95d2c3a09d2161a, type: 3}
-  redPassenger: {fileID: 4286326145165717463, guid: 8fb0d84ecce30574e9f628dd90def442, type: 3}
-  passengerHolder: {fileID: 2092286612}
 --- !u!1 &2092286611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1863,6 +1845,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2092286612}
+  - component: {fileID: 2092286613}
   m_Layer: 5
   m_Name: Passengers
   m_TagString: Untagged
@@ -1889,6 +1872,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -250}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2092286613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092286611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ad5676be1f7a1a41a2496f3479eb019, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  passenger: {fileID: 3458753486608886590, guid: 6e5190abdb6c4e44c95d2c3a09d2161a, type: 3}
+  passengerHolder: {fileID: 2092286612}
 --- !u!1 &2099640186
 GameObject:
   m_ObjectHideFlags: 0

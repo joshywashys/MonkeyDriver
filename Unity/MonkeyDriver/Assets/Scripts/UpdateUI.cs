@@ -20,27 +20,27 @@ public class UpdateUI : MonoBehaviour
     //new Vector3(i, j, 1)
     void Start()
     {
-        foreach (Passenger person in BusControls.passengers)
-        {
-            string destination = person.getDestination();
-            switch (destination)
-            {
-                case "blue":
-                    passengerIcons.Add(Instantiate(bluePassenger, passengerHolder));
-                    break;
-                case "green":
-                    passengerIcons.Add(Instantiate(greenPassenger, passengerHolder));
-                    break;
-                case "pink":
-                    passengerIcons.Add(Instantiate(pinkPassenger, passengerHolder));
-                    break;
-                case "red":
-                    passengerIcons.Add(Instantiate(redPassenger, passengerHolder));
-                    break;
-            }
-        }
+        //foreach (Passenger person in BusControls.passengers)
+        //{
+        //    string destination = person.getDestination();
+        //    switch (destination)
+        //    {
+        //        case "blue":
+        //            passengerIcons.Add(Instantiate(bluePassenger, passengerHolder));
+        //            break;
+        //        case "green":
+        //            passengerIcons.Add(Instantiate(greenPassenger, passengerHolder));
+        //            break;
+        //        case "pink":
+        //            passengerIcons.Add(Instantiate(pinkPassenger, passengerHolder));
+        //            break;
+        //        case "red":
+        //            passengerIcons.Add(Instantiate(redPassenger, passengerHolder));
+        //            break;
+        //    }
+        //}
 
-        for (int i =0; i < BusControls.numPassengers; i++)
+        for (int i = 0; i < BusControls.numPassengers; i++)
         {
             tileXPos = i / tileHeight;
             tileYPos = i % tileHeight;

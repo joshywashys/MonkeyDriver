@@ -36,7 +36,7 @@ public class BusControls : MonoBehaviour
 
     public GameObject controls;
     List <Controls> activeControls = new List<Controls>();
-    public static List<Passenger> passengers = new List<Passenger>();
+    public static List<GameObject> passengers = new List<GameObject>();
     MapMatrix map;
     private int monkeyChoice;
 
@@ -78,10 +78,6 @@ public class BusControls : MonoBehaviour
     }
     private void OnEnable()
     {
-        for (int i = 0; i < numPassengers; i++)
-        {
-            passengers.Add(new Passenger(map.destinations.Values.ElementAt(Random.Range(0, map.destinations.Count))));
-        }
         StartCoroutine(restTime(3));
         SetAvailableControls();
     }
@@ -282,16 +278,10 @@ public class BusControls : MonoBehaviour
             }
         }
 
-        foreach(Passenger person in passengers)
+        foreach(GameObject person in passengers)
         {
-            //if the passenger's destination is the same colour as the closest stop then eject them
-            if (person.getDestination() == map.destinations[closestStop])
-            {
-                person.setOnBus(false);
-                ScoreManager.i.addScore(shortestDistance);
-                numPassengers -= 1;
-            }
+            person.GetComponent<PassengerBehaviour>().ejectPassenger(map.destinations[closestStop], shortestDistance);
         }
-        passengers.RemoveAll(person => person.getOnBus() == false);
+        passengers.RemoveAll(person => person.GetComponent<PassengerBehaviour>().getOnBus() == false);
     }
 }
