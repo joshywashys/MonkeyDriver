@@ -318,6 +318,7 @@ MonoBehaviour:
   obstacle: {fileID: 7309656774847513232, guid: 35e00b988b420fa41a89f9219d02185b, type: 3}
   height: 9
   width: 9
+  minRegionSize: 5
   numStops: 5
   numObstacles: 3
   MAP_SCALAR: 1

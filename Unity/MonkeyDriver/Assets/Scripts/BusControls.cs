@@ -83,12 +83,14 @@ public class BusControls : MonoBehaviour
     }
 
     // Update is called once per frame
-
+    /*
     void CheckForBounds()
     {
+        Vector2Int currPos = new Vector2Int(busPos.x, busPos.y);
+        Intersection currIntersection = map.mapMatrix[busPos.x,busPos.y];
+
         int mapWidth = map.mapMatrix.GetLength(0) * map.MAP_SCALAR - 1;
         int mapHeight = map.mapMatrix.GetLength(1) * map.MAP_SCALAR - 1;
-        Vector2Int currPos = new Vector2Int(busPos.x, busPos.y);
 
         atBoundUp = false;
         atBoundRight = false;
@@ -111,7 +113,26 @@ public class BusControls : MonoBehaviour
         {
             atBoundLeft = true;
         }
+
+        //new version
+        if (currIntersection.atBoundUp())
+        {
+            atBoundUp = true;
+        }
+        if (currPos.x == mapWidth)
+        {
+            atBoundRight = true;
+        }
+        if (currPos.y == 0)
+        {
+            atBoundDown = true;
+        }
+        if (currPos.x == 0)
+        {
+            atBoundLeft = true;
+        }
     }
+    */
 
     //Up,Down,Left,Right,Plow,Rest,Accelerate
     void SetAvailableControls()
@@ -138,10 +159,12 @@ public class BusControls : MonoBehaviour
             activeControls.Add((Controls)ctrlNum);
         }
 
-        if (atBoundUp) { activeControls.Remove(Controls.Up); }
-        if (atBoundRight) { activeControls.Remove(Controls.Right); }
-        if (atBoundDown) { activeControls.Remove(Controls.Down); }
-        if (atBoundLeft) { activeControls.Remove(Controls.Left); }
+        Intersection currIntersection = map.mapMatrix[busPos.x, busPos.y];
+
+        if (currIntersection.atBoundUp()) { activeControls.Remove(Controls.Up); }
+        if (currIntersection.atBoundRight()) { activeControls.Remove(Controls.Right); }
+        if (currIntersection.atBoundDown()) { activeControls.Remove(Controls.Down); }
+        if (currIntersection.atBoundLeft()) { activeControls.Remove(Controls.Left); }
     }
 
 #region control methods
@@ -227,7 +250,7 @@ public class BusControls : MonoBehaviour
     private void executeAction(int control)
     {
         SetAvailableControls();
-        CheckForBounds();
+        //CheckForBounds();
         try
         {
             switch (activeControls[control])
