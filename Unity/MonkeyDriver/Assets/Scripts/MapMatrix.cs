@@ -14,7 +14,7 @@ public class MapMatrix : MonoBehaviour
 {
     //Unity objects
     public Transform generationLocation;
-    public GameObject intersection;
+    public GameObject intersection, intersection2;
     public GameObject blueBusStop, greenBusStop, pinkBusStop, redBusStop;
     public GameObject obstacle;
 
@@ -60,7 +60,7 @@ public class MapMatrix : MonoBehaviour
     public Dictionary<Vector2,string> destinations;
 
     public int MAP_SCALAR = 1; //altered for debugging/visualisation purposes
-    public GameObject intersection2;
+    
 
     //populates a 2d array we feed it with bus stops and obstacles.
     void GenerateMap(Intersection[,] mapMatrix, int numStops)
