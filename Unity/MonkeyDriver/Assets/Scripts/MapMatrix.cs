@@ -210,16 +210,15 @@ public class MapMatrix : MonoBehaviour
         for (int i = 0; i < numStops; i++)
         {
             int randVal;
-            int randColour;
+            int colVal = (i + 1) % 5;
             do
             {
                 randVal = Random.Range(0, intersectionList.Count);
-                randColour = Random.Range(1,5);
             }
             while (intersectionList[randVal].type != 0);
 
-            intersectionList[randVal].type = randColour;
-
+            intersectionList[randVal].type = colVal;
+            //print();
         }
 
         //populate map with obstacles
