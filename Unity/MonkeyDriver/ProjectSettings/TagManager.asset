@@ -59,6 +59,6 @@ TagManager:
   - name: Stops+Obstacles
     uniqueID: 1998862007
     locked: 0
-  - name: New Layer
+  - name: UI
     uniqueID: 3162348709
     locked: 0
