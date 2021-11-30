@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public AudioSource monkeySource;
+    public AudioClip monkeyLaugh;
     void Start()
     {
-        
+        StartCoroutine(MonkeyChatter());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator MonkeyChatter()
     {
-        
+        while (true)
+        {
+            monkeySource.PlayOneShot(monkeyLaugh);
+            yield return new WaitForSeconds(10.0f);
+        }
     }
 }
