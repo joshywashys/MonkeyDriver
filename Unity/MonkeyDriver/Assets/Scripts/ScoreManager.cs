@@ -34,9 +34,10 @@ public class ScoreManager : MonoBehaviour
     }
     public void subScore(int subtraction)
     {
-        if (score != 0)
+        score -= subtraction;
+        if (score < 0)
         {
-            score -= subtraction;
+            score = 0;
         }
         scoreCounter.text = "" + score;
     }
@@ -45,8 +46,8 @@ public class ScoreManager : MonoBehaviour
     {
         while (true)
         {
-            subScore(3);
-            yield return new WaitForSeconds(5);
+            subScore(50);
+            yield return new WaitForSeconds(1);
         }
     }
 }

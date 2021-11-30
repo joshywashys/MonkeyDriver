@@ -316,13 +316,13 @@ MonoBehaviour:
   pinkBusStop: {fileID: 7309656774847513232, guid: 9617dfa1e2d9c1444817fd9d4c0ef761, type: 3}
   redBusStop: {fileID: 7309656774847513232, guid: 347de037a679092419466c25ee583611, type: 3}
   obstacle: {fileID: 7309656774847513232, guid: 35e00b988b420fa41a89f9219d02185b, type: 3}
-  height: 15
-  width: 15
+  height: 18
+  width: 18
   minRegionSize: 2
   maxRegionSize: 5
   regionChance: 0.4
   numStops: 5
-  numObstacles: 3
+  numObstacles: 6
   MAP_SCALAR: 1
 --- !u!4 &325480521
 Transform:
@@ -922,11 +922,11 @@ RectTransform:
   m_LocalScale: {x: 1.237905, y: 0.34291, z: 0.34291}
   m_Children: []
   m_Father: {fileID: 1466963800}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -132, y: -60}
+  m_AnchoredPosition: {x: -1132, y: -60}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &809755667
@@ -941,8 +941,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abec3c36e1cfbf44084b1e96768fe1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ctrlNum: 4
-  isEnabled: 1
+  ctrlNum: 6
+  isEnabled: 0
 --- !u!225 &809755668
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1170,11 +1170,11 @@ RectTransform:
   m_LocalScale: {x: 1.237905, y: 0.34291, z: 0.34291}
   m_Children: []
   m_Father: {fileID: 1466963800}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -132, y: -290}
+  m_AnchoredPosition: {x: -132, y: -59.6}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1146213015
@@ -1189,8 +1189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abec3c36e1cfbf44084b1e96768fe1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ctrlNum: 6
-  isEnabled: 0
+  ctrlNum: 4
+  isEnabled: 1
 --- !u!225 &1146213016
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1707,9 +1707,9 @@ RectTransform:
   - {fileID: 531667676}
   - {fileID: 1639253026}
   - {fileID: 1451756954}
-  - {fileID: 809755666}
-  - {fileID: 790734598}
   - {fileID: 1146213014}
+  - {fileID: 790734598}
+  - {fileID: 809755666}
   m_Father: {fileID: 2046821962}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

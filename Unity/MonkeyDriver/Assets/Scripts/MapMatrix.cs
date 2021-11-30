@@ -218,7 +218,6 @@ public class MapMatrix : MonoBehaviour
             while (intersectionList[randVal].type != 0);
 
             intersectionList[randVal].type = colVal;
-            //print();
         }
 
         //populate map with obstacles

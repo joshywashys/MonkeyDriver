@@ -21,7 +21,7 @@ public class Obstacle : MonoBehaviour
 
             GetComponent<AudioSource>().Play();
             FindObjectOfType<ShakeEffect>().shakeCamera();
-            ScoreManager.i.subScore(50);
+            ScoreManager.i.subScore(500);
             Destroy(gameObject, 0.7f);
             GetComponent<SpriteRenderer>().forceRenderingOff = true;
             isCrushed = true;

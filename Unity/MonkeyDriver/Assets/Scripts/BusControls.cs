@@ -98,7 +98,7 @@ public class BusControls : MonoBehaviour
         SetAvailableControls();
     }
 
-    /*
+    
     void CheckForBounds()
     {
         Vector2Int currPos = new Vector2Int(busPos.x, busPos.y);
@@ -134,26 +134,27 @@ public class BusControls : MonoBehaviour
         {
             atBoundUp = true;
         }
-        if (currPos.x == mapWidth)
+        if (currIntersection.atBoundRight())
         {
             atBoundRight = true;
         }
-        if (currPos.y == 0)
+        if (currIntersection.atBoundDown())
         {
             atBoundDown = true;
         }
-        if (currPos.x == 0)
+        if (currIntersection.atBoundLeft())
         {
             atBoundLeft = true;
         }
     }
-    */
+    
 
     //Up,Down,Left,Right,Plow,Rest,Accelerate
     void SetAvailableControls()
     {
-        Transform[] ctrlsList = new Transform[7];
-        for (int i = 0; i < 7; i++)
+        CheckForBounds();
+        Transform[] ctrlsList = new Transform[6];
+        for (int i = 0; i < 6; i++)
         {
             ctrlsList[i] = controls.transform.GetChild(i);
         }
