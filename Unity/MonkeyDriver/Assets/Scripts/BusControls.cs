@@ -269,7 +269,6 @@ public class BusControls : MonoBehaviour
         float distance;
         Vector2 closestStop = new Vector2(-100,-100);
 
-        Debug.Log("Bus position:" + busPos);
         foreach (Vector2 stop in map.destinations.Keys)
         {
             distance = Mathf.Sqrt(Mathf.Pow((busPos.x - stop.x),2) + Mathf.Pow((busPos.y - stop.y),2));
