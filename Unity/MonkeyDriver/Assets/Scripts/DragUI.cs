@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class DragUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerDownHandler, IPointerClickHandler, IDropHandler
 {
+    MapMatrix map;
+
     private Canvas canvas;
     private CanvasGroup canvasGroup;
 
@@ -19,6 +21,8 @@ public class DragUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
 
     public void Awake()
     {
+        map = FindObjectOfType<MapMatrix>();
+
         canvasGroup = GetComponent<CanvasGroup>();
         canvas = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<Canvas>();
 
@@ -29,6 +33,7 @@ public class DragUI : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHa
 
     public void Update()
     {
+        
         if (BusControls.atBoundUp && ctrlNum == 0) { GetComponent<Image>().color = new Color32(255, 255, 225, 100); }
         if (!BusControls.atBoundUp && ctrlNum == 0) { GetComponent<Image>().color = new Color32(255, 255, 225, 255); }
         if (BusControls.atBoundDown && ctrlNum == 1) { GetComponent<Image>().color = new Color32(255, 255, 225, 100); }

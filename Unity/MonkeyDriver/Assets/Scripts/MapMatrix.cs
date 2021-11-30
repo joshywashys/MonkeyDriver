@@ -9,6 +9,7 @@ This script is responsible for:
 -generate stops and any other locations
 -keep track of entity locations (bus)
 */
+
 public class MapMatrix : MonoBehaviour
 {
     //Unity objects
@@ -27,10 +28,31 @@ public class MapMatrix : MonoBehaviour
     public Dictionary<Intersection, GameObject> stopDict = new Dictionary<Intersection, GameObject>();
 
     //region (PCG) properties
-    private List<Vector2Int> regionPos = new List<Vector2Int>();
+    struct Region
+    {
+        public Vector2Int pos;
+        public int width;
+        public int height;
+
+        public Region(int x, int y, int width, int height)
+        {
+            pos = new Vector2Int(x,y);
+            this.width = width;
+            this.height = height;
+        }
+
+        public Region(Vector2Int xy, int width, int height)
+        {
+            pos = xy;
+            this.width = width;
+            this.height = height;
+        }
+    }
+
+    private List<Region> regionList = new List<Region>();
     public int minRegionSize;
     public int maxRegionSize;
-    public int numRegions;
+    public float regionChance;
 
     //map gen variables + data
     public int numStops;
@@ -46,39 +68,76 @@ public class MapMatrix : MonoBehaviour
         int matrixHeight = mapMatrix.GetLength(1);
 
         //generate regions
-        Vector2Int currRegionPos = new Vector2Int(0, 0);
-        for (int i = 0; i < numRegions; i++)
+        void generateRegion(int startX, int startY, int maxWidth)
         {
-            regionPos.Add(currRegionPos);
             int regionWidth = Random.Range(minRegionSize, maxRegionSize);
             int regionHeight = Random.Range(minRegionSize, maxRegionSize);
 
-            for (int j = currRegionPos.x; j < regionWidth; j++)
+            for (int i = startX; i < startX + regionWidth; i++)
             {
-                for (int k = currRegionPos.y; k < regionHeight; k++)
+                for (int j = startY; j < startY + regionHeight; j++)
                 {
-                    //Intersection newIntersection = new Intersection(j, k);
-                    //mapMatrix[j, k] = newIntersection;
-                    //intersectionList.Add(newIntersection);
+                    Intersection newIntersection = new Intersection(i, j);
+                    mapMatrix[i, j] = newIntersection;
+                    intersectionList.Add(newIntersection);
                 }
+            }
+            
+        }
+
+        //cycle through all tiles
+        for (int i = 0; i < matrixWidth - minRegionSize; i++)
+        {
+            for (int j = 0; j < matrixHeight - minRegionSize; j++)
+            {
+                //if tile doesn't have an intersection
+                if (mapMatrix[i, j] == null && Random.Range(0f,1f) < regionChance)
+                {
+                    bool hasSpace = true;
+                    int availableSpace = 1;
+                    while (hasSpace && availableSpace < maxRegionSize)
+                    {
+                        if (i + availableSpace < mapMatrix.GetLength(0) - 1)
+                        {
+                            if (mapMatrix[i + availableSpace, j] == null)
+                            {
+                                availableSpace += 1;
+                            }
+                            else
+                            {
+                                hasSpace = false;
+                            }
+
+                        }
+                        else
+                        {
+                            hasSpace = false;
+                        }
+
+                    }
+                    if (availableSpace > minRegionSize && j < mapMatrix.GetLength(1) - minRegionSize - 1)
+                    {
+                        generateRegion(i, j, availableSpace);
+                    }
+                    
+                }
+
             }
 
         }
 
-        //generate bridges between regions
-
-        
+        /*
         //populate map with intersections
         for (int i = 0; i < matrixWidth; i++)
         {
             for (int j = 0; j < matrixHeight; j++)
             {
-                Intersection newIntersection = new Intersection(i, j);
-                mapMatrix[i, j] = newIntersection;
-                intersectionList.Add(newIntersection);
+                //Intersection newIntersection = new Intersection(i, j);
+                //mapMatrix[i, j] = newIntersection;
+                //intersectionList.Add(newIntersection);
             }
         }
-        
+        */
 
         //register intersection bounds
         for (int i = 0; i < matrixWidth; i++)
@@ -236,12 +295,14 @@ public class MapMatrix : MonoBehaviour
 
         }
 
+        /*
         //center map at origin
         int matrixWidth = mapMatrix.GetLength(0);
         int matrixHeight = mapMatrix.GetLength(1);
         float mapWidth = matrixWidth * MAP_SCALAR;
         float mapHeight = matrixHeight * MAP_SCALAR;
         generationLocation.Translate(new Vector3(-(mapWidth - 1) /2, -(mapHeight - 1)/2, -6));
+        */
     }
 
     void Awake()

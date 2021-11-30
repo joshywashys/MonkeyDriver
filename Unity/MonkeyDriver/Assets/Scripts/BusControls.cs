@@ -72,10 +72,27 @@ public class BusControls : MonoBehaviour
         }
 
         map = FindObjectOfType<MapMatrix>();
-
-        busPos = new Vector2Int(0,0);
-        
     }
+
+    void Start()
+    {
+        //set bus starting pos
+        int randVal;
+        int testVal = 0;
+        do
+        {
+            randVal = Random.Range(0, map.intersectionList.Count);
+            map.intersectionList[randVal].getPos();
+            testVal++;
+            print(randVal);
+        }
+        while (map.intersectionList[randVal].type != 0 && testVal < 10);
+
+        busPos = map.intersectionList[randVal].getPos();
+        Vector3 startPos = new Vector3(busPos.x, busPos.y, 0);
+        transform.position = startPos;
+    }
+
     private void OnEnable()
     {
         StartCoroutine(restTime(3));

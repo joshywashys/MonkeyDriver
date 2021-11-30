@@ -316,11 +316,11 @@ MonoBehaviour:
   pinkBusStop: {fileID: 7309656774847513232, guid: 9617dfa1e2d9c1444817fd9d4c0ef761, type: 3}
   redBusStop: {fileID: 7309656774847513232, guid: 347de037a679092419466c25ee583611, type: 3}
   obstacle: {fileID: 7309656774847513232, guid: 35e00b988b420fa41a89f9219d02185b, type: 3}
-  height: 9
-  width: 9
-  minRegionSize: 5
-  maxRegionSize: 0
-  numRegions: 0
+  height: 15
+  width: 15
+  minRegionSize: 2
+  maxRegionSize: 6
+  regionChance: 0.4
   numStops: 5
   numObstacles: 3
   MAP_SCALAR: 1
