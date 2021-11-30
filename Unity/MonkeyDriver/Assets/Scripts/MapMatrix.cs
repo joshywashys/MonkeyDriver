@@ -60,6 +60,7 @@ public class MapMatrix : MonoBehaviour
     public Dictionary<Vector2,string> destinations;
 
     public int MAP_SCALAR = 1; //altered for debugging/visualisation purposes
+    public GameObject intersection2;
 
     //populates a 2d array we feed it with bus stops and obstacles.
     void GenerateMap(Intersection[,] mapMatrix, int numStops)
@@ -251,7 +252,18 @@ public class MapMatrix : MonoBehaviour
             //print(i);
             //print(x + ", " + y);
 
-            Instantiate(intersection, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
+            Vector2Int intPos = intersectionList[i].getPos();
+            if ((intPos.x + intPos.y) % 2 == 0)
+            {
+                print("even");
+                Instantiate(intersection, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
+            }
+            else
+            {
+                print("odd");
+                Instantiate(intersection2, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
+            }
+
 
             switch (intersectionList[i].type)
             {
