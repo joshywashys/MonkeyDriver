@@ -50,4 +50,9 @@ public class ScoreManager : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
     }
+
+    public int getScore()
+    {
+        return score;
+    }
 }

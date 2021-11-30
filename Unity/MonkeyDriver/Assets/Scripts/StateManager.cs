@@ -12,6 +12,7 @@ public class StateManager : MonoBehaviour
 {
     public static StateManager i = null;
     public GameObject gameOverPanel;
+    public TMPro.TextMeshProUGUI scoreText;
 
 
     gameState curGameState = gameState.PLAY;
@@ -29,6 +30,7 @@ public class StateManager : MonoBehaviour
         if (flag == gameState.FINISHED)
         {
             curGameState = gameState.FINISHED;
+            scoreText.text = "Your final score: " + ScoreManager.i.getScore();
             gameOverPanel.SetActive(true);
         }
     }
