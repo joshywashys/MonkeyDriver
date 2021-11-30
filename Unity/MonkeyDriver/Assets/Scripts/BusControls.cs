@@ -27,11 +27,10 @@ public class BusControls : MonoBehaviour
 
     private Vector2Int busPos;
     public static bool atBoundUp, atBoundLeft, atBoundRight, atBoundDown; //map changes these
-    bool hasPlow = false;
     private float lerpSpeed = 0.7f;
     private float minSpeed = 0.1f;
     private float speedDecrement = 0.07f;
-    public static int numControls = 4;
+    public static int numControls = 7;
     public static int numPassengers = 20;
 
     public GameObject controls;
@@ -152,7 +151,6 @@ public class BusControls : MonoBehaviour
     //Up,Down,Left,Right,Plow,Rest,Accelerate
     void SetAvailableControls()
     {
-        CheckForBounds();
         Transform[] ctrlsList = new Transform[6];
         for (int i = 0; i < 6; i++)
         {
@@ -241,12 +239,6 @@ public class BusControls : MonoBehaviour
         }
     }
 
-    public void Plow()
-    {
-        hasPlow = !hasPlow;
-        StartCoroutine(restTime(0.3f));
-    }
-
     public void Rest()
     {
         StartCoroutine(restTime(3));
@@ -266,7 +258,7 @@ public class BusControls : MonoBehaviour
     private void executeAction(int control)
     {
         SetAvailableControls();
-        //CheckForBounds();
+        CheckForBounds();
         try
         {
             switch (activeControls[control])
@@ -282,9 +274,6 @@ public class BusControls : MonoBehaviour
                     break;
                 case Controls.Right:
                     Right();
-                    break;
-                case Controls.Plow:
-                    Plow();
                     break;
                 case Controls.Rest:
                     Rest();

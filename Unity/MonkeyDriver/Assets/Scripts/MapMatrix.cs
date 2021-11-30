@@ -15,6 +15,7 @@ public class MapMatrix : MonoBehaviour
     //Unity objects
     public Transform generationLocation;
     public GameObject intersection;
+    public GameObject intersection2;
     public GameObject blueBusStop, greenBusStop, pinkBusStop, redBusStop;
     public GameObject obstacle;
 
@@ -119,7 +120,7 @@ public class MapMatrix : MonoBehaviour
                     }
                     if (availableSpace > minRegionSize && j < mapMatrix.GetLength(1) - minRegionSize - 1)
                     {
-                        print(i + ", " + j + ", " + availableSpace);
+                        //print(i + ", " + j + ", " + availableSpace);
                         generateRegion(i, j, availableSpace);
                     }
                     
@@ -250,8 +251,18 @@ public class MapMatrix : MonoBehaviour
 
             //print(i);
             //print(x + ", " + y);
-
-            Instantiate(intersection, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
+            Vector2Int intPos = intersectionList[i].getPos();
+            if ((intPos.x + intPos.y) % 2 == 0)
+            {
+                print("even");
+                Instantiate(intersection, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
+            }
+            else
+            {
+                print("odd");
+                Instantiate(intersection2, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
+            }
+            
 
             switch (intersectionList[i].type)
             {
