@@ -77,10 +77,12 @@ public class MapMatrix : MonoBehaviour
             {
                 for (int j = startY; j < startY + regionHeight; j++)
                 {
+                    //print(i + ", " + j);
                     Intersection newIntersection = new Intersection(i, j);
                     mapMatrix[i, j] = newIntersection;
                     intersectionList.Add(newIntersection);
                 }
+
             }
             
         }
@@ -88,7 +90,7 @@ public class MapMatrix : MonoBehaviour
         //cycle through all tiles
         for (int i = 0; i < matrixWidth - minRegionSize; i++)
         {
-            for (int j = 0; j < matrixHeight - minRegionSize; j++)
+            for (int j = 0; j < matrixHeight - minRegionSize - 1; j++)
             {
                 //if tile doesn't have an intersection
                 if (mapMatrix[i, j] == null && Random.Range(0f,1f) < regionChance)
@@ -117,6 +119,7 @@ public class MapMatrix : MonoBehaviour
                     }
                     if (availableSpace > minRegionSize && j < mapMatrix.GetLength(1) - minRegionSize - 1)
                     {
+                        print(i + ", " + j + ", " + availableSpace);
                         generateRegion(i, j, availableSpace);
                     }
                     

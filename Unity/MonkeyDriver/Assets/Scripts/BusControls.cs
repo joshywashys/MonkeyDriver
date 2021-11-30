@@ -84,7 +84,6 @@ public class BusControls : MonoBehaviour
             randVal = Random.Range(0, map.intersectionList.Count);
             map.intersectionList[randVal].getPos();
             testVal++;
-            print(randVal);
         }
         while (map.intersectionList[randVal].type != 0 && testVal < 10);
 

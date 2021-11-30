@@ -319,7 +319,7 @@ MonoBehaviour:
   height: 15
   width: 15
   minRegionSize: 2
-  maxRegionSize: 6
+  maxRegionSize: 5
   regionChance: 0.4
   numStops: 5
   numObstacles: 3
