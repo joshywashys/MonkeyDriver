@@ -149,7 +149,7 @@ public class BusControls : MonoBehaviour
     {
         if (!atBoundUp)//this check will become obsolete since the control should never be called if it would result in out of bounds
         {
-            busPos.y += map.MAP_SCALAR;
+            busPos.y += 1;
             StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y +  map.MAP_SCALAR));
         }
         else
@@ -163,7 +163,7 @@ public class BusControls : MonoBehaviour
     {
         if (!atBoundDown)
         {
-            busPos.y -=  map.MAP_SCALAR;
+            busPos.y -=  1;
             StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y -  map.MAP_SCALAR));
         }
         else
@@ -177,7 +177,7 @@ public class BusControls : MonoBehaviour
     {
         if (!atBoundLeft)
         {
-            busPos.x -=  map.MAP_SCALAR;
+            busPos.x -=  1;
             StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x -  map.MAP_SCALAR, transform.position.y));
         }
         else
@@ -192,7 +192,7 @@ public class BusControls : MonoBehaviour
     {
         if (!atBoundRight)
         {
-            busPos.x +=  map.MAP_SCALAR;
+            busPos.x +=  1;
             StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x +  map.MAP_SCALAR, transform.position.y));
         }
         else
@@ -267,7 +267,9 @@ public class BusControls : MonoBehaviour
     {
         float shortestDistance = 1000.0f;
         float distance;
-        Vector2 closestStop = new Vector2(-45,-45);
+        Vector2 closestStop = new Vector2(-100,-100);
+
+        Debug.Log("Bus position:" + busPos);
         foreach (Vector2 stop in map.destinations.Keys)
         {
             distance = Mathf.Sqrt(Mathf.Pow((busPos.x - stop.x),2) + Mathf.Pow((busPos.y - stop.y),2));

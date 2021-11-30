@@ -17,7 +17,11 @@ public class PassengerBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (!m_onBus)
+        {
+            renderer.forceRenderingOff = true;
+            Destroy(gameObject, 1.0f);
+        }
     }
 
     #region getters and setters
