@@ -10,6 +10,10 @@ public class MiniMap : MonoBehaviour
     public float maxDistanceThreshold;
     float targetX, targetY;
 
+    //have only the four closest stop indicators
+    //spawn them at start and set them not visible
+    //visible when off screen
+
     public GameObject tester;
 
     Camera cam;
