@@ -19,12 +19,18 @@ public class MapMatrix : MonoBehaviour
 
     //map properties
     public Intersection[,] mapMatrix;
-    private List<Intersection> intersectionList = new List<Intersection>();
     public int height;
     public int width;
 
+    private List<Intersection> intersectionList = new List<Intersection>();
+    private List<Intersection> obstacleList = new List<Intersection>();
+    private List<Intersection> stopList = new List<Intersection>();
+
+    //region (PCG) properties
     private List<Vector2Int> regionPos = new List<Vector2Int>();
     public int minRegionSize;
+    public int maxRegionSize;
+    public int numRegions;
 
     //map gen variables + data
     public int numStops;
@@ -38,21 +44,28 @@ public class MapMatrix : MonoBehaviour
     {
         int matrixWidth = mapMatrix.GetLength(0);
         int matrixHeight = mapMatrix.GetLength(1);
+
+        //generate regions
         Vector2Int currRegionPos = new Vector2Int(0, 0);
-
-        regionPos.Add(currRegionPos);
-        int regionWidth = Random.Range(minRegionSize, matrixWidth);
-        int regionHeight = Random.Range(minRegionSize, matrixHeight);
-
-        for (int i = currRegionPos.x; i < regionWidth; i++)
+        for (int i = 0; i < numRegions; i++)
         {
-            for (int j = currRegionPos.y; j < regionHeight; j++)
+            regionPos.Add(currRegionPos);
+            int regionWidth = Random.Range(minRegionSize, maxRegionSize);
+            int regionHeight = Random.Range(minRegionSize, maxRegionSize);
+
+            for (int j = currRegionPos.x; j < regionWidth; j++)
             {
-                Intersection newIntersection = new Intersection(i, j);
-                mapMatrix[i, j] = newIntersection;
-                intersectionList.Add(newIntersection);
+                for (int k = currRegionPos.y; k < regionHeight; k++)
+                {
+                    //Intersection newIntersection = new Intersection(j, k);
+                    //mapMatrix[j, k] = newIntersection;
+                    //intersectionList.Add(newIntersection);
+                }
             }
+
         }
+
+        //generate bridges between regions
 
         
         //populate map with intersections
@@ -60,9 +73,9 @@ public class MapMatrix : MonoBehaviour
         {
             for (int j = 0; j < matrixHeight; j++)
             {
-                //Intersection newIntersection = new Intersection(i, j);
-                //mapMatrix[i, j] = newIntersection;
-                //intersectionList.Add(newIntersection);
+                Intersection newIntersection = new Intersection(i, j);
+                mapMatrix[i, j] = newIntersection;
+                intersectionList.Add(newIntersection);
             }
         }
         
@@ -144,7 +157,8 @@ public class MapMatrix : MonoBehaviour
             while (intersectionList[randVal].type != 0);
 
             intersectionList[randVal].type = randColour;
-            
+            stopList.Add(intersectionList[randVal]);
+
         }
 
         //populate map with obstacles
@@ -158,6 +172,7 @@ public class MapMatrix : MonoBehaviour
             while (intersectionList[randVal].type != 0);
 
             intersectionList[randVal].type = 5;
+            obstacleList.Add(intersectionList[randVal]);
         }
 
     }
@@ -180,46 +195,46 @@ public class MapMatrix : MonoBehaviour
             Instantiate(intersection, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
 
             switch (intersectionList[i].type)
-                {
-                    case 0:
-                        break;
+            {
+                case 0:
+                    break;
 
-                    case 1:
-                        //creates a blue bus stop at [i,j] and adds it to the list of possible destinations
+                case 1:
+                    //creates a blue bus stop at [i,j] and adds it to the list of possible destinations
 
-                        Instantiate(blueBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
-                        destinations.Add(pos, "blue");
-                        break;
+                    Instantiate(blueBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                    destinations.Add(pos, "blue");
+                    break;
 
-                    case 2:
-                        //creates a green bus stop at [i,j] and adds it to the list of possible destinations
+                case 2:
+                    //creates a green bus stop at [i,j] and adds it to the list of possible destinations
 
-                        Instantiate(greenBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
-                        destinations.Add(pos, "green");
-                        break;
+                    Instantiate(greenBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                    destinations.Add(pos, "green");
+                    break;
 
-                    case 3:
-                        //creates an orange bus stop at [i,j] and adds it to the list of possible destinations
+                case 3:
+                    //creates an orange bus stop at [i,j] and adds it to the list of possible destinations
 
-                        Instantiate(pinkBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
-                        destinations.Add(pos, "pink");
-                        break;
+                    Instantiate(pinkBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                    destinations.Add(pos, "pink");
+                    break;
 
-                    case 4:
-                        //creates a purple bus stop at [i,j] and adds it to the list of possible destinations
+                case 4:
+                    //creates a purple bus stop at [i,j] and adds it to the list of possible destinations
 
-                        Instantiate(redBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
-                        destinations.Add(pos, "red");
-                        break;
+                    Instantiate(redBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                    destinations.Add(pos, "red");
+                    break;
 
-                    case 5:
-                        Instantiate(obstacle, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
-                        break;
+                case 5:
+                    Instantiate(obstacle, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation);
+                    break;
 
-                    default:
-                        break;
-                }
-            //}
+                default:
+                    break;
+            }
+
         }
 
         //center map at origin
