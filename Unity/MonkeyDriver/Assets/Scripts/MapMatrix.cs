@@ -14,8 +14,7 @@ public class MapMatrix : MonoBehaviour
 {
     //Unity objects
     public Transform generationLocation;
-    public GameObject intersection;
-    public GameObject intersection2;
+    public GameObject intersection, intersection2;
     public GameObject blueBusStop, greenBusStop, pinkBusStop, redBusStop;
     public GameObject obstacle;
 
@@ -66,6 +65,7 @@ public class MapMatrix : MonoBehaviour
     public List<GameObject> buildings;
 
     public int MAP_SCALAR = 1; //altered for debugging/visualisation purposes
+    
 
     //populates a 2d array we feed it with bus stops and obstacles.
     void GenerateMap(Intersection[,] mapMatrix, int numStops)
@@ -277,6 +277,8 @@ public class MapMatrix : MonoBehaviour
             int x = pos.x;
             int y = pos.y;
 
+            //print(i);
+            //print(x + ", " + y);
             /*
             //TEMP: remove once road junctions are implemented
             Vector2Int intPos = intersectionList[i].getPos();

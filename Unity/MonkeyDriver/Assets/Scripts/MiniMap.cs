@@ -9,6 +9,11 @@ public class MiniMap : MonoBehaviour
     public float minDistanceThreshold;
     public float maxDistanceThreshold;
     float targetX, targetY;
+    public float padding;
+
+    //have only the four closest stop indicators
+    //spawn them at start and set them not visible
+    //visible when off screen
 
     public GameObject tester;
 
@@ -27,7 +32,7 @@ public class MiniMap : MonoBehaviour
                 if (cam.transform.position.x < stop.transform.position.x)
                 {
                     //right
-                    targetX = cam.transform.position.x + cam.orthographicSize * cam.aspect;
+                    targetX = cam.transform.position.x + cam.orthographicSize * cam.aspect - padding;
                     targetY = ((stop.transform.position.y - cam.transform.position.y) / (stop.transform.position.x - cam.transform.position.x)) 
                         * (targetX - stop.transform.position.x) + stop.transform.position.y;
 
@@ -40,12 +45,12 @@ public class MiniMap : MonoBehaviour
                         if (cam.transform.position.y < stop.transform.position.y)
                         {
                             //up
-                            targetY = cam.transform.position.y + cam.orthographicSize;
+                            targetY = cam.transform.position.y + cam.orthographicSize - padding;
                         }
                         else
                         {
                             //down
-                            targetY = cam.transform.position.y - cam.orthographicSize;
+                            targetY = cam.transform.position.y - cam.orthographicSize + padding;
                         }
                         targetX = (targetY - stop.transform.position.y) / ((stop.transform.position.y - cam.transform.position.y) / (stop.transform.position.x - cam.transform.position.x))
                                 + stop.transform.position.x;

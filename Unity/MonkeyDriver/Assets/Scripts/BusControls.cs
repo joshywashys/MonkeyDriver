@@ -17,9 +17,8 @@ enum Controls
     Down,
     Left,
     Right,
-    Plow,
-    Rest,
-    Accelerate
+    Accelerate,
+    Rest
 }
 public class BusControls : MonoBehaviour
 {
@@ -179,6 +178,17 @@ public class BusControls : MonoBehaviour
         if (currIntersection.atBoundRight()) { activeControls.Remove(Controls.Right); }
         if (currIntersection.atBoundDown()) { activeControls.Remove(Controls.Down); }
         if (currIntersection.atBoundLeft()) { activeControls.Remove(Controls.Left); }
+
+        foreach (int avControl in availableCtrlNums)
+        {
+            Debug.Log("Available Controls (from UI): " + avControl); 
+        }
+
+        foreach (Controls control in activeControls)
+        {
+            Debug.Log("Active control methods: " + control);
+        }
+
     }
 
 #region control methods
@@ -238,7 +248,7 @@ public class BusControls : MonoBehaviour
             executeAction(monkeyChoice);
         }
     }
-
+    
     public void Rest()
     {
         StartCoroutine(restTime(3));
@@ -258,9 +268,12 @@ public class BusControls : MonoBehaviour
     private void executeAction(int control)
     {
         SetAvailableControls();
+
         CheckForBounds();
+        Debug.Log("control chosen: " + control);
         try
         {
+            Debug.Log("active control: " + activeControls[control]);
             switch (activeControls[control])
             {
                 case Controls.Up:
