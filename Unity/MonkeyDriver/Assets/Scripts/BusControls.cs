@@ -29,7 +29,7 @@ public class BusControls : MonoBehaviour
     private float lerpSpeed = 0.7f;
     private float minSpeed = 0.1f;
     private float speedDecrement = 0.07f;
-    public static int numControls = 4;
+    public static int numControls = 7;
     public static int numPassengers = 20;
 
     public GameObject controls;
@@ -150,7 +150,6 @@ public class BusControls : MonoBehaviour
     //Up,Down,Left,Right,Plow,Rest,Accelerate
     void SetAvailableControls()
     {
-        CheckForBounds();
         Transform[] ctrlsList = new Transform[6];
         for (int i = 0; i < 6; i++)
         {
@@ -249,6 +248,7 @@ public class BusControls : MonoBehaviour
             executeAction(monkeyChoice);
         }
     }
+    
     public void Rest()
     {
         StartCoroutine(restTime(3));
@@ -268,7 +268,8 @@ public class BusControls : MonoBehaviour
     private void executeAction(int control)
     {
         SetAvailableControls();
-        //CheckForBounds();
+
+        CheckForBounds();
         Debug.Log("control chosen: " + control);
         try
         {

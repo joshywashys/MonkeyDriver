@@ -312,7 +312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   generationLocation: {fileID: 2099640187}
   intersection: {fileID: 8739461921070908460, guid: 25d44706dd4627c4b873dffdb329f496, type: 3}
-  intersection2: {fileID: 8739461921070908460, guid: 2b5f33d41e0d0214482d0bb64d94104e, type: 3}
+  intersection2: {fileID: 911240611607083860, guid: 252035934f907fe4d83200fa04fe23f0, type: 3}
   blueBusStop: {fileID: 7309656774847513232, guid: 5404fe11fc414454a91f4983ef86b80f, type: 3}
   greenBusStop: {fileID: 7309656774847513232, guid: d0e653c7c30947d47a2ec7e6ca0430be, type: 3}
   pinkBusStop: {fileID: 7309656774847513232, guid: 9617dfa1e2d9c1444817fd9d4c0ef761, type: 3}
@@ -325,6 +325,10 @@ MonoBehaviour:
   regionChance: 0.4
   numStops: 5
   numObstacles: 6
+  buildings:
+  - {fileID: 1860662580202147405, guid: ed8d6adc180d60e40bc3f3c27e4c4137, type: 3}
+  - {fileID: 3622377047509317400, guid: c0f3972b4133345449f9916544d3c05e, type: 3}
+  - {fileID: 7938216531820896735, guid: 976c4ce989f72e845812fe03038c6e87, type: 3}
   MAP_SCALAR: 1
 --- !u!4 &325480521
 Transform:
@@ -1013,7 +1017,7 @@ SpriteRenderer:
   m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 87a9fa17398e54844b8924bbe5a49d55, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.33981162, g: 0.5, b: 0.3089623, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1929,7 +1933,7 @@ Transform:
   m_GameObject: {fileID: 1444065752}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.17183943, y: 0.17183943, z: 0.17183943}
+  m_LocalScale: {x: 0.16, y: 0.16, z: 0.16}
   m_Children:
   - {fileID: 519420032}
   - {fileID: 555908603}

@@ -33,12 +33,14 @@ public class MapMatrix : MonoBehaviour
         public Vector2Int pos;
         public int width;
         public int height;
+        public List<Intersection> intersections;
 
         public Region(int x, int y, int width, int height)
         {
             pos = new Vector2Int(x,y);
             this.width = width;
             this.height = height;
+            intersections = new List<Intersection>();
         }
 
         public Region(Vector2Int xy, int width, int height)
@@ -46,6 +48,7 @@ public class MapMatrix : MonoBehaviour
             pos = xy;
             this.width = width;
             this.height = height;
+            intersections = new List<Intersection>();
         }
     }
 
@@ -59,6 +62,8 @@ public class MapMatrix : MonoBehaviour
     public int numObstacles;
     public Dictionary<Vector2,string> destinations;
 
+    public List<GameObject> buildings;
+
     public int MAP_SCALAR = 1; //altered for debugging/visualisation purposes
     
 
@@ -68,7 +73,7 @@ public class MapMatrix : MonoBehaviour
         int matrixWidth = mapMatrix.GetLength(0);
         int matrixHeight = mapMatrix.GetLength(1);
 
-        //generate regions
+        //generate a region
         void generateRegion(int startX, int startY, int maxWidth)
         {
             int regionWidth = Random.Range(minRegionSize, maxRegionSize);
@@ -85,7 +90,9 @@ public class MapMatrix : MonoBehaviour
                 }
 
             }
-            
+
+            regionList.Add(new Region(startX, startY, regionWidth, regionHeight));
+
         }
 
         //cycle through all tiles
@@ -120,7 +127,7 @@ public class MapMatrix : MonoBehaviour
                     }
                     if (availableSpace > minRegionSize && j < mapMatrix.GetLength(1) - minRegionSize - 1)
                     {
-                        print(i + ", " + j + ", " + availableSpace);
+                        //print(i + ", " + j + ", " + availableSpace);
                         generateRegion(i, j, availableSpace);
                     }
                     
@@ -240,18 +247,40 @@ public class MapMatrix : MonoBehaviour
     //instantiate everything in the right places
     void DrawMap(Intersection[,] mapMatrix)
     {
+        //region testing! just temp
+        int currIndex = 0;
+        foreach (Region region in regionList)
+        {
+            print(region.pos.x + ", " + region.pos.y);
+            for (int i = 0; i < region.width; i++)
+            {
+                for (int j = 0; j < region.height; j++)
+                {
+                    if (currIndex % 2 == 0)
+                    {
+                        print("even");
+                        Instantiate(intersection, new Vector3((region.pos.x + i) * MAP_SCALAR, (region.pos.y + j) * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
+                    }
+                    else
+                    {
+                        print("odd");
+                        Instantiate(intersection2, new Vector3((region.pos.x + i) * MAP_SCALAR, (region.pos.y + j) * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
+                    }
+                }
+            }
+            currIndex += 1;
+        }
+
         for (int i = 0; i < intersectionList.Count; i++)
         {
-            //for (int j = 0; j < matrixHeight; j++)
-            //{
-            //draw intersections
             Vector2Int pos = intersectionList[i].getPos();
             int x = pos.x;
             int y = pos.y;
 
             //print(i);
             //print(x + ", " + y);
-
+            /*
+            //TEMP: remove once road junctions are implemented
             Vector2Int intPos = intersectionList[i].getPos();
             if ((intPos.x + intPos.y) % 2 == 0)
             {
@@ -263,8 +292,9 @@ public class MapMatrix : MonoBehaviour
                 print("odd");
                 Instantiate(intersection2, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
             }
+            */
 
-
+            //draw to the intersection based on type
             switch (intersectionList[i].type)
             {
                 case 0:
@@ -308,6 +338,23 @@ public class MapMatrix : MonoBehaviour
 
         }
 
+        //copy intersection list to the mapmatrix
+        //go thru mapmatrix, check if index is null, if so then fill with buildings
+        for (int i = 0; i < mapMatrix.GetLength(0); i++)
+        {
+            for (int j = 0; j < mapMatrix.GetLength(1); j++)
+            {
+                if (mapMatrix[i,j] == null)  //&& !isAlone(new Vector2Int(i, j)
+                {
+                    int buildingIndex = Random.Range(0, buildings.Count);
+                    float randomOffsetScalar = 0.2f;
+                    float randomOffsetX = Random.Range(-randomOffsetScalar, randomOffsetScalar);
+                    float randomOffsetY = Random.Range(-randomOffsetScalar, randomOffsetScalar);
+                    Instantiate(buildings[buildingIndex], new Vector3(i + randomOffsetX, j + randomOffsetY, 0), Quaternion.identity, generationLocation);
+                }
+            }
+        }
+
         /*
         //center map at origin
         int matrixWidth = mapMatrix.GetLength(0);
@@ -316,6 +363,63 @@ public class MapMatrix : MonoBehaviour
         float mapHeight = matrixHeight * MAP_SCALAR;
         generationLocation.Translate(new Vector3(-(mapWidth - 1) /2, -(mapHeight - 1)/2, -6));
         */
+    }
+
+    public bool hasIntersectionAbove(Vector2Int toCheck)
+    {
+        if (toCheck.y - 1 > 0)
+        {
+            if (mapMatrix[toCheck.x, toCheck.y - 1] == null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public bool hasIntersectionRight(Vector2Int toCheck)
+    {
+        if (toCheck.x + 1 < mapMatrix.GetLength(0))
+        {
+            if (mapMatrix[toCheck.x + 1, toCheck.y] == null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public bool hasIntersectionBelow(Vector2Int toCheck)
+    {
+        if (toCheck.y + 1 < mapMatrix.GetLength(1))
+        {
+            if (mapMatrix[toCheck.x, toCheck.y + 1] == null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public bool hasIntersectionLeft(Vector2Int toCheck)
+    {
+        if (toCheck.x - 1 > 0)
+        {
+            if (mapMatrix[toCheck.x - 1, toCheck.y] == null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public bool isAlone(Vector2Int toCheck)
+    {
+        if (!hasIntersectionAbove(toCheck) && !hasIntersectionRight(toCheck) && !hasIntersectionBelow(toCheck) && !hasIntersectionLeft(toCheck))
+        {
+            return true;
+        }
+        return false;
     }
 
     void Awake()
