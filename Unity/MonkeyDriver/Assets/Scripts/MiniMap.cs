@@ -5,9 +5,6 @@ using UnityEngine;
 public class MiniMap : MonoBehaviour
 {
     MapMatrix map;
-    float objectDistance;
-    public float minDistanceThreshold;
-    public float maxDistanceThreshold;
     float targetX, targetY;
     public float padding;
 
@@ -18,13 +15,27 @@ public class MiniMap : MonoBehaviour
     public GameObject tester;
 
     Camera cam;
+    float camHeight;
+    float camWidth;
+
+    List<GameObject> stopPointers;
+
     // Start is called before the first frame update
     void Start()
     {
         cam = Camera.main;
         map = FindObjectOfType<MapMatrix>();
-        Debug.Log(cam.aspect);
+        camHeight = cam.orthographicSize;
+        camWidth = camHeight * cam.aspect;
 
+        foreach (GameObject stop in map.stopDict.Values)
+        {
+            //instantiate a pointer of the correct colour
+        }
+    }
+
+    void Update()
+    {
         foreach (GameObject stop in map.stopDict.Values)
         {
             if (!stop.GetComponent<SpriteRenderer>().isVisible)
@@ -32,29 +43,31 @@ public class MiniMap : MonoBehaviour
                 if (cam.transform.position.x < stop.transform.position.x)
                 {
                     //right
-                    targetX = cam.transform.position.x + cam.orthographicSize * cam.aspect - padding;
-                    targetY = ((stop.transform.position.y - cam.transform.position.y) / (stop.transform.position.x - cam.transform.position.x)) 
+                    targetX = cam.transform.position.x + camWidth - padding;
+                    targetY = ((stop.transform.position.y - cam.transform.position.y) / (stop.transform.position.x - cam.transform.position.x))
                         * (targetX - stop.transform.position.x) + stop.transform.position.y;
 
-                    if (targetY > cam.transform.position.y - cam.orthographicSize && targetY < cam.transform.position.y + cam.orthographicSize)
+                    if (targetY > cam.transform.position.y - camHeight && targetY < cam.transform.position.y + camHeight)
                     {
-                        Instantiate(tester, new Vector3(targetX, targetY, 1), Quaternion.identity);
+                        //get stop colour
+                        //turn off pointer of the same colour
                     }
                     else
                     {
                         if (cam.transform.position.y < stop.transform.position.y)
                         {
                             //up
-                            targetY = cam.transform.position.y + cam.orthographicSize - padding;
+                            targetY = cam.transform.position.y + camHeight - padding;
                         }
                         else
                         {
                             //down
-                            targetY = cam.transform.position.y - cam.orthographicSize + padding;
+                            targetY = cam.transform.position.y - camHeight + padding;
                         }
                         targetX = (targetY - stop.transform.position.y) / ((stop.transform.position.y - cam.transform.position.y) / (stop.transform.position.x - cam.transform.position.x))
                                 + stop.transform.position.x;
-                        Instantiate(tester, new Vector3(targetX, targetY, 1), Quaternion.identity);
+                        //get stop colour
+                        //turn off pointer of the same colour
                     }
 
                 }
@@ -68,10 +81,5 @@ public class MiniMap : MonoBehaviour
                 //hide it
             }
         }
-    }
-
-    void Update()
-    {
-
     }
 }

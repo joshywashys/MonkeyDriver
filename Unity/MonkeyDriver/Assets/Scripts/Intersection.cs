@@ -89,5 +89,22 @@ public class Intersection
     {
         return pos;
     }
+
+    public string getColour()
+    {
+        switch (type)
+        {
+            case 1:
+                return ("blue");
+            case 2:
+                return ("green");
+            case 3:
+                return ("pink");
+            case 4:
+                return ("red");
+            default:
+                return ("");
+        }
+    }
     #endregion
 }
