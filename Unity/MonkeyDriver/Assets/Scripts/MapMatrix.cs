@@ -15,6 +15,7 @@ public class MapMatrix : MonoBehaviour
     //Unity objects
     public Transform generationLocation;
     public GameObject intersection, intersection2;
+    public GameObject intsectUp, intsectAcross, intsectTU, intsectTR, intsectTD, intsectTL, intsectLU, intsectLR, intsectLD, intsectLL;
     public GameObject blueBusStop, greenBusStop, pinkBusStop, redBusStop;
     public GameObject obstacle;
 
@@ -95,10 +96,10 @@ public class MapMatrix : MonoBehaviour
 
         }
 
-        //cycle through all tiles
-        for (int i = 0; i < matrixWidth - minRegionSize; i++)
+        //cycle through all tiles (i & j swapped for testing)
+        for (int j = 0; j < matrixWidth - minRegionSize; j++)
         {
-            for (int j = 0; j < matrixHeight - minRegionSize - 1; j++)
+            for (int i = 0; i < matrixHeight - minRegionSize - 1; i++)
             {
                 //if tile doesn't have an intersection
                 if (mapMatrix[i, j] == null && Random.Range(0f,1f) < regionChance)
@@ -138,7 +139,7 @@ public class MapMatrix : MonoBehaviour
         }
 
         /*
-        //populate map with intersections
+        //populate map with intersections (DEPRECATED)
         for (int i = 0; i < matrixWidth; i++)
         {
             for (int j = 0; j < matrixHeight; j++)
@@ -247,7 +248,9 @@ public class MapMatrix : MonoBehaviour
     //instantiate everything in the right places
     void DrawMap(Intersection[,] mapMatrix)
     {
+
         //region testing! just temp
+        /*
         int currIndex = 0;
         foreach (Region region in regionList)
         {
@@ -270,16 +273,14 @@ public class MapMatrix : MonoBehaviour
             }
             currIndex += 1;
         }
+        */
 
         for (int i = 0; i < intersectionList.Count; i++)
         {
             Vector2Int pos = intersectionList[i].getPos();
             int x = pos.x;
             int y = pos.y;
-
-            //print(i);
-            //print(x + ", " + y);
-            /*
+            
             //TEMP: remove once road junctions are implemented
             Vector2Int intPos = intersectionList[i].getPos();
             if ((intPos.x + intPos.y) % 2 == 0)
@@ -292,7 +293,7 @@ public class MapMatrix : MonoBehaviour
                 print("odd");
                 Instantiate(intersection2, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
             }
-            */
+            
 
             //draw to the intersection based on type
             switch (intersectionList[i].type)
@@ -338,8 +339,7 @@ public class MapMatrix : MonoBehaviour
 
         }
 
-        //copy intersection list to the mapmatrix
-        //go thru mapmatrix, check if index is null, if so then fill with buildings
+        //go thru mapmatrix, fill empty indexes with absolute SHRUBBERY!
         for (int i = 0; i < mapMatrix.GetLength(0); i++)
         {
             for (int j = 0; j < mapMatrix.GetLength(1); j++)
@@ -355,14 +355,6 @@ public class MapMatrix : MonoBehaviour
             }
         }
 
-        /*
-        //center map at origin
-        int matrixWidth = mapMatrix.GetLength(0);
-        int matrixHeight = mapMatrix.GetLength(1);
-        float mapWidth = matrixWidth * MAP_SCALAR;
-        float mapHeight = matrixHeight * MAP_SCALAR;
-        generationLocation.Translate(new Vector3(-(mapWidth - 1) /2, -(mapHeight - 1)/2, -6));
-        */
     }
 
     public bool hasIntersectionAbove(Vector2Int toCheck)
