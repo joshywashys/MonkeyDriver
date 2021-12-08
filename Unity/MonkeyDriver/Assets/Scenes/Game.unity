@@ -291,6 +291,7 @@ GameObject:
   - component: {fileID: 325480520}
   - component: {fileID: 325480522}
   - component: {fileID: 325480523}
+  - component: {fileID: 325480524}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -327,7 +328,7 @@ MonoBehaviour:
   minRegionSize: 2
   maxRegionSize: 5
   regionChance: 0.6
-  numStops: 5
+  numStops: 4
   numObstacles: 6
   buildings:
   - {fileID: 1860662580202147405, guid: ed8d6adc180d60e40bc3f3c27e4c4137, type: 3}
@@ -378,6 +379,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverPanel: {fileID: 438630085}
   scoreText: {fileID: 1068314498}
+--- !u!114 &325480524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 325480519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b07b15684d1aa974bacba06012db3209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  padding: 1
+  blueMini: {fileID: 6184713774374819605, guid: c0185391c5b4e22468cede456fbd5497, type: 3}
+  greenMini: {fileID: 6184713774374819605, guid: c65924bb527447049935be14f7aa2b8e, type: 3}
+  pinkMini: {fileID: 6184713774374819605, guid: 6c14569362f04f649a816ce5488b4f6c, type: 3}
+  redMini: {fileID: 6184713774374819605, guid: b363f969fd5eb8e428f9c9af04b888c7, type: 3}
+  miniHolder: {fileID: 2076586831}
 --- !u!1 &350180822
 GameObject:
   m_ObjectHideFlags: 0
@@ -2639,6 +2658,36 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &2076586830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2076586831}
+  m_Layer: 0
+  m_Name: MiniMap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2076586831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076586830}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2099640187}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2086134789
 GameObject:
   m_ObjectHideFlags: 0
@@ -2749,6 +2798,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1444065758}
+  - {fileID: 2076586831}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

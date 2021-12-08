@@ -124,13 +124,13 @@ public class MiniMap : MonoBehaviour
                         //move pointer of the same colour
                         stopPointers[stop.Key.getColour()].transform.position = new Vector3(targetX, targetY, 1);
 
-						//stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(
-						//Mathf.Atan2(targetY - cam.transform.position.y, targetX - cam.transform.position.x)
-						//* 180 / Mathf.PI, Vector3.forward);
+       //                 stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(
+							//Mathf.Atan2(stop.Value.transform.position.y - cam.transform.position.y, stop.Value.transform.position.x - cam.transform.position.x)
+							//* 180 / Mathf.PI - 180, Vector3.forward);
 
-						//stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(targetX, targetY) * 180 / Mathf.PI, Vector3.forward);
-					}
-				}
+                        //stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(targetX, targetY) * 180 / Mathf.PI, Vector3.forward);
+                    }
+                }
 			}
 			else
 			{
