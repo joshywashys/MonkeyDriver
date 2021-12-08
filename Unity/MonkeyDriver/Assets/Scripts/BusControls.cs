@@ -181,12 +181,12 @@ public class BusControls : MonoBehaviour
 
         foreach (int avControl in availableCtrlNums)
         {
-            Debug.Log("Available Controls (from UI): " + avControl); 
+            //Debug.Log("Available Controls (from UI): " + avControl); 
         }
 
         foreach (Controls control in activeControls)
         {
-            Debug.Log("Active control methods: " + control);
+            //Debug.Log("Active control methods: " + control);
         }
 
     }
@@ -270,10 +270,10 @@ public class BusControls : MonoBehaviour
         SetAvailableControls();
 
         CheckForBounds();
-        Debug.Log("control chosen: " + control);
+        //Debug.Log("control chosen: " + control);
         try
         {
-            Debug.Log("active control: " + activeControls[control]);
+            //Debug.Log("active control: " + activeControls[control]);
             switch (activeControls[control])
             {
                 case Controls.Up:

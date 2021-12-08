@@ -14,8 +14,9 @@ public class MapMatrix : MonoBehaviour
 {
     //Unity objects
     public Transform generationLocation;
-    public GameObject intersection, intersection2;
-    public GameObject intsectUp, intsectAcross, intsectTU, intsectTR, intsectTD, intsectTL, intsectLU, intsectLR, intsectLD, intsectLL;
+    public GameObject intersection2;
+    public GameObject debugSprite;
+    public GameObject intersection, intsectStraight, intsectT, intsectL;
     public GameObject blueBusStop, greenBusStop, pinkBusStop, redBusStop;
     public GameObject obstacle;
 
@@ -269,6 +270,7 @@ public class MapMatrix : MonoBehaviour
                         print("odd");
                         Instantiate(intersection2, new Vector3((region.pos.x + i) * MAP_SCALAR, (region.pos.y + j) * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
                     }
+
                 }
             }
             currIndex += 1;
@@ -277,11 +279,13 @@ public class MapMatrix : MonoBehaviour
 
         for (int i = 0; i < intersectionList.Count; i++)
         {
+            
             Vector2Int pos = intersectionList[i].getPos();
             int x = pos.x;
             int y = pos.y;
-            
+
             //TEMP: remove once road junctions are implemented
+            /*
             Vector2Int intPos = intersectionList[i].getPos();
             if ((intPos.x + intPos.y) % 2 == 0)
             {
@@ -293,7 +297,45 @@ public class MapMatrix : MonoBehaviour
                 print("odd");
                 Instantiate(intersection2, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, 1), Quaternion.identity, generationLocation);
             }
-            
+            */
+
+            //junction making
+            GameObject toInstantiate = debugSprite;
+            Quaternion rotation = Quaternion.identity;
+            int connections = 4;
+            if (intersectionList[i].atBoundUp()) { connections -= 1; }
+            if (intersectionList[i].atBoundRight()) { connections -= 1; }
+            if (intersectionList[i].atBoundDown()) { connections -= 1; }
+            if (intersectionList[i].atBoundLeft()) { connections -= 1; }
+
+            switch (connections)
+            {
+                case 0:
+                    print("0 connections?!?!");
+                    break;
+                case 1:
+                    print("1 connection?!?!");
+                    break;
+                case 2:
+                    toInstantiate = intsectL;
+                    if (intersectionList[i].atBoundUp() && intersectionList[i].atBoundLeft()) { rotation = Quaternion.Euler(0, 0, 0); }
+                    if (intersectionList[i].atBoundUp() && intersectionList[i].atBoundRight()) { rotation = Quaternion.Euler(0, 0, -90); }
+                    if (intersectionList[i].atBoundDown() && intersectionList[i].atBoundLeft()) { rotation = Quaternion.Euler(0, 0, -270); }
+                    if (intersectionList[i].atBoundDown() && intersectionList[i].atBoundRight()) { rotation = Quaternion.Euler(0, 0, -180); }
+                    break;
+                case 3:
+                    toInstantiate = intsectT;
+                    if (intersectionList[i].atBoundUp()) { rotation = Quaternion.Euler(0,0,-270); }
+                    if (intersectionList[i].atBoundRight()) { rotation = Quaternion.Euler(0, 0, 0); }
+                    if (intersectionList[i].atBoundDown()) { rotation = Quaternion.Euler(0, 0, -90); }
+                    if (intersectionList[i].atBoundLeft()) { rotation = Quaternion.Euler(0, 0, -180); }
+                    break;
+                case 4: toInstantiate = intersection;
+                    
+                    break;
+            }
+
+            Instantiate(toInstantiate, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, 1), rotation, generationLocation);
 
             //draw to the intersection based on type
             switch (intersectionList[i].type)
