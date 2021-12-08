@@ -312,18 +312,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   generationLocation: {fileID: 2099640187}
-  intersection: {fileID: 8739461921070908460, guid: 25d44706dd4627c4b873dffdb329f496, type: 3}
   intersection2: {fileID: 911240611607083860, guid: 252035934f907fe4d83200fa04fe23f0, type: 3}
-  intsectUp: {fileID: 0}
-  intsectAcross: {fileID: 0}
-  intsectTU: {fileID: 0}
-  intsectTR: {fileID: 0}
-  intsectTD: {fileID: 0}
-  intsectTL: {fileID: 0}
-  intsectLU: {fileID: 0}
-  intsectLR: {fileID: 0}
-  intsectLD: {fileID: 0}
-  intsectLL: {fileID: 0}
+  debugSprite: {fileID: 7607214069308544288, guid: 259ca966da27c9447a558c6a7c819aa2, type: 3}
+  intersection: {fileID: 6119100521455452919, guid: fd516a2a46654144b8cf1748f8e72f3c, type: 3}
+  intsectStraight: {fileID: 7607214069308544288, guid: 259ca966da27c9447a558c6a7c819aa2, type: 3}
+  intsectT: {fileID: 6161868765355205236, guid: b249fe29f5f3ca74e858a39b6471f435, type: 3}
+  intsectL: {fileID: 1585020489977553380, guid: d6810ed2f5677344e8b0973e5fc4783e, type: 3}
   blueBusStop: {fileID: 7309656774847513232, guid: 5404fe11fc414454a91f4983ef86b80f, type: 3}
   greenBusStop: {fileID: 7309656774847513232, guid: d0e653c7c30947d47a2ec7e6ca0430be, type: 3}
   pinkBusStop: {fileID: 7309656774847513232, guid: 9617dfa1e2d9c1444817fd9d4c0ef761, type: 3}
@@ -334,7 +328,7 @@ MonoBehaviour:
   minRegionSize: 2
   maxRegionSize: 5
   regionChance: 0.4
-  numStops: 5
+  numStops: 4
   numObstacles: 6
   buildings:
   - {fileID: 1860662580202147405, guid: ed8d6adc180d60e40bc3f3c27e4c4137, type: 3}
@@ -398,7 +392,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   padding: 1
-  tester: {fileID: 6184713774374819605, guid: 6c14569362f04f649a816ce5488b4f6c, type: 3}
+  blueMini: {fileID: 6184713774374819605, guid: c0185391c5b4e22468cede456fbd5497, type: 3}
+  greenMini: {fileID: 6184713774374819605, guid: c65924bb527447049935be14f7aa2b8e, type: 3}
+  pinkMini: {fileID: 6184713774374819605, guid: 6c14569362f04f649a816ce5488b4f6c, type: 3}
+  redMini: {fileID: 6184713774374819605, guid: b363f969fd5eb8e428f9c9af04b888c7, type: 3}
+  miniHolder: {fileID: 1470932773}
 --- !u!1 &350180822
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,7 +1040,7 @@ SpriteRenderer:
   m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 87a9fa17398e54844b8924bbe5a49d55, type: 3}
-  m_Color: {r: 0.33981162, g: 0.5, b: 0.3089623, a: 1}
+  m_Color: {r: 0.78939503, g: 1, b: 0.759434, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2027,6 +2025,36 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1470932772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1470932773}
+  m_Layer: 0
+  m_Name: MiniMap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1470932773
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470932772}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2099640187}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1577688526
 GameObject:
   m_ObjectHideFlags: 0
@@ -2733,7 +2761,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 85ef23d58f9618349a8b62ed60e2c31b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 50.239998, y: 7.187656}
@@ -2770,6 +2798,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1444065758}
+  - {fileID: 1470932773}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -19,7 +19,7 @@ public class MapMatrix : MonoBehaviour
     public GameObject intersection, intsectStraight, intsectT, intsectL;
     public GameObject blueBusStop, greenBusStop, pinkBusStop, redBusStop;
     public GameObject obstacle;
-
+    
     //map properties
     public Intersection[,] mapMatrix;
     public int height;
@@ -89,11 +89,9 @@ public class MapMatrix : MonoBehaviour
                     mapMatrix[i, j] = newIntersection;
                     intersectionList.Add(newIntersection);
                 }
-
             }
 
             regionList.Add(new Region(startX, startY, regionWidth, regionHeight));
-
         }
 
         //cycle through all tiles (i & j swapped for testing)
