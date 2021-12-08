@@ -179,16 +179,6 @@ public class BusControls : MonoBehaviour
         if (currIntersection.atBoundDown()) { activeControls.Remove(Controls.Down); }
         if (currIntersection.atBoundLeft()) { activeControls.Remove(Controls.Left); }
 
-        foreach (int avControl in availableCtrlNums)
-        {
-            Debug.Log("Available Controls (from UI): " + avControl); 
-        }
-
-        foreach (Controls control in activeControls)
-        {
-            Debug.Log("Active control methods: " + control);
-        }
-
     }
 
 #region control methods
@@ -270,10 +260,8 @@ public class BusControls : MonoBehaviour
         SetAvailableControls();
 
         CheckForBounds();
-        Debug.Log("control chosen: " + control);
         try
         {
-            Debug.Log("active control: " + activeControls[control]);
             switch (activeControls[control])
             {
                 case Controls.Up:
@@ -308,11 +296,11 @@ public class BusControls : MonoBehaviour
     {
         float shortestDistance = 1000.0f;
         float distance;
-        Vector2 closestStop = new Vector2(-100,-100);
+        Intersection closestStop = map.stopDict.ElementAt(0).Key;
 
-        foreach (Vector2 stop in map.destinations.Keys)
+        foreach (Intersection stop in map.stopDict.Keys)
         {
-            distance = Mathf.Sqrt(Mathf.Pow((busPos.x - stop.x),2) + Mathf.Pow((busPos.y - stop.y),2));
+            distance = Mathf.Sqrt(Mathf.Pow((busPos.x - stop.getPos().x),2) + Mathf.Pow((busPos.y - stop.getPos().y),2));
             if (distance < shortestDistance)
             {
                 shortestDistance = distance;
@@ -322,7 +310,7 @@ public class BusControls : MonoBehaviour
 
         foreach(GameObject person in passengers)
         {
-            person.GetComponent<PassengerBehaviour>().ejectPassenger(map.destinations[closestStop], shortestDistance);
+            person.GetComponent<PassengerBehaviour>().ejectPassenger(closestStop.getColour(), shortestDistance);
         }
         passengers.RemoveAll(person => person.GetComponent<PassengerBehaviour>().getOnBus() == false);
         if (passengers.Count == 0)
