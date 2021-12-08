@@ -30,7 +30,7 @@ public class ScoreManager : MonoBehaviour
         {
             score += baseScore;
         }
-        scoreCounter.text = "" + score;
+        scoreCounter.text = "Score: " + score;
     }
     public void subScore(int subtraction)
     {
@@ -39,7 +39,7 @@ public class ScoreManager : MonoBehaviour
         {
             score = 0;
         }
-        scoreCounter.text = "" + score;
+        scoreCounter.text = "Score: " + score;
     }
 
     IEnumerator ScoreTickDown()
