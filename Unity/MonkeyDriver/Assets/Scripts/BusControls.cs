@@ -13,309 +13,329 @@ This script is responsible for:
 */
 enum Controls
 {
-    Up,
-    Down,
-    Left,
-    Right,
-    Accelerate,
-    Rest
+	Up,
+	Down,
+	Left,
+	Right,
+	Accelerate,
+	Rest
 }
 public class BusControls : MonoBehaviour
 {
-    public static BusControls bus = null;
+	public static BusControls bus = null;
 
-    private Vector2Int busPos;
-    public static bool atBoundUp, atBoundLeft, atBoundRight, atBoundDown; //map changes these
-    private float lerpSpeed = 0.7f;
-    private float minSpeed = 0.1f;
-    private float speedDecrement = 0.07f;
-    public static int numControls = 7;
-    public static int numPassengers = 20;
+	private Vector2Int busPos;
+	public static bool atBoundUp, atBoundLeft, atBoundRight, atBoundDown; //map changes these
+	private float lerpSpeed = 0.5f;
+	private float maxSpeed = 0.1f;
+	private float defaultSpeed = 0.5f;
+	public static int numControls = 4;
+	public static int numPassengers = 20;
 
-    public GameObject controls;
-    List <Controls> activeControls = new List<Controls>();
-    public static List<GameObject> passengers = new List<GameObject>();
-    MapMatrix map;
-    private int monkeyChoice;
+	public GameObject controls;
+	List <Controls> activeControls = new List<Controls>();
+	public static List<GameObject> passengers = new List<GameObject>();
+	MapMatrix map;
+	private int monkeyChoice;
+	private Controls lastChoice;
 
-    IEnumerator restTime(float time)
-    {
-        float lastSpeed = lerpSpeed;
-        lerpSpeed = 0;
-        yield return new WaitForSeconds(time);
-        lerpSpeed = lastSpeed;
-        monkeyChoice = Random.Range(0, numControls);
-        executeAction(monkeyChoice);
-    }
-    IEnumerator Drive(float startX, float startY, float endX, float endY)
-    {
-        float DriveTime = 0.0f;
+	IEnumerator RestTime(float time)
+	{
+		float lastSpeed = lerpSpeed;
+		lerpSpeed = 0;
+		yield return new WaitForSeconds(time);
+		lerpSpeed = lastSpeed;
+		
+		executeAction();
+	}
 
-        while (DriveTime < lerpSpeed)
-        {
-            DriveTime += Time.deltaTime;
-            
-            transform.position = new Vector3(Mathf.Lerp(startX, endX, DriveTime / lerpSpeed), Mathf.Lerp(startY, endY, DriveTime / lerpSpeed), -6);
-            yield return null;
-        }
-        monkeyChoice = Random.Range(0, numControls);
-        executeAction(monkeyChoice);
-    }
+	IEnumerator SpeedUp()
+	{
+		lerpSpeed = maxSpeed;
+		yield return new WaitForSeconds(5);
+		lerpSpeed = defaultSpeed;
+		//disable speed control?
+	}
 
-    void Awake()
-    {
-        if (bus == null)
-        {
-            bus = this;
-        }
+	IEnumerator Drive(float startX, float startY, float endX, float endY)
+	{
+		float DriveTime = 0.0f;
 
-        map = FindObjectOfType<MapMatrix>();
-    }
+		while (DriveTime < lerpSpeed)
+		{
+			DriveTime += Time.deltaTime;
+			
+			transform.position = new Vector3(Mathf.Lerp(startX, endX, DriveTime / lerpSpeed), Mathf.Lerp(startY, endY, DriveTime / lerpSpeed), -6);
+			yield return null;
+		}
+		
+		executeAction();
+	}
 
-    void Start()
-    {
-        //set bus starting pos
-        int randVal;
-        int testVal = 0;
-        do
-        {
-            randVal = Random.Range(0, map.intersectionList.Count);
-            map.intersectionList[randVal].getPos();
-            testVal++;
-        }
-        while (map.intersectionList[randVal].type != 0 && testVal < 10);
+	void Awake()
+	{
+		if (bus == null)
+		{
+			bus = this;
+		}
 
-        busPos = map.intersectionList[randVal].getPos();
-        Vector3 startPos = new Vector3(busPos.x, busPos.y, 0);
-        transform.position = startPos;
-    }
+		map = FindObjectOfType<MapMatrix>();
+	}
 
-    private void OnEnable()
-    {
-        StartCoroutine(restTime(3));
-        SetAvailableControls();
-    }
+	void Start()
+	{
+		//set bus starting pos
+		int randVal;
+		int testVal = 0;
+		do
+		{
+			randVal = Random.Range(0, map.intersectionList.Count);
+			map.intersectionList[randVal].getPos();
+			testVal++;
+		}
+		while (map.intersectionList[randVal].type != 0 && testVal < 10);
 
-    
-    void CheckForBounds()
-    {
-        Vector2Int currPos = new Vector2Int(busPos.x, busPos.y);
-        Intersection currIntersection = map.mapMatrix[busPos.x,busPos.y];
+		busPos = map.intersectionList[randVal].getPos();
+		Vector3 startPos = new Vector3(busPos.x, busPos.y, 0);
+		transform.position = startPos;
+	}
 
-        int mapWidth = map.mapMatrix.GetLength(0) * map.MAP_SCALAR - 1;
-        int mapHeight = map.mapMatrix.GetLength(1) * map.MAP_SCALAR - 1;
+	private void OnEnable()
+	{
+		StartCoroutine(RestTime(3));
+		SetAvailableControls();
+	}
 
-        atBoundUp = false;
-        atBoundRight = false;
-        atBoundDown = false;
-        atBoundLeft = false;
+	
+	void CheckForBounds()
+	{
+		Vector2Int currPos = new Vector2Int(busPos.x, busPos.y);
+		Intersection currIntersection = map.mapMatrix[busPos.x,busPos.y];
 
-        if (currPos.y == mapHeight)
-        {
-            atBoundUp = true;
-        }
-        if (currPos.x == mapWidth)
-        {
-            atBoundRight = true;
-        }
-        if (currPos.y == 0)
-        {
-            atBoundDown = true;
-        }
-        if (currPos.x == 0)
-        {
-            atBoundLeft = true;
-        }
+		int mapWidth = map.mapMatrix.GetLength(0) * map.MAP_SCALAR - 1;
+		int mapHeight = map.mapMatrix.GetLength(1) * map.MAP_SCALAR - 1;
 
-        //new version
-        if (currIntersection.atBoundUp())
-        {
-            atBoundUp = true;
-        }
-        if (currIntersection.atBoundRight())
-        {
-            atBoundRight = true;
-        }
-        if (currIntersection.atBoundDown())
-        {
-            atBoundDown = true;
-        }
-        if (currIntersection.atBoundLeft())
-        {
-            atBoundLeft = true;
-        }
-    }
-    
+		atBoundUp = false;
+		atBoundRight = false;
+		atBoundDown = false;
+		atBoundLeft = false;
 
-    //Up,Down,Left,Right,Plow,Rest,Accelerate
-    void SetAvailableControls()
-    {
-        Transform[] ctrlsList = new Transform[6];
-        for (int i = 0; i < 6; i++)
-        {
-            ctrlsList[i] = controls.transform.GetChild(i);
-        }
+		if (currPos.y == mapHeight)
+		{
+			atBoundUp = true;
+		}
+		if (currPos.x == mapWidth)
+		{
+			atBoundRight = true;
+		}
+		if (currPos.y == 0)
+		{
+			atBoundDown = true;
+		}
+		if (currPos.x == 0)
+		{
+			atBoundLeft = true;
+		}
 
-        List<int> availableCtrlNums = new List<int>();
-        foreach (Transform currCtrl in ctrlsList)
-        {
-            if (currCtrl.GetComponent<DragUI>().isEnabled)
-            {
-                availableCtrlNums.Add(currCtrl.GetComponent<DragUI>().ctrlNum);
-            }
-        }
+		//new version
+		if (currIntersection.atBoundUp())
+		{
+			atBoundUp = true;
+		}
+		if (currIntersection.atBoundRight())
+		{
+			atBoundRight = true;
+		}
+		if (currIntersection.atBoundDown())
+		{
+			atBoundDown = true;
+		}
+		if (currIntersection.atBoundLeft())
+		{
+			atBoundLeft = true;
+		}
+	}
+	
 
-        activeControls.Clear();
-        //get ControlSlots enabled controls
-        foreach (int ctrlNum in availableCtrlNums)
-        {
-            activeControls.Add((Controls)ctrlNum);
-        }
+	//Up,Down,Left,Right,Rest,Accelerate
+	void SetAvailableControls()
+	{
+		Transform[] ctrlsList = new Transform[6];
+		for (int i = 0; i < 6; i++)
+		{
+			ctrlsList[i] = controls.transform.GetChild(i);
+		}
 
-        Intersection currIntersection = map.mapMatrix[busPos.x, busPos.y];
+		List<int> availableCtrlNums = new List<int>();
+		foreach (Transform currCtrl in ctrlsList)
+		{
+			if (currCtrl.GetComponent<DragUI>().isEnabled)
+			{
+				availableCtrlNums.Add(currCtrl.GetComponent<DragUI>().ctrlNum);
+			}
+		}
 
-        if (currIntersection.atBoundUp()) { activeControls.Remove(Controls.Up); }
-        if (currIntersection.atBoundRight()) { activeControls.Remove(Controls.Right); }
-        if (currIntersection.atBoundDown()) { activeControls.Remove(Controls.Down); }
-        if (currIntersection.atBoundLeft()) { activeControls.Remove(Controls.Left); }
+		activeControls.Clear();
+		//get ControlSlots enabled controls
+		foreach (int ctrlNum in availableCtrlNums)
+		{
+			activeControls.Add((Controls)ctrlNum);
+		}
 
-    }
+		Intersection currIntersection = map.mapMatrix[busPos.x, busPos.y];
+
+		if (currIntersection.atBoundUp()) { activeControls.Remove(Controls.Up); }
+		if (currIntersection.atBoundRight()) { activeControls.Remove(Controls.Right); }
+		if (currIntersection.atBoundDown()) { activeControls.Remove(Controls.Down); }
+		if (currIntersection.atBoundLeft()) { activeControls.Remove(Controls.Left); }
+
+	}
 
 #region control methods
-    public void Up()
-    {
-        if (!atBoundUp)//this check will become obsolete since the control should never be called if it would result in out of bounds
-        {
-            busPos.y += 1;
-            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y +  map.MAP_SCALAR));
-        }
-        else
-        {
-            monkeyChoice = Random.Range(0, numControls);
-            executeAction(monkeyChoice);
-        }
-    }
+	public void Up()
+	{
+		if (!atBoundUp)//this check will become obsolete since the control should never be called if it would result in out of bounds
+		{
+			busPos.y += 1;
+			StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y +  map.MAP_SCALAR));
+		}
+		else
+		{
+			executeAction();
+		}
+	}
 
-    public void Down()
-    {
-        if (!atBoundDown)
-        {
-            busPos.y -=  1;
-            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y -  map.MAP_SCALAR));
-        }
-        else
-        {
-            monkeyChoice = Random.Range(0, numControls);
-            executeAction(monkeyChoice);
-        }
-    }
+	public void Down()
+	{
+		if (!atBoundDown)
+		{
+			busPos.y -=  1;
+			StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x, transform.position.y -  map.MAP_SCALAR));
+		}
+		else
+		{
+			executeAction();
+		}
+	}
 
-    public void Left()
-    {
-        if (!atBoundLeft)
-        {
-            busPos.x -=  1;
-            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x -  map.MAP_SCALAR, transform.position.y));
-        }
-        else
-        {
-            monkeyChoice = Random.Range(0, numControls);
-            executeAction(monkeyChoice);
-        }
+	public void Left()
+	{
+		if (!atBoundLeft)
+		{
+			busPos.x -=  1;
+			StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x -  map.MAP_SCALAR, transform.position.y));
+		}
+		else
+		{	
+			executeAction();
+		}
 
-    }
+	}
 
-    public void Right()
-    {
-        if (!atBoundRight)
+	public void Right()
+	{
+		if (!atBoundRight)
+		{
+			busPos.x +=  1;
+			StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x +  map.MAP_SCALAR, transform.position.y));
+		}
+		else
+		{
+			executeAction();
+		}
+	}
+	
+	public void Rest()
+	{
+		if (!(lastChoice == Controls.Rest))
         {
-            busPos.x +=  1;
-            StartCoroutine(Drive(transform.position.x, transform.position.y, transform.position.x +  map.MAP_SCALAR, transform.position.y));
+			StartCoroutine(RestTime(1.5f));
         }
-        else
+		
+		else
         {
-            monkeyChoice = Random.Range(0, numControls);
-            executeAction(monkeyChoice);
-        }
-    }
-    
-    public void Rest()
-    {
-        StartCoroutine(restTime(1.5f));
-    }
+			executeAction();
+		}
+	}
 
-    public void Accelerate()
-    {
-        if (lerpSpeed > minSpeed)
-        {
-            lerpSpeed -= speedDecrement;
-        }
-        monkeyChoice = Random.Range(0, numControls);
-        executeAction(monkeyChoice);
-    }
-    #endregion
+	public void Accelerate()
+	{
+		StartCoroutine(SpeedUp());
 
-    private void executeAction(int control)
-    {
-        SetAvailableControls();
+		monkeyChoice = Random.Range(0, numControls);
+		executeAction();
+	}
+	#endregion
 
-        CheckForBounds();
-        try
-        {
-            switch (activeControls[control])
-            {
-                case Controls.Up:
-                    Up();
-                    break;
-                case Controls.Down:
-                    Down();
-                    break;
-                case Controls.Left:
-                    Left();
-                    break;
-                case Controls.Right:
-                    Right();
-                    break;
-                case Controls.Rest:
-                    Rest();
-                    break;
-                case Controls.Accelerate:
-                    Accelerate();
-                    break;
-            }
-        }
-        catch
-        {
-            monkeyChoice = Random.Range(0, numControls);
-            executeAction(monkeyChoice);
-        }
-        
-    }
+	private void executeAction()
+	{
+		monkeyChoice = Random.Range(0, numControls);
+		SetAvailableControls();
 
-    public void ejection()
-    {
-        float shortestDistance = 1000.0f;
-        float distance;
-        Intersection closestStop = map.stopDict.ElementAt(0).Key;
+		CheckForBounds();
+		try
+		{
+			Debug.Log("choosing: " + activeControls[monkeyChoice]);
+			switch (activeControls[monkeyChoice])
+			{
+				case Controls.Up:
+					Up();
+					lastChoice = Controls.Up;
+					break;
+				case Controls.Down:
+					Down();
+					lastChoice = Controls.Down;
+					break;
+				case Controls.Left:
+					Left();
+					lastChoice = Controls.Left;
+					break;
+				case Controls.Right:
+					Right();
+					lastChoice = Controls.Right;
+					break;
+				case Controls.Rest:
+					Rest();
+					lastChoice = Controls.Rest;
+					break;
+				case Controls.Accelerate:
+					Accelerate();
+					lastChoice = Controls.Accelerate;
+					break;
+			}
+		}
+		catch
+		{
+			executeAction();
+		}
+		
+	}
 
-        foreach (Intersection stop in map.stopDict.Keys)
-        {
-            distance = Mathf.Sqrt(Mathf.Pow((busPos.x - stop.getPos().x),2) + Mathf.Pow((busPos.y - stop.getPos().y),2));
-            if (distance < shortestDistance)
-            {
-                shortestDistance = distance;
-                closestStop = stop;
-            }
-        }
+	public void ejection()
+	{
+		float shortestDistance = 1000.0f;
+		float distance;
+		Intersection closestStop = map.stopDict.ElementAt(0).Key;
 
-        foreach(GameObject person in passengers)
-        {
-            person.GetComponent<PassengerBehaviour>().ejectPassenger(closestStop.getColour(), shortestDistance);
-        }
-        passengers.RemoveAll(person => person.GetComponent<PassengerBehaviour>().getOnBus() == false);
-        if (passengers.Count == 0)
-        {
-            StateManager.i.setGameState(gameState.FINISHED);
-        }
-    }
+		foreach (Intersection stop in map.stopDict.Keys)
+		{
+			distance = Mathf.Sqrt(Mathf.Pow((busPos.x - stop.getPos().x),2) + Mathf.Pow((busPos.y - stop.getPos().y),2));
+			if (distance < shortestDistance)
+			{
+				shortestDistance = distance;
+				closestStop = stop;
+			}
+		}
+
+		foreach(GameObject person in passengers)
+		{
+			person.GetComponent<PassengerBehaviour>().ejectPassenger(closestStop.getColour(), shortestDistance);
+		}
+		passengers.RemoveAll(person => person.GetComponent<PassengerBehaviour>().getOnBus() == false);
+
+		if (passengers.Count == 0)
+		{
+			StateManager.i.setGameState(gameState.FINISHED);
+		}
+	}
 }

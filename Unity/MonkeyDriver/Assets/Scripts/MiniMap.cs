@@ -57,9 +57,9 @@ public class MiniMap : MonoBehaviour
 	{
 		foreach (KeyValuePair<Intersection, GameObject> stop in map.stopDict)
 		{
+			//if not visible by camera or if it is below the UI
 			if (!stop.Value.GetComponent<SpriteRenderer>().isVisible || stop.Value.transform.position.y < cam.transform.position.y - camHalfHeight + UIHeight )
 			{
-
 
 				slope = (stop.Value.transform.position.y - cam.transform.position.y) / (stop.Value.transform.position.x - cam.transform.position.x);
 				stopPointers[stop.Key.getColour()].SetActive(true);
@@ -72,10 +72,14 @@ public class MiniMap : MonoBehaviour
 
 					if (targetY > cam.transform.position.y - camHalfHeight && targetY < cam.transform.position.y + camHalfHeight)
 					{
-						//get stop colour
-						//move pointer of the same colour
+						//draw the mini pointer
 						stopPointers[stop.Key.getColour()].transform.position = new Vector3(targetX,targetY, 1);
-					}
+
+						//rotation
+                        stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(
+                            Mathf.Atan2(targetY - cam.transform.position.y, stop.Value.transform.position.x - cam.transform.position.x)
+                            * 180 / Mathf.PI + 90, Vector3.forward);
+                    }
 					else
 					{
 						if (cam.transform.position.y < stop.Value.transform.position.y)
@@ -89,9 +93,14 @@ public class MiniMap : MonoBehaviour
 							targetY = cam.transform.position.y - camHalfHeight + bottomPadding;
 						}
 						targetX = (targetY - stop.Value.transform.position.y) / slope + stop.Value.transform.position.x;
-						//get stop colour
-						//move pointer of the same colour
+						//draw mini pointer
+
 						stopPointers[stop.Key.getColour()].transform.position = new Vector3(targetX, targetY, 1);
+
+						//rotation
+						stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(
+							Mathf.Atan2(stop.Value.transform.position.x - cam.transform.position.x, targetY - cam.transform.position.y)
+							* 180 / Mathf.PI + 90, Vector3.forward);
 					}
 				}
 				else if (cam.transform.position.x >= stop.Value.transform.position.x)
@@ -105,6 +114,11 @@ public class MiniMap : MonoBehaviour
 						//get stop colour
 						//move pointer of the same colour
 						stopPointers[stop.Key.getColour()].transform.position = new Vector3(targetX, targetY, 1);
+
+						//rotation
+						stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(
+							Mathf.Atan2(stop.Value.transform.position.y - cam.transform.position.y, stop.Value.transform.position.x - cam.transform.position.x)
+							* 180 / Mathf.PI + 90, Vector3.forward);
 					}
 					else
 					{
@@ -120,16 +134,19 @@ public class MiniMap : MonoBehaviour
 						}
 
 						targetX = (targetY - stop.Value.transform.position.y) / slope + stop.Value.transform.position.x;
-                        //get stop colour
+
                         //move pointer of the same colour
                         stopPointers[stop.Key.getColour()].transform.position = new Vector3(targetX, targetY, 1);
 
-       //                 stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(
-							//Mathf.Atan2(stop.Value.transform.position.y - cam.transform.position.y, stop.Value.transform.position.x - cam.transform.position.x)
-							//* 180 / Mathf.PI - 180, Vector3.forward);
+						//rotation
+						stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(
+							Mathf.Atan2(stop.Value.transform.position.x - cam.transform.position.x, stop.Value.transform.position.y - cam.transform.position.y)
+							* 180 / Mathf.PI + 90, Vector3.forward);
 
-                        //stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(Mathf.Atan2(targetX, targetY) * 180 / Mathf.PI, Vector3.forward);
-                    }
+						//                 stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(
+						//Mathf.Atan2(stop.Value.transform.position.y - cam.transform.position.y, stop.Value.transform.position.x - cam.transform.position.x)
+						//* 180 / Mathf.PI - 180, Vector3.forward);
+					}
                 }
 			}
 			else

@@ -7,7 +7,7 @@ public class PassengerManager : MonoBehaviour
     public GameObject passenger;
     public Transform passengerHolder;
 
-    private int tilingWidth = 30;
+    private int tilingWidth = 35;
     private int tilingHeight = 20;
     private int tileWidth = 5;
     private int tileHeight = 4;

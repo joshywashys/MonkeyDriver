@@ -20,7 +20,7 @@ public class PassengerBehaviour : MonoBehaviour
         if (!m_onBus)
         {
             renderer.forceRenderingOff = true;
-            Destroy(gameObject, 1.0f);
+            Destroy(gameObject, 5.0f);
         }
     }
 
