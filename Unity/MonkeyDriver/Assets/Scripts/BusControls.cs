@@ -241,7 +241,7 @@ public class BusControls : MonoBehaviour
     
     public void Rest()
     {
-        StartCoroutine(restTime(3));
+        StartCoroutine(restTime(1.5f));
     }
 
     public void Accelerate()

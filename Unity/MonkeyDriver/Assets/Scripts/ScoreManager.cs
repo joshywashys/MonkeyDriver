@@ -11,7 +11,7 @@ public class ScoreManager : MonoBehaviour
     public static ScoreManager i = null;
     private int score = 0;
     private int baseScore = 300;
-    public TMPro.TextMeshProUGUI scoreCounter;
+    public TMPro.TextMeshProUGUI scoreCounter, scoreBoost, scoreBad;
     void Start()
     {
         if (i == null)
@@ -22,14 +22,19 @@ public class ScoreManager : MonoBehaviour
     }
     public void addScore(float passengerDistance)
     {
+        int boost;
         if (passengerDistance < 3.0f)
         {
-            score += (baseScore + 400);
+            boost = baseScore + 400;
+            score += boost;
         }
         else
         {
-            score += baseScore;
+            boost = baseScore;
+            score += boost;
         }
+        scoreBoost.text = "+" + boost;
+        //gotta put this shit in a coroutine huh
         scoreCounter.text = "Score: " + score;
     }
     public void subScore(int subtraction)
