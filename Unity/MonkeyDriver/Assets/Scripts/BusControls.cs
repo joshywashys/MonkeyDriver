@@ -38,6 +38,7 @@ public class BusControls : MonoBehaviour
 	MapMatrix map;
 	private int monkeyChoice;
 	private Controls lastChoice;
+	private Controls lastDirection;
 
 	IEnumerator RestTime(float time)
 	{
@@ -103,7 +104,7 @@ public class BusControls : MonoBehaviour
 	private void OnEnable()
 	{
 		StartCoroutine(RestTime(3));
-		SetAvailableControls();
+		//SetAvailableControls();
 	}
 
 	
@@ -120,25 +121,25 @@ public class BusControls : MonoBehaviour
 		atBoundDown = false;
 		atBoundLeft = false;
 
-		if (currPos.y == mapHeight)
-		{
-			atBoundUp = true;
-		}
-		if (currPos.x == mapWidth)
-		{
-			atBoundRight = true;
-		}
-		if (currPos.y == 0)
-		{
-			atBoundDown = true;
-		}
-		if (currPos.x == 0)
-		{
-			atBoundLeft = true;
-		}
+        //if (currPos.y == mapHeight)
+        //{
+        //    atBoundUp = true;
+        //}
+        //if (currPos.x == mapWidth)
+        //{
+        //    atBoundRight = true;
+        //}
+        //if (currPos.y == 0)
+        //{
+        //    atBoundDown = true;
+        //}
+        //if (currPos.x == 0)
+        //{
+        //    atBoundLeft = true;
+        //}
 
-		//new version
-		if (currIntersection.atBoundUp())
+        //new version
+        if (currIntersection.atBoundUp())
 		{
 			atBoundUp = true;
 		}
@@ -247,22 +248,23 @@ public class BusControls : MonoBehaviour
 	
 	public void Rest()
 	{
-		if (!(lastChoice == Controls.Rest))
-        {
+		//if (!(lastChoice == Controls.Rest))
+  //      {
 			StartCoroutine(RestTime(1.5f));
-        }
-		
-		else
-        {
+  //      }
+		//else
+  //      {
 			executeAction();
-		}
+//		}
 	}
 
 	public void Accelerate()
 	{
+		//have speed be additive
+		//have speed move in the last direction
+		//if it can't move in that direction, choose a direction that it can go in
 		StartCoroutine(SpeedUp());
 
-		monkeyChoice = Random.Range(0, numControls);
 		executeAction();
 	}
 	#endregion
