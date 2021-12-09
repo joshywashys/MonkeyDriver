@@ -33,6 +33,7 @@ public class BusControls : MonoBehaviour
 	public static int numPassengers = 20;
 
 	public GameObject controls;
+	Dictionary<int, Transform> availableCtrlNums = new Dictionary<int, Transform>();
 	List <Controls> activeControls = new List<Controls>();
 	public static List<GameObject> passengers = new List<GameObject>();
 	MapMatrix map;
@@ -167,18 +168,18 @@ public class BusControls : MonoBehaviour
 			ctrlsList[i] = controls.transform.GetChild(i);
 		}
 
-		List<int> availableCtrlNums = new List<int>();
+		availableCtrlNums.Clear();
 		foreach (Transform currCtrl in ctrlsList)
 		{
 			if (currCtrl.GetComponent<DragUI>().isEnabled)
 			{
-				availableCtrlNums.Add(currCtrl.GetComponent<DragUI>().ctrlNum);
+				availableCtrlNums.Add(currCtrl.GetComponent<DragUI>().ctrlNum, currCtrl);
 			}
 		}
 
 		activeControls.Clear();
 		//get ControlSlots enabled controls
-		foreach (int ctrlNum in availableCtrlNums)
+		foreach (int ctrlNum in availableCtrlNums.Keys)
 		{
 			activeControls.Add((Controls)ctrlNum);
 		}
@@ -281,7 +282,9 @@ public class BusControls : MonoBehaviour
 			switch (activeControls[monkeyChoice])
 			{
 				case Controls.Up:
+					MonkeyButtonPress.i.PressButton(availableCtrlNums[(int)Controls.Up].position.y);
 					Up();
+					//Debug.Log("Up position: " + availableCtrlNums[(int)Controls.Up].localPosition);
 					lastChoice = Controls.Up;
 					break;
 				case Controls.Down:
@@ -297,7 +300,9 @@ public class BusControls : MonoBehaviour
 					lastChoice = Controls.Right;
 					break;
 				case Controls.Rest:
+					MonkeyButtonPress.i.PressButton(availableCtrlNums[(int)Controls.Rest].position.y);
 					Rest();
+					Debug.Log("Rest position: " + availableCtrlNums[(int)Controls.Rest].localPosition);
 					lastChoice = Controls.Rest;
 					break;
 				case Controls.Accelerate:

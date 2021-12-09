@@ -74,11 +74,6 @@ public class MiniMap : MonoBehaviour
 					{
 						//draw the mini pointer
 						stopPointers[stop.Key.getColour()].transform.position = new Vector3(targetX,targetY, 1);
-
-						//rotation
-                        stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(
-                            Mathf.Atan2(targetY - cam.transform.position.y, stop.Value.transform.position.x - cam.transform.position.x)
-                            * 180 / Mathf.PI + 90, Vector3.forward);
                     }
 					else
 					{
@@ -96,11 +91,6 @@ public class MiniMap : MonoBehaviour
 						//draw mini pointer
 
 						stopPointers[stop.Key.getColour()].transform.position = new Vector3(targetX, targetY, 1);
-
-						//rotation
-						stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(
-							Mathf.Atan2(stop.Value.transform.position.x - cam.transform.position.x, targetY - cam.transform.position.y)
-							* 180 / Mathf.PI + 90, Vector3.forward);
 					}
 				}
 				else if (cam.transform.position.x >= stop.Value.transform.position.x)
@@ -114,11 +104,6 @@ public class MiniMap : MonoBehaviour
 						//get stop colour
 						//move pointer of the same colour
 						stopPointers[stop.Key.getColour()].transform.position = new Vector3(targetX, targetY, 1);
-
-						//rotation
-						stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(
-							Mathf.Atan2(stop.Value.transform.position.y - cam.transform.position.y, stop.Value.transform.position.x - cam.transform.position.x)
-							* 180 / Mathf.PI + 90, Vector3.forward);
 					}
 					else
 					{
@@ -139,9 +124,9 @@ public class MiniMap : MonoBehaviour
                         stopPointers[stop.Key.getColour()].transform.position = new Vector3(targetX, targetY, 1);
 
 						//rotation
-						stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(
-							Mathf.Atan2(stop.Value.transform.position.x - cam.transform.position.x, stop.Value.transform.position.y - cam.transform.position.y)
-							* 180 / Mathf.PI + 90, Vector3.forward);
+						//stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(
+						//	Mathf.Atan2(stop.Value.transform.position.x - cam.transform.position.x, stop.Value.transform.position.y - cam.transform.position.y)
+						//	* 180 / Mathf.PI + 90, Vector3.forward);
 
 						//                 stopPointers[stop.Key.getColour()].transform.rotation = Quaternion.AngleAxis(
 						//Mathf.Atan2(stop.Value.transform.position.y - cam.transform.position.y, stop.Value.transform.position.x - cam.transform.position.x)
