@@ -4,19 +4,41 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    public AudioSource monkeySource;
-    public AudioClip monkeyLaugh;
-    void Start()
-    {
-        StartCoroutine(MonkeyChatter());
-    }
+	public static SoundManager i = null;
+	public AudioSource monkeySource, screamSource;
+	public AudioClip monkeyLaugh;
+	public AudioClip[] passengerScreams;
+	void Start()
+	{
+		if (i == null)
+		{
+			i = this;
+		}
+		StartCoroutine(MonkeyChatter());
+	}
 
-    IEnumerator MonkeyChatter()
-    {
-        while (true)
+	public void PlayScreams(float delay)
+	{
+		if (!screamSource.isPlaying)
         {
-            monkeySource.PlayOneShot(monkeyLaugh);
-            yield return new WaitForSeconds(10.0f);
-        }
-    }
+			StartCoroutine(Screaming(delay));
+		}
+
+	}
+	IEnumerator MonkeyChatter()
+	{
+		while (true)
+		{
+			monkeySource.PlayOneShot(monkeyLaugh);
+			yield return new WaitForSeconds(10.0f);
+		}
+	}
+
+	IEnumerator Screaming(float delay)
+	{
+		yield return new WaitForSeconds(delay);
+		screamSource.pitch = Random.Range(0.9f, 1.4f);
+		screamSource.PlayOneShot(passengerScreams[Random.Range(0, passengerScreams.Length)]);
+	}
+   
 }

@@ -9,6 +9,7 @@ public class PassengerBehaviour : MonoBehaviour
 
     private SpriteRenderer renderer;
     public Sprite blueSprite, greenSprite, pinkSprite, redSprite;
+    bool kicked = false;
     void Awake()
     {
         renderer = gameObject.GetComponent<SpriteRenderer>();
@@ -19,8 +20,13 @@ public class PassengerBehaviour : MonoBehaviour
     {
         if (!m_onBus)
         {
-            renderer.forceRenderingOff = true;
-            Destroy(gameObject, 5.0f);
+            if (!kicked)
+            {
+                renderer.forceRenderingOff = true;
+                SoundManager.i.PlayScreams(Random.Range(0f, 0.1f));
+                Destroy(gameObject, 0.5f);
+                kicked = true;
+            }
         }
     }
 

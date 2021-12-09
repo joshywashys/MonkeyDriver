@@ -11,7 +11,7 @@ public class ScoreManager : MonoBehaviour
 	public static ScoreManager i = null;
 	private int score = 0;
 	private int baseScore = 300;
-	public TMPro.TextMeshProUGUI scoreCounter; //, scoreBoost, scoreBad;
+	public TMPro.TextMeshProUGUI scoreCounter, scoreBoost, scoreBad;
 	void Start()
 	{
 		if (i == null)
@@ -33,15 +33,20 @@ public class ScoreManager : MonoBehaviour
 			boost = baseScore;
 			score += boost;
 		}
-		
-		//scoreBoost.text = "+" + boost;
+
+		scoreBoost.text = "+" + boost;
+		scoreBoost.GetComponent<ScoreMotion>().ScoreMove();
 		//gotta put this shit in a coroutine huh
 		scoreCounter.text = "Score: " + score;
 	}
 	public void subScore(int subtraction)
 	{
-		score -= subtraction;
-		if (score < 0)
+		if (score > 0)
+        {
+			score -= subtraction;
+			scoreBad.text = "-" + subtraction;
+			scoreBad.GetComponent<ScoreMotion>().ScoreMove();
+		} else
 		{
 			score = 0;
 		}
