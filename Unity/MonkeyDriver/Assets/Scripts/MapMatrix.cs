@@ -63,7 +63,12 @@ public class MapMatrix : MonoBehaviour
     public int numStops;
     public int numObstacles;
 
-    public List<GameObject> buildings;
+    public Vector2 stopOffset;
+
+    public List<GameObject> foliageList;
+    public List<GameObject> buildingsList;
+    public List<GameObject> buildingsList2;
+    public float rareRegionChance;
 
     public int MAP_SCALAR = 1; //altered for debugging/visualisation purposes
     
@@ -274,6 +279,7 @@ public class MapMatrix : MonoBehaviour
         }
         */
 
+        //For every intersection...
         for (int i = 0; i < intersectionList.Count; i++)
         {
             
@@ -343,25 +349,25 @@ public class MapMatrix : MonoBehaviour
                 case 1:
                     //creates a blue bus stop at [i,j] and adds it to the list of possible destinations
 
-                    stopDict.Add(intersectionList[i], Instantiate(blueBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation));
+                    stopDict.Add(intersectionList[i], Instantiate(blueBusStop, new Vector3(x * MAP_SCALAR + stopOffset.x, y * MAP_SCALAR + stopOffset.y, -1), Quaternion.identity, generationLocation));
                     break;
 
                 case 2:
                     //creates a green bus stop at [i,j] and adds it to the list of possible destinations
 
-                    stopDict.Add(intersectionList[i], Instantiate(greenBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation));
+                    stopDict.Add(intersectionList[i], Instantiate(greenBusStop, new Vector3(x * MAP_SCALAR + stopOffset.x, y * MAP_SCALAR + stopOffset.y, -1), Quaternion.identity, generationLocation));
                     break;
 
                 case 3:
                     //creates an orange bus stop at [i,j] and adds it to the list of possible destinations
 
-                    stopDict.Add(intersectionList[i], Instantiate(pinkBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation));
+                    stopDict.Add(intersectionList[i], Instantiate(pinkBusStop, new Vector3(x * MAP_SCALAR + stopOffset.x, y * MAP_SCALAR + stopOffset.y, -1), Quaternion.identity, generationLocation));
                     break;
 
                 case 4:
                     //creates a purple bus stop at [i,j] and adds it to the list of possible destinations
 
-                    stopDict.Add(intersectionList[i], Instantiate(redBusStop, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, -1), Quaternion.identity, generationLocation));
+                    stopDict.Add(intersectionList[i], Instantiate(redBusStop, new Vector3(x * MAP_SCALAR + stopOffset.x, y * MAP_SCALAR + stopOffset.y, -1), Quaternion.identity, generationLocation));
                     break;
 
                 case 5:
@@ -374,6 +380,7 @@ public class MapMatrix : MonoBehaviour
 
         }
 
+        /*
         //go thru mapmatrix, fill empty indexes with absolute SHRUBBERY!
         for (int i = 0; i < mapMatrix.GetLength(0); i++)
         {
@@ -381,11 +388,67 @@ public class MapMatrix : MonoBehaviour
             {
                 if (mapMatrix[i,j] == null)  //&& !isAlone(new Vector2Int(i, j)
                 {
-                    int buildingIndex = Random.Range(0, buildings.Count);
+                    int buildingIndex = Random.Range(0, foliageList.Count);
                     float randomOffsetScalar = 0.2f;
                     float randomOffsetX = Random.Range(-randomOffsetScalar, randomOffsetScalar);
                     float randomOffsetY = Random.Range(-randomOffsetScalar, randomOffsetScalar);
-                    Instantiate(buildings[buildingIndex], new Vector3(i + randomOffsetX, j + randomOffsetY, 0), Quaternion.identity, generationLocation);
+                    Instantiate(foliageList[buildingIndex], new Vector3(i + randomOffsetX, j + randomOffsetY, 0), Quaternion.identity, generationLocation);
+                }
+            }
+        }
+        */
+
+        //shrubbery 
+        int boundFoliageWidth = 3;
+        for (int i = 0; i < mapMatrix.GetLength(0) + boundFoliageWidth*2; i++)
+        {
+            for (int j = 0; j < mapMatrix.GetLength(1) + boundFoliageWidth * 2; j++)
+            {
+                int foliageIndex = 0;
+                if (i < boundFoliageWidth || j < boundFoliageWidth || i >= mapMatrix.GetLength(0) + boundFoliageWidth || j >= mapMatrix.GetLength(0) + boundFoliageWidth) 
+                {
+                    foliageIndex = Random.Range(0, foliageList.Count);
+                    float randomOffsetScalar = 0.2f;
+                    float randomOffsetX = Random.Range(-randomOffsetScalar, randomOffsetScalar);
+                    float randomOffsetY = Random.Range(-randomOffsetScalar, randomOffsetScalar);
+                    Instantiate(foliageList[foliageIndex], new Vector3(i - boundFoliageWidth + randomOffsetX, j - boundFoliageWidth + randomOffsetY, 0), Quaternion.identity, generationLocation);
+                }
+                else
+                {
+                    if (mapMatrix[i - boundFoliageWidth, j - boundFoliageWidth] == null)  //&& !isAlone(new Vector2Int(i, j)
+                    {
+                        foliageIndex = Random.Range(0, foliageList.Count);
+                        float randomOffsetScalar = 0.2f;
+                        float randomOffsetX = Random.Range(-randomOffsetScalar, randomOffsetScalar);
+                        float randomOffsetY = Random.Range(-randomOffsetScalar, randomOffsetScalar);
+                        Instantiate(foliageList[foliageIndex], new Vector3(i - boundFoliageWidth + randomOffsetX, j - boundFoliageWidth + randomOffsetY, 0), Quaternion.identity, generationLocation);
+                    }
+                }
+            }
+        }
+
+        //districts + buildingzzz
+        for (int i = 0; i < regionList.Count; i++)
+        {
+            Region region = regionList[i];
+            int buildingIndex;
+            List<GameObject> chosenList;
+
+            if (rareRegionChance > Random.Range(0.0f, 1.0f))
+            {
+                chosenList = buildingsList2;
+            }
+            else
+            {
+                chosenList = buildingsList;
+            }
+
+            for (int j = 0; j < region.width; j++)
+            {
+                for (int k = 0; k < region.height; k++)
+                {
+                    buildingIndex = Random.Range(0, chosenList.Count);
+                    Instantiate(chosenList[buildingIndex], new Vector3((region.pos.x + j) * MAP_SCALAR + 0.5f, (region.pos.y + k) * MAP_SCALAR + 0.5f, 1), Quaternion.identity, generationLocation);
                 }
             }
         }
