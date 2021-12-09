@@ -7,6 +7,8 @@ public class MonkeyButtonPress : MonoBehaviour
 	public static MonkeyButtonPress i = null;
     public GameObject MonkeyFinger;
     public Transform HandHolder;
+    private GameObject finger;
+    public float offset;
 
     private void Start()
     {
@@ -17,6 +19,11 @@ public class MonkeyButtonPress : MonoBehaviour
 	}
     public void PressButton(float yPos)
     {
-        Instantiate(MonkeyFinger, new Vector3(0, yPos, 0), Quaternion.identity, HandHolder);
+        finger = Instantiate(MonkeyFinger);
+        finger.transform.SetParent(HandHolder, true);
+        finger.transform.localPosition = Vector3.zero;
+        finger.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+
+        finger.transform.position = new Vector3(0, yPos - offset, finger.transform.position.z);
     }
 }
