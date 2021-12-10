@@ -56,7 +56,7 @@ public class BusControls : MonoBehaviour
         if (lerpSpeed > 0.2)
         {
             lerpSpeed -= speedBonus;
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(4);
             lerpSpeed += speedBonus;
         }
 
@@ -109,6 +109,7 @@ public class BusControls : MonoBehaviour
 		busPos = map.intersectionList[randVal].getPos();
 		Vector3 startPos = new Vector3(busPos.x, busPos.y, 0);
 		transform.position = startPos;
+		lastChoice = Controls.Rest;
 	}
 
 	private void OnEnable()
@@ -261,6 +262,10 @@ public class BusControls : MonoBehaviour
 	
 	public void Rest()
 	{
+		if(lastChoice != Controls.Rest && lastChoice != Controls.Accelerate && lerpSpeed < defaultSpeed)
+        {
+			SoundManager.i.PlayBrake();
+        }
 		StartCoroutine(RestTime(1.5f));
     }
 

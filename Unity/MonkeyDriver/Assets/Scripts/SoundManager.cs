@@ -5,8 +5,8 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
 	public static SoundManager i = null;
-	public AudioSource monkeySource, screamSource;
-	public AudioClip monkeyLaugh, brake;
+	public AudioSource monkeySource, screamSource, busSource;
+	public AudioClip monkeyLaugh;
 	public AudioClip[] passengerScreams;
 	void Start()
 	{
@@ -28,7 +28,7 @@ public class SoundManager : MonoBehaviour
 	public void PlayBrake()
 	{
 
-		monkeySource.PlayOneShot(brake);
+		busSource.Play();
 
 	}
 	IEnumerator MonkeyChatter()
