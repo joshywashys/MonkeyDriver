@@ -255,7 +255,7 @@ public class MapMatrix : MonoBehaviour
     void DrawMap(Intersection[,] mapMatrix)
     {
 
-        //region testing! just temp
+        //region testing! just temp (checkerboard)
         /*
         int currIndex = 0;
         foreach (Region region in regionList)
@@ -449,11 +449,15 @@ public class MapMatrix : MonoBehaviour
                 chosenList = buildingsList;
             }
 
-            for (int j = 0; j < region.width; j++)
+            for (int j = 0; j < region.width - 1; j++)
             {
-                for (int k = 0; k < region.height; k++)
+                for (int k = 0; k < region.height - 1; k++)
                 {
-                    int buildingIndex;
+                    int buildingIndex = Random.Range(0, chosenList.Count); ;
+                    Instantiate(chosenList[buildingIndex], new Vector3(j + x + 0.5f, k + y + 0.35f, 1), Quaternion.identity, generationLocation);
+
+                    /*
+                     * 4 BUILDINGS
                     float randomOffsetX;
                     void randomize()
                     {
@@ -464,11 +468,12 @@ public class MapMatrix : MonoBehaviour
                     randomize();
                     Instantiate(chosenList[buildingIndex], new Vector3(j + x + buildingOffset + randomOffsetX, k + y + buildingOffset, 1), Quaternion.identity, generationLocation);
                     randomize();
-                    //Instantiate(chosenList[buildingIndex], new Vector3(j + x + buildingOffset + randomOffsetX, k + y - buildingOffset, 1), Quaternion.identity, generationLocation);
+                    Instantiate(chosenList[buildingIndex], new Vector3(j + x + buildingOffset + randomOffsetX, k + y - buildingOffset, 1), Quaternion.identity, generationLocation);
                     randomize();
                     Instantiate(chosenList[buildingIndex], new Vector3(j + x - buildingOffset + randomOffsetX, k + y - buildingOffset, 1), Quaternion.identity, generationLocation);
                     randomize();
-                    //Instantiate(chosenList[buildingIndex], new Vector3(j + x - buildingOffset + randomOffsetX, k + y + buildingOffset, 1), Quaternion.identity, generationLocation);
+                    Instantiate(chosenList[buildingIndex], new Vector3(j + x - buildingOffset + randomOffsetX, k + y + buildingOffset, 1), Quaternion.identity, generationLocation);
+                    */
                 }
             }
         }

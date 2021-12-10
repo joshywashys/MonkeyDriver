@@ -36,7 +36,6 @@ public class ScoreManager : MonoBehaviour
 
 		scoreBoost.text = "+" + boost;
 		scoreBoost.GetComponent<ScoreMotion>().ScoreMove();
-		//gotta put this shit in a coroutine huh
 		scoreCounter.text = "Score: " + score;
 	}
 	public void subScore(int subtraction)
@@ -57,7 +56,7 @@ public class ScoreManager : MonoBehaviour
 	{
 		while (true)
 		{
-			subScore(50);
+			subScore(25);
 			yield return new WaitForSeconds(1);
 		}
 	}

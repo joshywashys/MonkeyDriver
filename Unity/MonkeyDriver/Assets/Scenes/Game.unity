@@ -617,6 +617,7 @@ MonoBehaviour:
   intsectStraight: {fileID: 7607214069308544288, guid: 259ca966da27c9447a558c6a7c819aa2, type: 3}
   intsectT: {fileID: 6161868765355205236, guid: b249fe29f5f3ca74e858a39b6471f435, type: 3}
   intsectL: {fileID: 1585020489977553380, guid: d6810ed2f5677344e8b0973e5fc4783e, type: 3}
+  intersectionGround: {fileID: 0}
   blueBusStop: {fileID: 7309656774847513232, guid: 5404fe11fc414454a91f4983ef86b80f, type: 3}
   greenBusStop: {fileID: 7309656774847513232, guid: d0e653c7c30947d47a2ec7e6ca0430be, type: 3}
   pinkBusStop: {fileID: 7309656774847513232, guid: 9617dfa1e2d9c1444817fd9d4c0ef761, type: 3}
@@ -629,7 +630,9 @@ MonoBehaviour:
   regionChance: 0.6
   numStops: 4
   numObstacles: 6
-  stopOffset: {x: 0.15, y: 0.15}
+  stopOffset: {x: 0.137, y: 0.45}
+  buildingOffset: 0.25
+  randombuildingOffset: 0.02
   foliageList:
   - {fileID: 1860662580202147405, guid: ed8d6adc180d60e40bc3f3c27e4c4137, type: 3}
   - {fileID: 3622377047509317400, guid: c0f3972b4133345449f9916544d3c05e, type: 3}
@@ -640,6 +643,7 @@ MonoBehaviour:
   buildingsList2:
   - {fileID: 9188024959971597147, guid: b4dcf0c7cd93f434c8db7241b8fc90a7, type: 3}
   - {fileID: 6006070558035945681, guid: 3a7bd3d1900dd534e8542796721b247d, type: 3}
+  - {fileID: 8828165404521500921, guid: 11c03539dd58cb6429ad151ceca0bb7d, type: 3}
   - {fileID: 2073648836608756146, guid: e2e9bd104da640d4a8c50b4c5bc8a3aa, type: 3}
   rareRegionChance: 0.4
   MAP_SCALAR: 1
