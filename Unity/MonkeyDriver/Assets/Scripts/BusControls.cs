@@ -107,7 +107,7 @@ public class BusControls : MonoBehaviour
 		while (map.intersectionList[randVal].type != 0 && testVal < 10);
 
 		busPos = map.intersectionList[randVal].getPos();
-		Vector3 startPos = new Vector3(busPos.x, busPos.y, 0);
+		Vector3 startPos = new Vector3(busPos.x, busPos.y + 0.15f, 0);
 		transform.position = startPos;
 		lastChoice = Controls.Rest;
 	}
