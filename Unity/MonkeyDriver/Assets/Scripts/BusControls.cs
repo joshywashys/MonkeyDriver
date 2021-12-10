@@ -27,7 +27,7 @@ public class BusControls : MonoBehaviour
 	private Vector2Int busPos;
 	public static bool atBoundUp, atBoundLeft, atBoundRight, atBoundDown; //map changes these
 	private float lerpSpeed = 0.5f;
-	private float maxSpeed = 0.1f;
+	private float speedBonus = 0.1f;
 	private float defaultSpeed = 0.5f;
 	public static int numControls = 4;
 	public static int numPassengers = 20;
@@ -35,33 +35,42 @@ public class BusControls : MonoBehaviour
 	public GameObject controls;
 	Dictionary<int, RectTransform> availableCtrlNums = new Dictionary<int, RectTransform>();
 	List <Controls> activeControls = new List<Controls>();
+
 	public static List<GameObject> passengers = new List<GameObject>();
 	MapMatrix map;
 	private int monkeyChoice;
 	private Controls lastChoice;
-	private Controls lastDirection;
+	private Controls lastChoiceDir;
 
 	IEnumerator RestTime(float time)
 	{
 		float lastSpeed = lerpSpeed;
-		lerpSpeed = 0;
+		lerpSpeed -= lerpSpeed;
 		yield return new WaitForSeconds(time);
-		lerpSpeed = lastSpeed;
-		
-		executeAction();
-	}
+		lerpSpeed += lastSpeed;
+        executeAction();
+    }
 
 	IEnumerator SpeedUp()
 	{
-		lerpSpeed = maxSpeed;
-		yield return new WaitForSeconds(5);
-		lerpSpeed = defaultSpeed;
-		//disable speed control?
+        if (lerpSpeed > 0.2)
+        {
+            lerpSpeed -= speedBonus;
+            yield return new WaitForSeconds(1);
+            lerpSpeed += speedBonus;
+        }
+
 	}
 
 	IEnumerator Drive(float startX, float startY, float endX, float endY)
 	{
 		float DriveTime = 0.0f;
+        float speed = lerpSpeed;
+        if (speed < 0)
+        {
+            speed = 0;
+        }
+        
 
 		while (DriveTime < lerpSpeed)
 		{
@@ -111,7 +120,8 @@ public class BusControls : MonoBehaviour
 	
 	void CheckForBounds()
 	{
-		Vector2Int currPos = new Vector2Int(busPos.x, busPos.y);
+        print("checked bounds");
+        Vector2Int currPos = new Vector2Int(busPos.x, busPos.y);
 		Intersection currIntersection = map.mapMatrix[busPos.x,busPos.y];
 
 		int mapWidth = map.mapMatrix.GetLength(0) * map.MAP_SCALAR - 1;
@@ -162,6 +172,7 @@ public class BusControls : MonoBehaviour
 	//Up,Down,Left,Right,Rest,Accelerate
 	void SetAvailableControls()
 	{
+        print("set controls");
 		Transform[] ctrlsList = new Transform[6];
 		for (int i = 0; i < 6; i++)
 		{
@@ -190,8 +201,9 @@ public class BusControls : MonoBehaviour
 		if (currIntersection.atBoundRight()) { activeControls.Remove(Controls.Right); }
 		if (currIntersection.atBoundDown()) { activeControls.Remove(Controls.Down); }
 		if (currIntersection.atBoundLeft()) { activeControls.Remove(Controls.Left); }
+        if (lastChoice == Controls.Accelerate) { activeControls.Remove(Controls.Accelerate);} //activeControls.Remove(Controls.Rest);
 
-	}
+    }
 
 #region control methods
 	public void Up()
@@ -249,23 +261,12 @@ public class BusControls : MonoBehaviour
 	
 	public void Rest()
 	{
-		//if (!(lastChoice == Controls.Rest))
-  //      {
-			StartCoroutine(RestTime(1.5f));
-  //      }
-		//else
-  //      {
-			//executeAction();
-//		}
-	}
+		StartCoroutine(RestTime(1.5f));
+    }
 
 	public void Accelerate()
 	{
-		//have speed be additive
-		//have speed move in the last direction
-		//if it can't move in that direction, choose a direction that it can go in
 		StartCoroutine(SpeedUp());
-
 		executeAction();
 	}
 	#endregion
@@ -274,9 +275,9 @@ public class BusControls : MonoBehaviour
 	{
 		monkeyChoice = Random.Range(0, numControls);
 		SetAvailableControls();
+        CheckForBounds();
 
-		CheckForBounds();
-		try
+        try
 		{
 			Debug.Log("choosing: " + activeControls[monkeyChoice]);
 			switch (activeControls[monkeyChoice])
@@ -285,22 +286,26 @@ public class BusControls : MonoBehaviour
 					MonkeyButtonPress.i.PressButton(availableCtrlNums[(int)Controls.Up].position.y);
 					Up();
 					lastChoice = Controls.Up;
-					break;
+                    lastChoiceDir = Controls.Up;
+                    break;
 				case Controls.Down:
 					MonkeyButtonPress.i.PressButton(availableCtrlNums[(int)Controls.Down].position.y);
 					Down();
 					lastChoice = Controls.Down;
-					break;
+                    lastChoiceDir = Controls.Down;
+                    break;
 				case Controls.Left:
 					MonkeyButtonPress.i.PressButton(availableCtrlNums[(int)Controls.Left].position.y);
 					Left();
 					lastChoice = Controls.Left;
-					break;
+                    lastChoiceDir = Controls.Left;
+                    break;
 				case Controls.Right:
 					MonkeyButtonPress.i.PressButton(availableCtrlNums[(int)Controls.Right].position.y);
 					Right();
 					lastChoice = Controls.Right;
-					break;
+                    lastChoiceDir = Controls.Right;
+                    break;
 				case Controls.Rest:
 					MonkeyButtonPress.i.PressButton(availableCtrlNums[(int)Controls.Rest].position.y);
 					Rest();
@@ -320,7 +325,7 @@ public class BusControls : MonoBehaviour
 		
 	}
 
-	public void ejection()
+    public void ejection()
 	{
 		float shortestDistance = 1000.0f;
 		float distance;

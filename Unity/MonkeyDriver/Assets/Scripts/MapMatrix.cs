@@ -17,9 +17,10 @@ public class MapMatrix : MonoBehaviour
     public GameObject intersection2;
     public GameObject debugSprite;
     public GameObject intersection, intsectStraight, intsectT, intsectL;
+    public GameObject intersectionGround;
     public GameObject blueBusStop, greenBusStop, pinkBusStop, redBusStop;
     public GameObject obstacle;
-    
+
     //map properties
     public Intersection[,] mapMatrix;
     public int height;
@@ -64,6 +65,8 @@ public class MapMatrix : MonoBehaviour
     public int numObstacles;
 
     public Vector2 stopOffset;
+    public float buildingOffset;
+    public float randombuildingOffset;
 
     public List<GameObject> foliageList;
     public List<GameObject> buildingsList;
@@ -338,6 +341,7 @@ public class MapMatrix : MonoBehaviour
                     break;
             }
 
+            //Instantiate(intersectionGround, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, 2), Quaternion.identity, generationLocation);
             Instantiate(toInstantiate, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, 1), rotation, generationLocation);
 
             //draw to the intersection based on type
@@ -431,7 +435,9 @@ public class MapMatrix : MonoBehaviour
         for (int i = 0; i < regionList.Count; i++)
         {
             Region region = regionList[i];
-            int buildingIndex;
+            int x = region.pos.x;
+            int y = region.pos.y;
+
             List<GameObject> chosenList;
 
             if (rareRegionChance > Random.Range(0.0f, 1.0f))
@@ -447,8 +453,22 @@ public class MapMatrix : MonoBehaviour
             {
                 for (int k = 0; k < region.height; k++)
                 {
-                    buildingIndex = Random.Range(0, chosenList.Count);
-                    Instantiate(chosenList[buildingIndex], new Vector3((region.pos.x + j) * MAP_SCALAR + 0.5f, (region.pos.y + k) * MAP_SCALAR + 0.5f, 1), Quaternion.identity, generationLocation);
+                    int buildingIndex;
+                    float randomOffsetX;
+                    void randomize()
+                    {
+                        randomOffsetX = Random.Range(-randombuildingOffset, randombuildingOffset);
+                        buildingIndex = Random.Range(0, chosenList.Count);
+                    }
+
+                    randomize();
+                    Instantiate(chosenList[buildingIndex], new Vector3(j + x + buildingOffset + randomOffsetX, k + y + buildingOffset, 1), Quaternion.identity, generationLocation);
+                    randomize();
+                    //Instantiate(chosenList[buildingIndex], new Vector3(j + x + buildingOffset + randomOffsetX, k + y - buildingOffset, 1), Quaternion.identity, generationLocation);
+                    randomize();
+                    Instantiate(chosenList[buildingIndex], new Vector3(j + x - buildingOffset + randomOffsetX, k + y - buildingOffset, 1), Quaternion.identity, generationLocation);
+                    randomize();
+                    //Instantiate(chosenList[buildingIndex], new Vector3(j + x - buildingOffset + randomOffsetX, k + y + buildingOffset, 1), Quaternion.identity, generationLocation);
                 }
             }
         }
