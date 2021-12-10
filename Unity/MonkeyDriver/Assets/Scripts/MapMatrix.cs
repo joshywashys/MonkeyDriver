@@ -420,7 +420,7 @@ public class MapMatrix : MonoBehaviour
                     Instantiate(chosenList[buildingIndex], new Vector3(j + x + 0.5f, k + y + 0.35f, 1), Quaternion.identity, generationLocation);
 
                     /*
-                     * 4 BUILDINGS
+                     * 4 BUILDINGS (deprecated)
                     float randomOffsetX;
                     void randomize()
                     {
