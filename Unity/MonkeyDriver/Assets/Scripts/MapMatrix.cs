@@ -4,10 +4,10 @@ using UnityEngine;
 
 /*
 This script is responsible for:
--generate a simple matrix map
+-generate a 2D matrix map
 -generating the map (further tech goal)
 -generate stops and any other locations
--keep track of entity locations (bus)
+-keep track of entity locations
 */
 
 public class MapMatrix : MonoBehaviour
@@ -73,7 +73,7 @@ public class MapMatrix : MonoBehaviour
     public List<GameObject> buildingsList2;
     public float rareRegionChance;
 
-    public int MAP_SCALAR = 1; //altered for debugging/visualisation purposes
+    public int MAP_SCALAR = 1; //alter only for debugging/visualisation purposes
     
 
     //populates a 2d array we feed it with bus stops and obstacles.
@@ -134,7 +134,6 @@ public class MapMatrix : MonoBehaviour
                     }
                     if (availableSpace > minRegionSize && j < mapMatrix.GetLength(1) - minRegionSize - 1)
                     {
-                        //print(i + ", " + j + ", " + availableSpace);
                         generateRegion(i, j, availableSpace);
                     }
                     
@@ -144,19 +143,6 @@ public class MapMatrix : MonoBehaviour
 
         }
 
-        /*
-        //populate map with intersections (DEPRECATED)
-        for (int i = 0; i < matrixWidth; i++)
-        {
-            for (int j = 0; j < matrixHeight; j++)
-            {
-                //Intersection newIntersection = new Intersection(i, j);
-                //mapMatrix[i, j] = newIntersection;
-                //intersectionList.Add(newIntersection);
-            }
-        }
-        */
-
         //register intersection bounds
         for (int i = 0; i < matrixWidth; i++)
         {
@@ -164,8 +150,6 @@ public class MapMatrix : MonoBehaviour
             {
                 if (mapMatrix[i,j] != null)
                 {
-                    //print(i + ", " + j);
-
                     //up
                     if (j < mapMatrix.GetLength(1) - 1)
                     {
@@ -340,8 +324,7 @@ public class MapMatrix : MonoBehaviour
                     
                     break;
             }
-
-            //Instantiate(intersectionGround, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, 2), Quaternion.identity, generationLocation);
+            
             Instantiate(toInstantiate, new Vector3(x * MAP_SCALAR, y * MAP_SCALAR, 1), rotation, generationLocation);
 
             //draw to the intersection based on type
@@ -351,26 +334,18 @@ public class MapMatrix : MonoBehaviour
                     break;
 
                 case 1:
-                    //creates a blue bus stop at [i,j] and adds it to the list of possible destinations
-
                     stopDict.Add(intersectionList[i], Instantiate(blueBusStop, new Vector3(x * MAP_SCALAR + stopOffset.x, y * MAP_SCALAR + stopOffset.y, -1), Quaternion.identity, generationLocation));
                     break;
 
                 case 2:
-                    //creates a green bus stop at [i,j] and adds it to the list of possible destinations
-
                     stopDict.Add(intersectionList[i], Instantiate(greenBusStop, new Vector3(x * MAP_SCALAR + stopOffset.x, y * MAP_SCALAR + stopOffset.y, -1), Quaternion.identity, generationLocation));
                     break;
 
                 case 3:
-                    //creates an orange bus stop at [i,j] and adds it to the list of possible destinations
-
                     stopDict.Add(intersectionList[i], Instantiate(pinkBusStop, new Vector3(x * MAP_SCALAR + stopOffset.x, y * MAP_SCALAR + stopOffset.y, -1), Quaternion.identity, generationLocation));
                     break;
 
                 case 4:
-                    //creates a purple bus stop at [i,j] and adds it to the list of possible destinations
-
                     stopDict.Add(intersectionList[i], Instantiate(redBusStop, new Vector3(x * MAP_SCALAR + stopOffset.x, y * MAP_SCALAR + stopOffset.y, -1), Quaternion.identity, generationLocation));
                     break;
 
@@ -384,31 +359,15 @@ public class MapMatrix : MonoBehaviour
 
         }
 
-        /*
-        //go thru mapmatrix, fill empty indexes with absolute SHRUBBERY!
-        for (int i = 0; i < mapMatrix.GetLength(0); i++)
-        {
-            for (int j = 0; j < mapMatrix.GetLength(1); j++)
-            {
-                if (mapMatrix[i,j] == null)  //&& !isAlone(new Vector2Int(i, j)
-                {
-                    int buildingIndex = Random.Range(0, foliageList.Count);
-                    float randomOffsetScalar = 0.2f;
-                    float randomOffsetX = Random.Range(-randomOffsetScalar, randomOffsetScalar);
-                    float randomOffsetY = Random.Range(-randomOffsetScalar, randomOffsetScalar);
-                    Instantiate(foliageList[buildingIndex], new Vector3(i + randomOffsetX, j + randomOffsetY, 0), Quaternion.identity, generationLocation);
-                }
-            }
-        }
-        */
-
-        //shrubbery 
+        //fill 'er up with SHRUBBERY! 
         int boundFoliageWidth = 3;
         for (int i = 0; i < mapMatrix.GetLength(0) + boundFoliageWidth*2; i++)
         {
             for (int j = 0; j < mapMatrix.GetLength(1) + boundFoliageWidth * 2; j++)
             {
                 int foliageIndex = 0;
+
+                //outside map
                 if (i < boundFoliageWidth || j < boundFoliageWidth || i >= mapMatrix.GetLength(0) + boundFoliageWidth || j >= mapMatrix.GetLength(0) + boundFoliageWidth) 
                 {
                     foliageIndex = Random.Range(0, foliageList.Count);
@@ -417,6 +376,8 @@ public class MapMatrix : MonoBehaviour
                     float randomOffsetY = Random.Range(-randomOffsetScalar, randomOffsetScalar);
                     Instantiate(foliageList[foliageIndex], new Vector3(i - boundFoliageWidth + randomOffsetX, j - boundFoliageWidth + randomOffsetY, 0), Quaternion.identity, generationLocation);
                 }
+
+                //inside map
                 else
                 {
                     if (mapMatrix[i - boundFoliageWidth, j - boundFoliageWidth] == null)  //&& !isAlone(new Vector2Int(i, j)
@@ -440,6 +401,7 @@ public class MapMatrix : MonoBehaviour
 
             List<GameObject> chosenList;
 
+            //choose region type
             if (rareRegionChance > Random.Range(0.0f, 1.0f))
             {
                 chosenList = buildingsList2;
@@ -449,6 +411,7 @@ public class MapMatrix : MonoBehaviour
                 chosenList = buildingsList;
             }
 
+            //for every intersection in the region...
             for (int j = 0; j < region.width - 1; j++)
             {
                 for (int k = 0; k < region.height - 1; k++)
@@ -480,6 +443,7 @@ public class MapMatrix : MonoBehaviour
 
     }
 
+    #region bound checking
     public bool hasIntersectionAbove(Vector2Int toCheck)
     {
         if (toCheck.y - 1 > 0)
@@ -536,14 +500,11 @@ public class MapMatrix : MonoBehaviour
         }
         return false;
     }
+    #endregion
 
     void Awake()
     {
         mapMatrix = new Intersection[width, height];
-        //intersectionList = new List<Intersection>();
-        //dictionary has stop coordinates, and a string colour
-        //passengers get a colour and can be dropped off at that colour stop
-        //have to generate stops of different colour still
 
         GenerateMap(mapMatrix, numStops);
         DrawMap(mapMatrix);
