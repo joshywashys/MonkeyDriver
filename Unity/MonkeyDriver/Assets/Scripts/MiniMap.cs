@@ -6,9 +6,10 @@ public class MiniMap : MonoBehaviour
 {
 	MapMatrix map;
 	float targetX, targetY;
-	public float padding;
-	private float bottomPadding = 3;
-	private float UIHeight = 2.0f;
+	public float padding = 0.25f;
+	private float UIHeight = 1f;
+	private float bottomPadding;
+
 
 	//have only the four closest stop indicators
 	//spawn them at start and set them not visible
@@ -31,6 +32,7 @@ public class MiniMap : MonoBehaviour
 		map = FindObjectOfType<MapMatrix>();
 		camHalfHeight = cam.orthographicSize;
 		camHalfWidth = camHalfHeight * cam.aspect;
+		bottomPadding = UIHeight + padding;
 
 		foreach (Intersection stop in map.stopDict.Keys)
 		{
