@@ -56,8 +56,8 @@ public class ScoreManager : MonoBehaviour
 	{
 		while (true)
 		{
-			subScore(25);
-			yield return new WaitForSeconds(1);
+			subScore(50);
+			yield return new WaitForSeconds(2);
 		}
 	}
 

@@ -6,7 +6,7 @@ public class SoundManager : MonoBehaviour
 {
 	public static SoundManager i = null;
 	public AudioSource monkeySource, screamSource;
-	public AudioClip monkeyLaugh;
+	public AudioClip monkeyLaugh, brake;
 	public AudioClip[] passengerScreams;
 	void Start()
 	{
@@ -23,6 +23,12 @@ public class SoundManager : MonoBehaviour
         {
 			StartCoroutine(Screaming(delay));
 		}
+
+	}
+	public void PlayBrake()
+	{
+
+		monkeySource.PlayOneShot(brake);
 
 	}
 	IEnumerator MonkeyChatter()

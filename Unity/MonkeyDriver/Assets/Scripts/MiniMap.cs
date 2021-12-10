@@ -6,8 +6,8 @@ public class MiniMap : MonoBehaviour
 {
 	MapMatrix map;
 	float targetX, targetY;
-	public float padding = 0.5f;
-	private float UIHeight = 1.5f;
+	public float padding;
+	private float UIHeight = 1.25f;
 	private float bottomPadding;
 
 

@@ -703,7 +703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b07b15684d1aa974bacba06012db3209, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  padding: 1
+  padding: 0.5
   blueMini: {fileID: 6184713774374819605, guid: c0185391c5b4e22468cede456fbd5497, type: 3}
   greenMini: {fileID: 6184713774374819605, guid: c65924bb527447049935be14f7aa2b8e, type: 3}
   pinkMini: {fileID: 6184713774374819605, guid: 6c14569362f04f649a816ce5488b4f6c, type: 3}
@@ -1096,6 +1096,7 @@ MonoBehaviour:
   monkeySource: {fileID: 470737945}
   screamSource: {fileID: 470737949}
   monkeyLaugh: {fileID: 8300000, guid: 6c5c92bb8da4b3145a7fa11314289708, type: 3}
+  brake: {fileID: 0}
   passengerScreams:
   - {fileID: 8300000, guid: 52904e3a17826af4fb589922ef17ea7e, type: 3}
   - {fileID: 8300000, guid: 0b1bcf3da833b4e46ab6c2eb6e61b4b1, type: 3}
@@ -1264,7 +1265,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 2
+  orthographic size: 3
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
